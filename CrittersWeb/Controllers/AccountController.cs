@@ -18,6 +18,16 @@ namespace CrittersWeb.Controllers
             _signInManager = signInManager;
         }
 
+        [HttpGet]
+        public ActionResult<UserInfoModel> UserInfo()
+        {
+            return new UserInfoModel() 
+            { 
+                SignedIn = User.Identity.IsAuthenticated,
+                Email = User.Identity.Name
+            };
+        }
+
         [HttpPost]
         public async Task<ActionResult<bool>> Login([FromBody] LoginModel m)
         {
@@ -29,7 +39,7 @@ namespace CrittersWeb.Controllers
             return false;
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<ActionResult<bool>> Logout()
         {
             if (User.Identity.IsAuthenticated)
@@ -41,17 +51,13 @@ namespace CrittersWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<RegistrationModel>> Register([FromBody] LoginModel m)
+        public async Task<ActionResult<RegistrationResultModel>> Register([FromBody] LoginModel m)
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                var newUser = new GameUser();
-                newUser.Email = m.Mail;
-                newUser.UserName = m.Mail;                
-                var result = await _signInManager.UserManager.CreateAsync(newUser, m.Password);
-                return new RegistrationModel() { Success = false, ErrorDescription = result.Errors.FirstOrDefault()?.Description };
-            }
-            return new RegistrationModel() { Success = true };
+            var newUser = new GameUser();
+            newUser.Email = m.Mail;
+            newUser.UserName = m.Mail;
+            var result = await _signInManager.UserManager.CreateAsync(newUser, m.Password);
+            return new RegistrationResultModel() { Success = result.Succeeded, ErrorDescription = result.Errors.FirstOrDefault()?.Description };            
         }
 
     }

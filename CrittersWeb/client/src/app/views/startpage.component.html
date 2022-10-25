@@ -1,4 +1,4 @@
-﻿ <div class="container-fluid vh-100 bg-light">
+﻿<div class="container-fluid vh-100 bg-light">
     <header class="container-fluid bg-light">
         <nav class="navbar navbar-expand-lg navbar-light fs-4" style="background-color: #e3f2fd;">
             <div class="container-fluid">
@@ -20,11 +20,10 @@
                             <a class="nav-link" routerLink="/play">Game</a>
                         </li>
                     </ul>
-                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" (click)="Login()">Login</button>
+                    <label *ngIf="userInfo.signedIn" class="text-body me-2 fs-5">User: {{userInfo.email}}</label>
+                    <button *ngIf="userInfo.signedIn" class="btn btn-outline-primary my-2 my-sm-0" type="submit" (click)="Logout()">Logout</button>
+                    <button *ngIf="!userInfo.signedIn" class="btn btn-outline-primary my-2 my-sm-0" type="submit" (click)="Login()">Login</button>
                 </div>
-            </div>
-            <div style="position: fixed">
-                <ng-template component-container style="position: fixed"></ng-template>
             </div>
         </nav>
     </header>
@@ -34,4 +33,8 @@
         Critters is defined on a two-dimensional infinite grid of cells, which may be identified with the integer lattice. As in Conway's Game of Life, at any point in time each cell may be in one of two states: alive or dead. The Critters rule is a block cellular automaton using the Margolus neighborhood. This means that, at each step, the cells of the automaton are partitioned into 2 × 2 blocks and each block is updated independently of the other blocks. The center of a block at one time step becomes the corner of four blocks at the next time step, and vice versa; in this way, the four cells in each block belong to four different 2 × 2 blocks of the previous partition.
         <br> (Wikipedia)
     </div>
- </div>
+</div>
+
+<div style="position: fixed">
+    <ng-template component-container style="position: fixed"></ng-template>
+</div>

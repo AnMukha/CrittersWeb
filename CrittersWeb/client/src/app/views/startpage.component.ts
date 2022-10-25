@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { LoginService, UserInfo } from '../services/login.service';
 import { ComponentContainerDirective } from './component-container.directive';
 import { LoginComponent } from './login.component';
 import { RegistrationComponent } from './registration.component';
@@ -11,16 +12,21 @@ import { RegistrationComponent } from './registration.component';
 })
 export class StartpageComponent implements OnInit {
 
-  constructor() { }
+    constructor(private loginService: LoginService) { }
 
   @ViewChild(ComponentContainerDirective, { static: true }) dialogsHost!: ComponentContainerDirective;
 
-  ngOnInit(): void {
-  }
+    userInfo: UserInfo = { email: "", signedIn: false };
+;
+
+    async ngOnInit() {
+        this.userInfo = await this.loginService.getCurrentUserInfo();
+        console.log(this.userInfo);
+    }
 
     Login() {
         let login = this.dialogsHost.viewContainerRef.createComponent(LoginComponent);
-        login.instance.result.subscribe(evt => {
+        login.instance.result.subscribe(async evt => {
             this.dialogsHost.viewContainerRef.clear();
             if (evt == 'register') {
                 let register = this.dialogsHost.viewContainerRef.createComponent(RegistrationComponent);
@@ -28,9 +34,14 @@ export class StartpageComponent implements OnInit {
                     this.dialogsHost.viewContainerRef.clear();
                 });
             }
+            this.userInfo = await this.loginService.getCurrentUserInfo();
         }
-        );
-        return;
+        );        
+    }
+
+    async Logout() {
+        await this.loginService.Logout();
+        this.userInfo = await this.loginService.getCurrentUserInfo();
     }
 
 }

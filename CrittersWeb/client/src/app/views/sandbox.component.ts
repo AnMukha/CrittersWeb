@@ -35,18 +35,6 @@ export class SandboxComponent implements OnInit {
     @ViewChild(ComponentContainerDirective, { static: true }) dialogsHost!: ComponentContainerDirective;    
 
     onSaveButton() {
-        let login = this.dialogsHost.viewContainerRef.createComponent(LoginComponent);
-        login.instance.result.subscribe(evt => {
-            this.dialogsHost.viewContainerRef.clear();
-            if (evt == 'register') {
-                let register = this.dialogsHost.viewContainerRef.createComponent(RegistrationComponent);
-                register.instance.result.subscribe(evt => {
-                    this.dialogsHost.viewContainerRef.clear();
-                });
-            }
-        }
-        );
-        return;
         this.savePopup.open(this.http, this.world);
     }
 
@@ -160,11 +148,6 @@ class LoadPopup {
     loadPopupDisplayStyle: string = "none";
 
     open(http: HttpClient, resultCallback: (cellsData: number[]) => void) {    
-        // some slots can be free, some - busy
-        // we show all array whith 10 slots;
-        // empty slots marked in list and have name ---------
-        // user can select slot and change name in dialog if neccessary;
-        // name applyed when user save world.        
         this.http = http;
         this.resultCallback = resultCallback;
         this.titles = [];        

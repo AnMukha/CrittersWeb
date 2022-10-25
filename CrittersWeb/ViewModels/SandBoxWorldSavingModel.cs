@@ -7,8 +7,8 @@ namespace CrittersWeb.ViewModels
 {
     public class SandBoxWorldSavingModel
     {
-        public int slot { get; set; }
-        public string newName { get; set; }
-        public int[] cellsData { get; set; }
+        public int Slot { get; set; }
+        public string NewName { get; set; }
+        public int[] CellsData { get; set; }
     }
 }

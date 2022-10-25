@@ -12,7 +12,7 @@ namespace CrittersWeb.ViewModels
         {
             var result = new List<Cell>();
             for (var i = 0; i < cellsData.Length; i = i + 2)
-                result.Add(new Cell() { x = cellsData[i], y = cellsData[i+1], });
+                result.Add(new Cell() { X = cellsData[i], Y = cellsData[i+1], });
             return result.ToArray();
         }
 
@@ -21,8 +21,8 @@ namespace CrittersWeb.ViewModels
             var result = new List<int>();
             foreach (var c in cells)
             {
-                result.Add(c.x);
-                result.Add(c.y);
+                result.Add(c.X);
+                result.Add(c.Y);
             }
             return result.ToArray();
         }

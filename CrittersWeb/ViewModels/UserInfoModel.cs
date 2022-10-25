@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace CrittersWeb.ViewModels
 {
-    public class RegistrationModel
+    public class UserInfoModel
     {
-        public string ErrorDescription { get; set; }
-        public bool Success { get; set; }
+        public string Email { get; set; }
+        public bool SignedIn { get; set; }
     }
 }

@@ -2,26 +2,29 @@
      tabindex="-1"
      role="dialog"
      [ngStyle]="{'display':'block'}">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Register</h4>
             </div>            
             <div class="modal-body">
                 <p class="text-danger" [hidden]="!registrationFailed">{{registrationError}}</p>
-                <div #titleinput class="input-group mb-3">
+                <div #titleinput class="mb-3">
+                    <label for="emailInRegister" class="form-label">Email</label>
                     <input #nameInput type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2"
-                           value={{eMail}}
+                           value={{eMail}} id="emailInLogin"
                            (input)="eMail = nameInput.value">
                 </div>
-                <div #titleinput class="input-group mb-3">
-                    <input #passInput type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2"
-                           value={{password}}
+                <div #titleinput class="mb-3">
+                    <label for="passwordInRegister" class="form-label">Password</label>
+                    <input #passInput type="password" class="form-control" aria-label="Password" aria-describedby="basic-addon2"
+                           value={{password}} id="passwordInRegister"
                            (input)="password = passInput.value">
                 </div>
-                <div #titleinput class="input-group mb-3">
-                    <input #passInput2 type="password" class="form-control" placeholder="Repeat password" aria-label="Repeat password" aria-describedby="basic-addon2"
-                           value={{password2}}
+                <div #titleinput class="mb-3">
+                    <label for="passwordInRegister2" class="form-label">Repeat password</label>
+                    <input #passInput2 type="password" class="form-control" aria-label="Repeat password" aria-describedby="basic-addon2"
+                           value={{password2}} id="passwordInRegister2"
                            (input)="password2 = passInput2.value">
                 </div>
             </div>

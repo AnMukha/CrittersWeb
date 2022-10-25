@@ -7,8 +7,8 @@ namespace CrittersWeb.Data.Repositories
 {
     public interface ISandBoxWorldsRepository
     {
-        Task<SandBoxSave[]> GetAll();
-        Task<int> SaveToSlot(int slot, string newName, Cell[] cells);
-        Task<SandBoxWorldInfo> LoadFromSlot(int slot);
+        Task<SandBoxSave[]> GetAll(GameUser user);
+        Task<int> SaveToSlot(GameUser user, int slot, string newName, Cell[] cells);
+        Task<SandBoxWorldInfo> LoadFromSlot(GameUser user, int slot);
     }
 }

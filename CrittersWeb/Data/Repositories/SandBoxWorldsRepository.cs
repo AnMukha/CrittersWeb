@@ -17,41 +17,34 @@ namespace CrittersWeb.Data.Repositories
             _context = context;
         }
 
-        public async Task<SandBoxSave[]> GetAll()
-        {
-            return await _context.SandBoxSaves.ToArrayAsync();
+        public async Task<SandBoxSave[]> GetAll(GameUser user)
+        {            
+            return await _context.SandBoxSaves.Where(s => s.GameUser == user).ToArrayAsync();
         }
 
-        public async Task<int> SaveToSlot(int slot, string newName, Cell[] cells)
+        public async Task<int> SaveToSlot(GameUser user, int slot, string newName, Cell[] cells)
         {
-            try
+            var existedSave = await _context.SandBoxSaves.Where(s => s.GameUser == user).FirstOrDefaultAsync(s => s.Slot == slot);
+            if (existedSave != null)
             {
-                var existedSave = await _context.SandBoxSaves.FirstOrDefaultAsync(s => s.slot == slot);
-                if (existedSave != null)
-                {
-                    existedSave.data = SerializeCells(cells);
-                    existedSave.name = newName;
-                    await _context.SaveChangesAsync();
-                    return existedSave.Id;
-                }
-                else
-                {
-                    var newS = new SandBoxSave() { slot = slot, name = newName, data = SerializeCells(cells) };
-                    await _context.AddAsync(newS);
-                    await _context.SaveChangesAsync();
-                    return newS.Id;
-                }
+                existedSave.Data = SerializeCells(cells);
+                existedSave.Name = newName;
+                await _context.SaveChangesAsync();
+                return existedSave.Id;
             }
-            catch (Exception e)
+            else
             {
-                throw e;
+                var newS = new SandBoxSave() {GameUser = user,  Slot = slot, Name = newName, Data = SerializeCells(cells) };
+                await _context.AddAsync(newS);
+                await _context.SaveChangesAsync();
+                return newS.Id;
             }
         }
 
-        public async Task<SandBoxWorldInfo> LoadFromSlot(int slot)
+        public async Task<SandBoxWorldInfo> LoadFromSlot(GameUser user, int slot)
         {
-            var world = await _context.SandBoxSaves.FirstOrDefaultAsync(s => s.slot == slot);
-            return new SandBoxWorldInfo() { slot = slot, name = world.name, cells = DeserializeCells(world.data) };
+            var world = await _context.SandBoxSaves.Where(s => s.GameUser == user).FirstOrDefaultAsync(s => s.Slot == slot);
+            return new SandBoxWorldInfo() { slot = slot, name = world.Name, cells = DeserializeCells(world.Data) };
         }
 
         private Cell[] DeserializeCells(string data)
@@ -59,7 +52,7 @@ namespace CrittersWeb.Data.Repositories
             var asNumbers = data.Split('|').Select(n => int.Parse(n)).ToArray();
             var reslut = new List<Cell>();
             for (var i = 0; i < asNumbers.Length; i = i + 2)
-                reslut.Add(new Cell() { x = asNumbers[i], y = asNumbers[i+1] });
+                reslut.Add(new Cell() { X = asNumbers[i], Y = asNumbers[i+1] });
             return reslut.ToArray();
         }
 
@@ -73,9 +66,9 @@ namespace CrittersWeb.Data.Repositories
                     b.Append("|");
                 else
                     first = false;                
-                b.Append(c.x.ToString());
+                b.Append(c.X.ToString());
                 b.Append("|");
-                b.Append(c.y.ToString());                
+                b.Append(c.Y.ToString());                
             }            
             return b.ToString();
         }
