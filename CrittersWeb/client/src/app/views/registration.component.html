@@ -1,0 +1,40 @@
+<div class="modal"
+     tabindex="-1"
+     role="dialog"
+     [ngStyle]="{'display':'block'}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Register</h4>
+            </div>            
+            <div class="modal-body">
+                <p class="text-danger" [hidden]="!registrationFailed">{{registrationError}}</p>
+                <div #titleinput class="input-group mb-3">
+                    <input #nameInput type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2"
+                           value={{eMail}}
+                           (input)="eMail = nameInput.value">
+                </div>
+                <div #titleinput class="input-group mb-3">
+                    <input #passInput type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2"
+                           value={{password}}
+                           (input)="password = passInput.value">
+                </div>
+                <div #titleinput class="input-group mb-3">
+                    <input #passInput2 type="password" class="form-control" placeholder="Repeat password" aria-label="Repeat password" aria-describedby="basic-addon2"
+                           value={{password2}}
+                           (input)="password2 = passInput2.value">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                        (click)="onOkButton()">
+                    Register
+                </button>
+                <button type="button" class="btn btn-primary"
+                        (click)="onCancelButton()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

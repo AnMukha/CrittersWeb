@@ -1,0 +1,99 @@
+<div style="background: black; height: 100vh; display: grid;
+       grid-template-rows: max-content auto;">
+    <div style="background-color: #e3f2fd; ">
+        <button class="btn btn-outline-primary m-1" routerLink="/home">Home</button>
+        <button class="btn btn-outline-primary m-1" (click)="onSaveButton()">Save</button>
+        <button class="btn btn-outline-primary m-1" (click)="onLoadButton()">Load</button>
+    </div>
+    <div style="background-color: white; position: relative; overflow: hidden">
+        <canvas id="c_canvas" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;
+                height: 100%; background-color: white"></canvas>
+        <button (click)="onNext()" class="btn btn-outline-primary m-1" style="position: absolute; left:30px; bottom: 30px;">Step</button>
+    </div>
+
+    <div style="position: fixed">
+        <ng-template component-container style="position: fixed"></ng-template>
+    </div>
+
+    <div class="modal"
+         tabindex="-1"
+         role="dialog"
+         [ngStyle]="{'display':savePopup.savePopupDisplayStyle}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Save world</h4>
+                </div>
+                <div class="modal-body">
+                    <select #saveTitlesSel multiple size="10" class="form-select" aria-label="Select slot to save"
+                            style="overflow-y: auto;"
+                            (change)="savePopup.onSlotSelect(saveTitlesSel.value)">
+                        <option value={{title.slot}} *ngFor="let title of savePopup.titles">{{title.name}}</option>
+                    </select>
+                    <br />
+                    <div #titleinput class="input-group mb-3">
+                        <input #nameInput type="text" class="form-control" placeholder="World name" aria-label="Recipient's username" aria-describedby="basic-addon2"
+                               value={{savePopup.saveName}}
+                               (input)="savePopup.saveName = nameInput.value">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            (click)="savePopup.onPopupOk()">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-primary"
+                            (click)="savePopup.close()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal"
+         tabindex="-1"
+         role="dialog"
+         [ngStyle]="{'display':loadPopup.loadPopupDisplayStyle}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Load world</h4>
+                </div>
+                <div class="modal-body">
+                    <select #loadTitlesSel multiple size="10" class="form-select" aria-label="Select world"
+                            style="overflow-y: auto;"
+                            (change)="loadPopup.onSlotSelect(loadTitlesSel.value)">
+                        <option value={{title.slot}} *ngFor="let title of loadPopup.titles">{{title.name}}</option>
+                    </select>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            (click)="loadPopup.onPopupOk()">
+                        Load
+                    </button>
+                    <button type="button" class="btn btn-primary"
+                            (click)="loadPopup.close()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<!--
+<div style="background: black; height: 100vh; display: flex; flex-direction: column; align-items: stretch">
+    <div style="background-color:aquamarine; min-height: 60px">
+        panel 1
+    </div>    
+    <div style="background-color: coral; height: 100%; position: relative; overflow: hidden">        
+        <div style="background-color: burlywood">            
+            <div style="position: absolute; right:100px; bottom: 50px">ssssssssssssss</div>
+        </div>
+    </div>
+</div> 
+    !-->

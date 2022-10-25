@@ -1,0 +1,37 @@
+﻿ <div class="container-fluid vh-100 bg-light">
+    <header class="container-fluid bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light fs-4" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-between w-50">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/sandbox">Sandbox</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/wiki">Investigation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/play">Game</a>
+                        </li>
+                    </ul>
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" (click)="Login()">Login</button>
+                </div>
+            </div>
+            <div style="position: fixed">
+                <ng-template component-container style="position: fixed"></ng-template>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <br>
+        Critters is defined on a two-dimensional infinite grid of cells, which may be identified with the integer lattice. As in Conway's Game of Life, at any point in time each cell may be in one of two states: alive or dead. The Critters rule is a block cellular automaton using the Margolus neighborhood. This means that, at each step, the cells of the automaton are partitioned into 2 × 2 blocks and each block is updated independently of the other blocks. The center of a block at one time step becomes the corner of four blocks at the next time step, and vice versa; in this way, the four cells in each block belong to four different 2 × 2 blocks of the previous partition.
+        <br> (Wikipedia)
+    </div>
+ </div>
