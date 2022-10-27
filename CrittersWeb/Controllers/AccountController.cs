@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CrittersWeb.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : Controller 
     {
         readonly SignInManager<GameUser> _signInManager;
 
