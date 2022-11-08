@@ -1,0 +1,22 @@
+<div style="background: green; height: 100vh; display: grid; position: relative; grid-template-areas: 'header header' 'menu workArea';
+            grid-template-columns: 200px auto;
+            grid-template-rows: max-content auto">
+    <div style="background: rgb(48, 59, 68); grid-area: header; color: white; position: relative">
+        <button class="btn btn-light m-2" routerLink="/home">Home</button>       
+        <div class="input-group float-end m-2" style="width: 600px">            
+            <input #findInput class="form-control" placeholder="something to find" aria-label="Find" aria-describedby="basic-addon2">
+            <button class="btn btn-outline-secondary" type="button" routerLink="/home">Find</button>
+        </div>
+
+    </div>
+    <div style="background: rgb(79, 90, 110); width: 200px; grid-area: menu; color: white ">
+        <a routerLink='article/Contents' class="link-light m-3" style="display: block">Contents</a>
+        <a routerLink='article/Random' class="link-light m-3" style="display: block">Random article</a>
+        <a routerLink='articles/All' class="link-light m-3" style="display: block">All articles</a>
+        <a routerLink='articles/My' class="link-light m-3" style="display: block">My articles</a>
+        <a routerLink='article/About' class="link-light m-3" style="display: block">About investigations</a>        
+    </div>
+    <div style="background: white; grid-area: workArea">
+        <router-outlet></router-outlet>
+    </div>
+</div>

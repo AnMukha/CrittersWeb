@@ -9,6 +9,8 @@
     <None Remove="client\src\app\views\registration.component.html" />
     <None Remove="client\src\app\views\sandbox.component.html" />
     <None Remove="client\src\app\views\startpage.component.html" />
+    <None Remove="client\src\app\views\wiki.component.html" />
+    <None Remove="client\src\app\views\wiki\article.component.html" />
     <None Remove="text.txt" />
   </ItemGroup>
 
@@ -33,6 +35,8 @@
     <TypeScriptCompile Include="client\src\app\views\registration.component.html" />
     <TypeScriptCompile Include="client\src\app\views\sandbox.component.html" />
     <TypeScriptCompile Include="client\src\app\views\startpage.component.html" />
+    <TypeScriptCompile Include="client\src\app\views\wiki\article.component.html" />
+    <TypeScriptCompile Include="client\src\app\views\wiki\wiki.component.html" />
   </ItemGroup>
 
 </Project>

@@ -6,10 +6,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SandboxComponent } from './views/sandbox.component';
 import { StartpageComponent } from './views/startpage.component';
-import { WikiComponent } from './views/wiki.component';
+import { WikiComponent } from './views/wiki/wiki.component';
 import { LoginComponent } from './views/login.component';
 import { ComponentContainerDirective } from './views/component-container.directive';
 import { RegistrationComponent } from './views/registration.component';
+import { ArticleComponent } from './views/wiki/article.component';
+import { ArticlesComponent } from './views/wiki/articles.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { RegistrationComponent } from './views/registration.component';
     WikiComponent,
     LoginComponent,
     ComponentContainerDirective,
-    RegistrationComponent
+    RegistrationComponent,
+    ArticleComponent,
+    ArticlesComponent
   ],
   imports: [
     BrowserModule,

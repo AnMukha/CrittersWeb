@@ -53,11 +53,6 @@ export class SandboxComponent implements OnInit {
 
     ngOnInit(): void {        
         let canvas = document.getElementById("c_canvas") as HTMLCanvasElement;
-        // создать мир, создать View, связать с канвас c View, связать View c миром;
-        // инициализировать мир, нужно процедура рисования;
-        // создать и добавить модель редактирования;
-        // добавить контроллер для редактирования, обрабатывающий события и преобразующий их в изменения
-        // модели редактирования и мира
         this.world = new CrittersWorld();
         this.world.TestInit();
         this.editModel = new CEditModel();

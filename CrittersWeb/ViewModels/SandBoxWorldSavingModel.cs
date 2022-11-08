@@ -9,6 +9,6 @@ namespace CrittersWeb.ViewModels
     {
         public int Slot { get; set; }
         public string NewName { get; set; }
-        public int[] CellsData { get; set; }
+        public int[] CellsData { get; set; }        
     }
 }
