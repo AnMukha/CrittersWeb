@@ -12,5 +12,9 @@ namespace CrittersWeb.Data.Entities
         public string Name { get; set; }
         public string Data { get; set; }
         public GameUser GameUser { get; set; }
+        public Cell[] GetCells()
+        {
+            return CellsDataInDBSerializer.DeserializeCells(Data);
+        }
     }
 }

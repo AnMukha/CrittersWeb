@@ -9,6 +9,6 @@ namespace CrittersWeb.Data.Repositories
     {
         Task<SandBoxSave[]> GetAll(GameUser user);
         Task<int> SaveToSlot(GameUser user, int slot, string newName, Cell[] cells);
-        Task<SandBoxWorldInfo> LoadFromSlot(GameUser user, int slot);
+        Task<SandBoxSave> LoadFromSlot(GameUser user, int slot);
     }
 }

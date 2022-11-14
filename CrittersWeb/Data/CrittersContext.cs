@@ -16,6 +16,7 @@ namespace CrittersWeb.Data
         }
 
         public DbSet<SandBoxSave> SandBoxSaves { get; set; }
+        public DbSet<Article> Articles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

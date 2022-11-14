@@ -54,7 +54,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "../wwwroot/bootstrap/dist/css/bootstrap.min.css"
+              "../wwwroot/bootstrap/dist/css/bootstrap.min.css",
+              "../wwwroot/lib/fortawesome/fontawesome-free/css/all.css"
             ],
             "scripts": ["../wwwroot/bootstrap/dist/js/bootstrap.min.js"]
           },

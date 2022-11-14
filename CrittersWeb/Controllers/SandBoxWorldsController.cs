@@ -34,7 +34,7 @@ namespace CrittersWeb.Controllers
         public async Task<ActionResult<int>> SaveToSlot([FromBody] SandBoxWorldSavingModel saving)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var id = await _rep.SaveToSlot(currentUser, saving.Slot, saving.NewName, (new CellsDataInModelSerializer()).ToCells(saving.CellsData));
+            var id = await _rep.SaveToSlot(currentUser, saving.Slot, saving.NewName, CellsDataInModelSerializer.ToCells(saving.CellsData));
             return id;
         }
 
@@ -43,8 +43,8 @@ namespace CrittersWeb.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var w = await _rep.LoadFromSlot(currentUser, slot);
-            var data = (new CellsDataInModelSerializer()).CellsToData(w.cells);
-            var result = new SandBoxWorldSavingModel() { Slot = slot, NewName = w.name, CellsData = data };
+            var data = CellsDataInModelSerializer.CellsToData(w.GetCells());
+            var result = new SandBoxWorldSavingModel() { Slot = slot, NewName = w.Name, CellsData = data };
             return result;
         }
 

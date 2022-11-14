@@ -1,4 +1,20 @@
-<div>
-    name: {{article?.name}}<br>
-    content: {{article?.content}}
-</div>
+<div style="height: 100%; display: grid; position: relative; grid-template-areas: 'area1 area2' 'area1 area2'; grid-template-columns: 50% 50%; grid-template-rows: auto 0%; ">
+
+    <div  style="grid-template-rows: 'max-content auto'; color: black; position: relative; ">
+        <div class="p-3" style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; overflow-y: scroll;">
+            <h4>{{article?.name}}<br></h4>
+            <div [innerHtml]="article?.content"></div>
+        </div>
+        <button routerLink="/wiki/edit/{{article?.id}}"
+                class="btn btn-primary" style="position: absolute; bottom: 20px; right: 30px">
+            <i class="fas fa-edit"></i> Edit
+        </button>
+    </div>
+
+        <div style="color: black; position: relative">
+            <canvas id="article_view_canvas" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; 
+          background-color: white"></canvas>
+            <button class="btn btn-outline-primary m-1" style="position: absolute; left:30px; bottom: 30px;">Step</button>
+        </div>
+
+    </div>

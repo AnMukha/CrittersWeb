@@ -27,50 +27,24 @@ namespace CrittersWeb.Data.Repositories
             var existedSave = await _context.SandBoxSaves.Where(s => s.GameUser == user).FirstOrDefaultAsync(s => s.Slot == slot);
             if (existedSave != null)
             {
-                existedSave.Data = SerializeCells(cells);
+                existedSave.Data = CellsDataInDBSerializer.SerializeCells(cells);
                 existedSave.Name = newName;
                 await _context.SaveChangesAsync();
                 return existedSave.Id;
             }
             else
             {
-                var newS = new SandBoxSave() {GameUser = user,  Slot = slot, Name = newName, Data = SerializeCells(cells) };
+                var newS = new SandBoxSave() {GameUser = user,  Slot = slot, Name = newName, Data = CellsDataInDBSerializer.SerializeCells(cells) };
                 await _context.AddAsync(newS);
                 await _context.SaveChangesAsync();
                 return newS.Id;
             }
         }
 
-        public async Task<SandBoxWorldInfo> LoadFromSlot(GameUser user, int slot)
+        public async Task<SandBoxSave> LoadFromSlot(GameUser user, int slot)
         {
-            var world = await _context.SandBoxSaves.Where(s => s.GameUser == user).FirstOrDefaultAsync(s => s.Slot == slot);
-            return new SandBoxWorldInfo() { slot = slot, name = world.Name, cells = DeserializeCells(world.Data) };
+            return await _context.SandBoxSaves.Where(s => s.GameUser == user).FirstOrDefaultAsync(s => s.Slot == slot);            
         }
 
-        private Cell[] DeserializeCells(string data)
-        {
-            var asNumbers = data.Split('|').Select(n => int.Parse(n)).ToArray();
-            var reslut = new List<Cell>();
-            for (var i = 0; i < asNumbers.Length; i = i + 2)
-                reslut.Add(new Cell() { X = asNumbers[i], Y = asNumbers[i+1] });
-            return reslut.ToArray();
-        }
-
-        private string SerializeCells(Cell[] cells)
-        {
-            var b = new StringBuilder();
-            var first = true;
-            foreach (var c in cells)
-            {
-                if (!first)                
-                    b.Append("|");
-                else
-                    first = false;                
-                b.Append(c.X.ToString());
-                b.Append("|");
-                b.Append(c.Y.ToString());                
-            }            
-            return b.ToString();
-        }
     }
 }

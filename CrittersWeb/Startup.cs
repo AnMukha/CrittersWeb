@@ -27,6 +27,7 @@ namespace CrittersWeb
                 .AddEntityFrameworkStores<CrittersContext>();
             services.AddDbContext<CrittersContext>();
             services.AddScoped<ISandBoxWorldsRepository, SandBoxWorldsRepository>();
+            services.AddScoped<ArticlesRepository, ArticlesRepository>();
             services.AddControllers();
         }
 
@@ -53,8 +54,28 @@ namespace CrittersWeb
             {
                 endpoints.MapControllerRoute(
                     name: "article",
-                    pattern: "article/{*name}",
+                    pattern: "article/{*id}",
                     defaults: new { controller = "Article", action = "Get" });
+                endpoints.MapControllerRoute(
+                    name: "article",
+                    pattern: "article/new",
+                    defaults: new { controller = "Article", action = "Post" });
+                endpoints.MapControllerRoute(
+                    name: "article",
+                    pattern: "article/update",
+                    defaults: new { controller = "Article", action = "Put" });
+                /*endpoints.MapControllerRoute(
+                    name: "article",
+                    pattern: "article/{*id}",
+                    defaults: new { controller = "Article", action = "Delete" });
+                endpoints.MapControllerRoute(
+                    name: "article",
+                    pattern: "article/reject",
+                    defaults: new { controller = "Article", action = "Pop" });
+                endpoints.MapControllerRoute(
+                    name: "article",
+                    pattern: "article/approve",
+                    defaults: new { controller = "Article", action = "Pop" });*/
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -12,6 +12,7 @@ import { ComponentContainerDirective } from './views/component-container.directi
 import { RegistrationComponent } from './views/registration.component';
 import { ArticleComponent } from './views/wiki/article.component';
 import { ArticlesComponent } from './views/wiki/articles.component';
+import { EditArticleComponent } from './views/wiki/edit.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ArticlesComponent } from './views/wiki/articles.component';
     ComponentContainerDirective,
     RegistrationComponent,
     ArticleComponent,
-    ArticlesComponent
+    ArticlesComponent,
+    EditArticleComponent
   ],
   imports: [
     BrowserModule,

@@ -57,7 +57,7 @@ namespace CrittersWeb.Controllers
             newUser.Email = m.Mail;
             newUser.UserName = m.Mail;
             var result = await _signInManager.UserManager.CreateAsync(newUser, m.Password);
-            return new RegistrationResultModel() { Success = result.Succeeded, ErrorDescription = result.Errors.FirstOrDefault()?.Description };            
+            return new RegistrationResultModel() { Success = result.Succeeded, ErrorDescription = result.Errors.FirstOrDefault()?.Description };
         }
 
     }
