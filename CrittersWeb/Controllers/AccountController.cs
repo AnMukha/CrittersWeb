@@ -12,10 +12,12 @@ namespace CrittersWeb.Controllers
     public class AccountController : Controller 
     {
         readonly SignInManager<GameUser> _signInManager;
+        readonly UserManager<GameUser> _userManager;
 
-        public AccountController(SignInManager<GameUser> signInManager)
+        public AccountController(SignInManager<GameUser> signInManager, UserManager<GameUser> userManager)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -33,8 +35,21 @@ namespace CrittersWeb.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                var result = await _signInManager.PasswordSignInAsync(m.Mail, m.Password, true, false);
-                return result.Succeeded;
+                if (string.IsNullOrWhiteSpace(m.UserName))
+                {
+                    var user = await _userManager.FindByEmailAsync(m.Mail);
+                    if (user != null)
+                    {
+                        var result = await _signInManager.PasswordSignInAsync(user, m.Password, true, false);
+                        return result.Succeeded;
+                    }
+                    return false;
+                }
+                else
+                {
+                    var result = await _signInManager.PasswordSignInAsync(m.UserName, m.Password, true, false);
+                    return result.Succeeded;
+                }
             }
             return false;
         }
@@ -55,7 +70,7 @@ namespace CrittersWeb.Controllers
         {
             var newUser = new GameUser();
             newUser.Email = m.Mail;
-            newUser.UserName = m.Mail;
+            newUser.UserName = m.UserName;
             var result = await _signInManager.UserManager.CreateAsync(newUser, m.Password);
             return new RegistrationResultModel() { Success = result.Succeeded, ErrorDescription = result.Errors.FirstOrDefault()?.Description };
         }

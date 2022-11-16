@@ -17,6 +17,7 @@ export class RegistrationComponent implements OnInit {
     registrationFailed: boolean = false;
     registrationError: string = "";
     eMail!: string;
+    userName!: string;
     password!: string;
     password2!: string;
 
@@ -24,7 +25,7 @@ export class RegistrationComponent implements OnInit {
     }
 
     async onOkButton() {
-        let res = await lastValueFrom(this.http.post("/account/Register", { Mail: this.eMail, Password: this.password })) as any;
+        let res = await lastValueFrom(this.http.post("/account/Register", { Mail: this.eMail, Password: this.password, UserName: this.userName })) as any;
         console.log(res);
         if (res.success) {
             console.log("Registration success");

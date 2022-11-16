@@ -1,6 +1,10 @@
 ﻿using CrittersWeb.Data.Entities;
+using CrittersWeb.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CrittersWeb.Data.Repositories
 {
@@ -24,9 +28,30 @@ namespace CrittersWeb.Data.Repositories
             return article;
         }
 
+        internal ArticleTextContent[] GetAllArticlesContent()
+        {
+            return _dbContext.Articles//.Where(a=> a.Status == ArticleStatus.Approved)
+                .Select(a=> new ArticleTextContent()
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Status = a.Status,
+                    ApprovalDate = a.ApprovalDate,
+                    Content = a.Content,
+                    CreationDate = a.CreationDate,
+                    LastEditionDate = a.LastEditionDate,
+                    AuthorName = a.Author.UserName
+                }).ToArray();
+        }
+
+        public Article[] GetArticles(int[] articlesId)
+        {
+            return _dbContext.Articles.Where(a => articlesId.Contains(a.Id)).Include(a => a.Author).ToArray();
+        }
+
         public Article[] GetAll(int pageNum, int pageSize)
         {
-            return _dbContext.Articles.ToArray();
+            return _dbContext.Articles.Include(a => a.Author).ToArray();
         }
 
         public bool Delete(int id)
@@ -41,9 +66,16 @@ namespace CrittersWeb.Data.Repositories
             return false;
         }
 
-        internal void Save()
+        public Article[] GetUserArticles(string userId)
+        {
+            return _dbContext.Articles.Where(a=>a.Author.Id == userId).Include(a => a.Author).ToArray();
+        }
+
+        public void Save()
         {
             _dbContext.SaveChanges();
         }
+
     }
+
 }

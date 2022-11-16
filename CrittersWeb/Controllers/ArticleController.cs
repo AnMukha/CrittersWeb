@@ -1,6 +1,7 @@
 ﻿using CrittersWeb.Data;
 using CrittersWeb.Data.Entities;
 using CrittersWeb.Data.Repositories;
+using CrittersWeb.Services;
 using CrittersWeb.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,12 @@ namespace CrittersWeb.Controllers
 
         ArticlesRepository _articlesRep;
         UserManager<GameUser> _userManager;
-        public ArticleController(ArticlesRepository articlesRep, UserManager<GameUser> userManager)
+        SearchService _searchService;
+        public ArticleController(ArticlesRepository articlesRep, UserManager<GameUser> userManager, SearchService searchService)
         {
             _articlesRep = articlesRep;
             _userManager = userManager;
+            _searchService = searchService;
         }
 
         public ActionResult<ArticleModel> Get([FromRoute] string id)
@@ -62,6 +65,7 @@ namespace CrittersWeb.Controllers
                  Name = article.Name,
                  Status = ArticleStatus.Draft
             });
+            _searchService.OnArticleChanged(newArticle);
             return CreatedAtAction(nameof(Get), new { id = newArticle.Id });
         }
 
@@ -75,6 +79,7 @@ namespace CrittersWeb.Controllers
                 modified.LastEditionDate = DateTime.Now;
                 modified.Name = article.Name;
                 _articlesRep.Save();
+                _searchService.OnArticleChanged(modified);
                 return CreatedAtAction(nameof(Get), new { id = article.Id });
             }
             return null;
@@ -82,13 +87,12 @@ namespace CrittersWeb.Controllers
 
         private string RestrictHtmlInContent(string content)
         {
-            // only i,br,b,a tags have to be enabled in html;
-            // for this we remove
+            // only i, br, b, a tags allowed in html;
             var result = new StringBuilder();
             var i=0;
             while (i < content.Length)
             {
-                var l = FindEnabledTagLength(content, i);
+                var l = FindEnabledTagLength( content, i);
                 if (l != -1)
                 {
                     result.Append(content.Substring(i, l));
@@ -124,7 +128,9 @@ namespace CrittersWeb.Controllers
         [HttpDelete]
         public async Task<ActionResult<bool>> Delete(int id)
         {
-            return _articlesRep.Delete(id);            
+            var result = _articlesRep.Delete(id);
+            _searchService.OnArticleDeleted(id);
+            return result;
         }
 
 

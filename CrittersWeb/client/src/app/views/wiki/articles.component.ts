@@ -18,9 +18,16 @@ export class ArticlesComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params.subscribe(routeParams => {
-            this.http.get<ArticleTitleModel[]>("/articles/" + (routeParams as any).request).subscribe(articles => {
-                this.articles = articles;
-            });
+            console.log(routeParams);
+            let request = (routeParams as any).request as string;
+            if (!request.startsWith('q:'))
+                this.http.get<ArticleTitleModel[]>("/articles/" + request).subscribe(articles => {
+                    this.articles = articles;
+                });
+            else
+                this.http.get<ArticleTitleModel[]>("/articles/search/" + request.substr(2)).subscribe(articles => {
+                    this.articles = articles;
+                });
         });
   }
 }

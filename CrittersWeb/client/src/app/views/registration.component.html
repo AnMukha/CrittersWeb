@@ -10,9 +10,15 @@
             <div class="modal-body">
                 <p class="text-danger" [hidden]="!registrationFailed">{{registrationError}}</p>
                 <div #titleinput class="mb-3">
+                    <label for="userInRegister" class="form-label">User name</label>
+                    <input #userInput type="text" class="form-control" placeholder="User name" aria-label="User name" aria-describedby="basic-addon2"
+                           value={{userName}} id="userInRegister"
+                           (input)="userName = userInput.value">
+                </div>
+                <div #titleinput class="mb-3">
                     <label for="emailInRegister" class="form-label">Email</label>
                     <input #nameInput type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2"
-                           value={{eMail}} id="emailInLogin"
+                           value={{eMail}} id="emailInRegister"
                            (input)="eMail = nameInput.value">
                 </div>
                 <div #titleinput class="mb-3">

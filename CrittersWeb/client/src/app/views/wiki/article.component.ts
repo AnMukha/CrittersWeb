@@ -22,6 +22,10 @@ export class ArticleComponent implements OnInit {
     view!: CView;
     editController!: CEditController;
 
+    CellsFieldIsEmpy(): boolean {        
+        return (this.article?.cellsData?.length ?? 0)==0;
+    }
+
     async ngOnInit() {
         let canvas = document.getElementById("article_view_canvas") as HTMLCanvasElement;
         this.world = new CrittersWorld();
@@ -30,16 +34,22 @@ export class ArticleComponent implements OnInit {
         this.editController = new CEditController(canvas, this.world, this.editModel, () => this.view.Repaint());
         this.view.Repaint();        
         this.route.params.subscribe(routeParams => {
-            console.log(routeParams);
-            this.http.get<ArticleModel>("/article/" + (routeParams as any).id).subscribe(article => {
+            console.log("load start");
+            this.http.get<ArticleModel>("/article/" + (routeParams as any).id).subscribe(async article => {
+                console.log("Loaded");
                 this.article = article;
                 this.world.Clear();
                 let data = article.cellsData;
                 for (let i = 0; i < data.length; i = i + 2)
                     this.world.AddCell(data[i], data[i + 1]);
-                this.view.Repaint();
+                setInterval(() =>
+                    this.view.Repaint(), 0);                
             });
         });
+    }
+
+    ContentToHTML(content: string | undefined): string | undefined {
+        return content == undefined ? content: content.replace(/(?:\r\n|\r|\n)/g, '<br>');               
     }
 
 }

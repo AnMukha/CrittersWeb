@@ -5,9 +5,9 @@
         <button class="btn btn-outline-light m-2" routerLink="/home"><i class="fas fa-home"></i> Home</button>
     </div>
     <div style="background: rgb(48, 59, 68); grid-area: header2; color: white; position: relative">
-        <div class="input-group m-2 float-start" style="width: 400px">
-            <input #findInput class="form-control" placeholder="something to find" aria-label="Find" aria-describedby="basic-addon2">
-            <button class="btn btn-outline-secondary" type="button" routerLink="/home"><i class="fas fa-search"></i></button>
+        <div class="input-group mt-2 float-start" style="width: 400px">
+            <input #searchInput class="form-control" placeholder="something to find" aria-label="Find" aria-describedby="basic-addon2">
+            <button class="btn btn-outline-secondary" type="button" (click)="OnSearch(searchInput.value)"><i class="fas fa-search"></i></button>
         </div>
         <button class="btn btn-success m-2 float-end" style="grid-area: header2" routerLink="edit/new">Create article</button>
     </div>

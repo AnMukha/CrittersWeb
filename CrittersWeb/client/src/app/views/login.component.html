@@ -10,22 +10,19 @@
             <div class="modal-body">
                 <p class="text-danger" [hidden]="!loginFailed">Incorrect password or login</p>
                 <div #titleinput class="mb-3">
-                    <label for="emailInLogin" class="form-label">Email</label>
-                    <input #nameInput type="email" class="form-control" placeholder="example@mail.com" aria-label="Email" aria-describedby="basic-addon2"
-                           value={{eMail}} id="emailInLogin"
-                           (input)="eMail = nameInput.value">
+                    <label for="emailInLogin" class="form-label">User name or email</label>
+                    <input #nameInput type="text" class="form-control" placeholder="example@mail.com" aria-label="Email" aria-describedby="basic-addon2">                           
                 </div>
                 <div #titleinput class="mb-3">
                     <label for="passwordInLogin" class="form-label">Password</label>
-                    <input #passInput type="password" autocomplete="off" class="form-control" id="passwordInLogin" aria-label="Password" aria-describedby="basic-addon2"
-                           value={{password}}
-                           (input)="password = passInput.value">
+                    <input #passInput type="password" autocomplete="off" class="form-control" id="passwordInLogin" 
+                           aria-label="Password" aria-describedby="basic-addon2">                           
                 </div>
                 <a [routerLink]="[]" class="link-primary float-end" (click)="onRegisterButton()">Register</a>
             </div>
             <div class="modal-footer">
                 <button type="button"  class="btn btn-outline-primary"
-                        (click)="onOkButton()">
+                        (click)="onOkButton(nameInput.value, passInput.value)">
                     Sign in
                 </button>
                 <button type="button" class="btn btn-outline-primary"

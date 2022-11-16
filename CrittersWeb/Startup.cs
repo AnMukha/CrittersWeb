@@ -1,6 +1,7 @@
 using CrittersWeb.Data;
 using CrittersWeb.Data.Entities;
 using CrittersWeb.Data.Repositories;
+using CrittersWeb.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,8 @@ namespace CrittersWeb
             services.AddDbContext<CrittersContext>();
             services.AddScoped<ISandBoxWorldsRepository, SandBoxWorldsRepository>();
             services.AddScoped<ArticlesRepository, ArticlesRepository>();
+            services.AddSingleton<SearchService, SearchService>();
+
             services.AddControllers();
         }
 
@@ -64,18 +67,10 @@ namespace CrittersWeb
                     name: "article",
                     pattern: "article/update",
                     defaults: new { controller = "Article", action = "Put" });
-                /*endpoints.MapControllerRoute(
-                    name: "article",
-                    pattern: "article/{*id}",
-                    defaults: new { controller = "Article", action = "Delete" });
                 endpoints.MapControllerRoute(
-                    name: "article",
-                    pattern: "article/reject",
-                    defaults: new { controller = "Article", action = "Pop" });
-                endpoints.MapControllerRoute(
-                    name: "article",
-                    pattern: "article/approve",
-                    defaults: new { controller = "Article", action = "Pop" });*/
+                    name: "articles",
+                    pattern: "articles/search/{request?}",
+                    defaults: new { controller = "Articles", action = "Search" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

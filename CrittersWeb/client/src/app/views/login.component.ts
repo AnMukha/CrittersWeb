@@ -14,15 +14,14 @@ export class LoginComponent implements OnInit {
 
     @Output() result = new EventEmitter<String>();
 
-    eMail!: string;
-    password!: string;
     loginFailed: boolean = false;
 
     ngOnInit(): void {
     }    
 
-    async onOkButton() {
-        let res = await lastValueFrom(this.http.post("/account/Login", { Mail: this.eMail, Password: this.password }));
+    async onOkButton(emailOrName: string, password: string) {        
+        let isEmail = emailOrName.indexOf('@') != -1;
+        let res = await lastValueFrom(this.http.post("/account/Login", { UserName: isEmail ? null : emailOrName, Mail: isEmail ? emailOrName: null, Password: password }));
         console.log(res);
         if (res)
             this.result.emit("ok");
