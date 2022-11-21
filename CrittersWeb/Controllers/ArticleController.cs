@@ -71,6 +71,10 @@ namespace CrittersWeb.Controllers
 
         public async Task<ActionResult<ArticleModel>> Put([FromBody] ArticleModel article)
         {
+            if (article.Content?.Length > 10000)
+                article.Content = article.Content.Substring(10000);
+            if (article.Name?.Length > 60)
+                article.Content = article.Content.Substring(60);
             var modified = _articlesRep.GetById(article.Id);
             if (modified != null)
             {

@@ -54,7 +54,7 @@ namespace CrittersWeb.Services
                 bool matches = true;
                 foreach (var w in req)
                 {
-                    var myRegex = new Regex(w);
+                    var myRegex = new Regex($@"\b{w}\b");                    
                     var matchesInContent = myRegex.Matches(a.Content);
                     var matchesInTitle = myRegex.Matches(a.Name);
                     if (matchesInContent.Count==0 && matchesInTitle.Count==0)

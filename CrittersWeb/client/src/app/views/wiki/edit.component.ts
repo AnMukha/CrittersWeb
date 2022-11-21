@@ -3,50 +3,49 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
-import { CrittersWorld, CrittersWorldSerializer } from '../../../critters/CrittersWorld';
-import { CEditModel } from '../../../critters/CEditModel';
-import { CView } from '../../../critters/CView';
-import { CEditController } from '../../../critters/CEditController';
+import { CrittersWorld, CrittersWorldSerializer, WorldCangesType } from '../../critters/CrittersWorld';
+import { CEditModel } from '../../critters/CEditModel';
+import { CrittersView } from '../../critters/CrittersView';
+import { CEditController } from '../../critters/CEditController';
+import { CTimeController } from '../../critters/CTimeController';
+import { CWorldSnapshot } from '../../critters/CWorldSnapshot';
+import { ZeroTimeController } from '../../critters/ZeroTimeController';
 
 @Component({
   selector: 'app-edit-article',
     templateUrl: "edit.component.html",    
   styles: [
-  ]
+    ],
+    providers: [CrittersWorld, CEditController, CEditModel, CrittersView, CTimeController, ZeroTimeController]
 })
 export class EditArticleComponent implements OnInit {
 
-    constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private location: Location) { }    
+    constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private location: Location,
+        private world: CrittersWorld, private zeroTimeController: ZeroTimeController) { }    
 
     article: ArticleModel = new ArticleModel();
     isNew: boolean = false;
-    world!: CrittersWorld;
-    editModel!: CEditModel;
-    view!: CView;
-    editController!: CEditController;
+    nameLength: number | undefined = 0;
+    contentLength: number | undefined = 0;    
 
     ngOnInit(): void {
         this.route.params.subscribe(routeParams => {
-            let canvas = document.getElementById("edit_article_canvas") as HTMLCanvasElement;
-            this.world = new CrittersWorld();
-            this.editModel = new CEditModel();
-            this.view = new CView(canvas, this.world, this.editModel);
-            this.editController = new CEditController(canvas, this.world, this.editModel, () => this.view.Repaint());
-            this.view.Repaint();        
             console.log(routeParams);
             if ((routeParams as any).id != 'new')
                 this.http.get<ArticleModel>("/article/" + (routeParams as any).id).subscribe(article => {
                     this.article = article;
                     this.world.Clear();
                     let data = article.cellsData;
-                    for (let i = 0; i < data.length; i = i + 2)
+                    for (let i = 0; i < data.length ; i = i + 2)
                         this.world.AddCell(data[i], data[i + 1]);
-                    this.view.Repaint();
+                    this.zeroTimeController.setThisTimeAsZero();                    
+                    setInterval(() =>
+                        this.world.notifyAboutChanges(WorldCangesType.loaded));
                 });
             else {                    
                 this.isNew = true;
                 this.world.Clear();
-                this.view.Repaint();
+                this.world.notifyAboutChanges(WorldCangesType.loaded);
             }
         });
     }

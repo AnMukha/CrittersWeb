@@ -1,20 +1,15 @@
-﻿import { CEditModel } from "./CEditModel";
+﻿import { Injectable } from "@angular/core";
+import { CEditModel } from "./CEditModel";
 import { CrittersWorld } from "./CrittersWorld";
 
-export class CView {
-    public constructor(canvas: HTMLCanvasElement, world: CrittersWorld, editModel: CEditModel) {
-        this.canvas = canvas;
-        this.world = world;
-        this.editModel = editModel;
+@Injectable()
+export class CrittersView {
+    public constructor(private world: CrittersWorld, private editModel: CEditModel) {        
     }
-
-    canvas!: HTMLCanvasElement;
-    world!: CrittersWorld;
-    editModel!: CEditModel;
-
-    Repaint() {
-        let ctx = this.canvas.getContext('2d');
-        ctx!.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
+    paint(canvas: HTMLCanvasElement) {
+        let ctx = canvas.getContext('2d');
+        ctx!.clearRect(0, 0, canvas.width, canvas.height);
         ctx!.canvas.width = ctx!.canvas.clientWidth;
         ctx!.canvas.height = ctx!.canvas.clientHeight;
         this.PaintGrid(ctx!);
@@ -24,16 +19,16 @@ export class CView {
             let c = c_e[1];
             let x = this.editModel.CellXToScr(c.x);
             let y = this.editModel.CellYToScr(c.y);
-            if (x < this.canvas.width && x > 0 - this.editModel.scale
-                && y > 0 - this.editModel.scale && y < this.canvas.height) {
+            if (x < canvas.width && x > 0 - this.editModel.scale
+                && y > 0 - this.editModel.scale && y < canvas.height) {
                 ctx!.fillRect(x, y, this.editModel.scale, this.editModel.scale);
             }            
         }
     }
 
     PaintGrid(ctx: CanvasRenderingContext2D) {
-        let x0 = this.editModel.ScrXToCell(0) - 1;
-        let x1 = this.editModel.ScrXToCell(ctx!.canvas.width) + 1;
+        let x0 = Math.floor(this.editModel.ScrXToCell(0)/2)*2 - 3;
+        let x1 = Math.floor(this.editModel.ScrXToCell(ctx!.canvas.width)/2)*2 + 3;
         ctx.strokeStyle = 'rgba(100, 100, 100, 0.5)';
         for (let x = x0; x <= x1; x = x + 2) {
             ctx.beginPath();
@@ -50,8 +45,8 @@ export class CView {
             ctx.lineTo(xs, ctx!.canvas.height);
             ctx.stroke();
         }            
-        let y0 = this.editModel.ScrYToCell(0) - 1;
-        let y1 = this.editModel.ScrYToCell(ctx!.canvas.height) + 1;
+        let y0 = Math.floor(this.editModel.ScrYToCell(0)/2)*2 - 3;
+        let y1 = Math.floor(this.editModel.ScrYToCell(ctx!.canvas.height)/2)*2 + 3;
         ctx.strokeStyle = 'rgba(100, 100, 100, 0.5)';
         for (let y = y0; y <= y1; y = y + 2) {
             ctx.beginPath();

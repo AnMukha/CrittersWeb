@@ -1,30 +1,46 @@
-﻿export class CrittersWorld {
+﻿import { Injectable } from "@angular/core";
+import { Subject, timeInterval } from "rxjs";
+import { CWorldSnapshot } from "./CWorldSnapshot";
 
+
+@Injectable()
+export class CrittersWorld {
     constructor() {
     }
 
     cells: Map<number, Cell> = new Map<number, Cell>();    
 
-    public AddAxisX: number = 0;
-    public AddAxisY: number = 0;                
+    stepNum: number = 1;
+
+    forward: boolean = true;
+
+    nextCellKey: number = 0;
+
+    private changesSubject: Subject<WorldCangesType> = new Subject();
 
     public AddCell(x: number, y: number): Cell {
-        let key = x * 1000000000 + y;
+        let key = x * Cell.KEY_GEN_FACTOR + y;
         let resultCell = new Cell(this.NextCellKey(), x, y, this.stepNum);
         this.cells.set(key, resultCell);
         return resultCell;
     }
-
-    nextCellKey: number = 0;
-
-    NextCellKey(): number {
+   
+    private NextCellKey(): number {
         this.nextCellKey++;
         return this.nextCellKey;
     }
-        
+
+    public notifyAboutChanges(changesType: WorldCangesType) {
+        this.changesSubject.next(changesType);
+    }
+
+    public subscribeToChanges(next: (value: WorldCangesType) => void) {
+        this.changesSubject.subscribe(next);
+    }
+            
     // Очистить клетку, если занята        
     public ClearCell(x: number, y: number) {
-        let key = x * 1000000000 + y;
+        let key = x * Cell.KEY_GEN_FACTOR + y;
         let c = this.cells.get(key);
         if (c)
             this.RemoveCell(key, c);
@@ -34,16 +50,8 @@
         this.cells.delete(key);
     }
 
-    public SetAdditionalAxis(xA: number, yA: number) {
-        this.AddAxisX = xA;
-        this.AddAxisY = yA;
-    }
 
     public IsEvenStep(): boolean {
-        return this.stepNum % 2 == 0;
-    }
-
-    public EvenState(): boolean {
         return this.stepNum % 2 == 0;
     }
 
@@ -55,17 +63,22 @@
     public Clear() {
         this.cells.clear();
         this.nextCellKey = 0;
-        this.stepNum = 0;
+        this.stepNum = 1;
     }
 
-    stepNum: number = 0;
-
     public ReverseTimeDirection() {
-        this.stepNum++;
+        if (this.forward)
+            this.stepNum--;
+        else
+            this.stepNum++;
+        this.forward = !this.forward;
     }
 
     private Run() {
-        this.stepNum++;
+        if (this.forward)
+            this.stepNum++;
+        else
+            this.stepNum--;
         let evenStep = this.stepNum % 2 == 0;
         for (let c_e of this.cells.entries()) {
             let c = c_e[1];
@@ -81,13 +94,13 @@
                 let gc01: Cell | undefined;
                 let gc10: Cell | undefined;
                 let c00: boolean = false, c11: boolean = false, c01: boolean = false, c10: boolean = false;
-                gc00 = this.cells.get(xgc * 1000000000 + ygc);
+                gc00 = this.cells.get(xgc * Cell.KEY_GEN_FACTOR + ygc);
                 c00 = gc00 != undefined;
-                gc11 = this.cells.get((xgc + 1) * 1000000000 + (ygc + 1));
+                gc11 = this.cells.get((xgc + 1) * Cell.KEY_GEN_FACTOR + (ygc + 1));
                 c11 = gc11 != undefined;
-                gc01 = this.cells.get(xgc * 1000000000 + (ygc + 1));
+                gc01 = this.cells.get(xgc * Cell.KEY_GEN_FACTOR + (ygc + 1));
                 c01 = gc01 != undefined;
-                gc10 = this.cells.get((xgc + 1) * 1000000000 + ygc);
+                gc10 = this.cells.get((xgc + 1) * Cell.KEY_GEN_FACTOR + ygc);
                 c10 = gc10 != undefined;
                 // определить действие в зависимости от положения 
                 let cellCnt = (gc00 == null ? 0 : 1) + (gc11 == null ? 0 : 1) + (gc01 == null ? 0 : 1) + (gc10 == null ? 0 : 1);
@@ -179,7 +192,7 @@
         let cellsNew = new Map<number, Cell>();
         for (let c_e of this.cells.entries()) {
             let c = c_e[1];
-            cellsNew.set(c.x * 1000000000 + c.y, c);
+            cellsNew.set(c.x * Cell.KEY_GEN_FACTOR + c.y, c);
         }
         this.cells = cellsNew;        
     }
@@ -189,7 +202,7 @@
     }
 
     public GetCell(x: number, y: number): Cell | undefined {        
-        return this.cells.get(x * 1000000000 + y);
+        return this.cells.get(x * Cell.KEY_GEN_FACTOR + y);
     }
 
     public FindInArea(rectangle: CRect): Cell[] {
@@ -219,12 +232,59 @@
         cells.Add(c.GetKey(), c);*/
     }
 
+    public SetThisTimeAsZero() {
+        if (this.stepNum == 1)
+            return;
+        this.stepNum = 1;
+        this.forward = true;
+        for (let c of this.cells.values())
+            c.prosessedStep = 1;
+    }
+
+    public IsZeroTime(): boolean {
+        return this.stepNum == 1;
+    }
+
+    public RunToZeroTime() {
+        if (!this.forward) {
+            this.ReverseTimeDirection();
+            if (this.IsEvenStep())
+                this.RunSerie(1);
+        }
+        if (this.stepNum == 1)
+            return;
+        let distToZero = Math.abs(this.stepNum - 1);        
+        if (this.stepNum > 1) 
+            this.ReverseTimeDirection();
+         this.RunSerie(distToZero);
+         this.SetThisTimeAsZero();
+    }
+
+    public MakeSnapshot(): CWorldSnapshot {        
+        let resultCells: Cell[] = [];
+        for (let value of this.cells.values()) {
+            resultCells.push(value.Clone());
+        }        
+        return { cells: resultCells };
+    }
+
+    public LoadSnapshot(snapshot: CWorldSnapshot) {
+        this.Clear();
+        this.stepNum = 1;
+        this.forward = true;
+        for (let c of snapshot.cells) {
+            c.prosessedStep = this.stepNum;
+            this.cells.set(c.x * Cell.KEY_GEN_FACTOR + c.y, c.Clone());
+        }
+    }
+
     public TestInit() {
         this.AddCell(10, 10);
         this.AddCell(11, 11);
         this.AddCell(10, 11);
         this.AddCell(12, 11);
     }
+
 
 }
 
@@ -254,6 +314,8 @@ export class Cell {
         this.y = y;
         this.prosessedStep = procStep;
     }
+
+    public static KEY_GEN_FACTOR = 1000000000;
     
     // Уникальный ключ    
     public id: number;
@@ -264,7 +326,7 @@ export class Cell {
  
     public GetKey(): number
     {
-        return this.x * 1000000000 + this.y;
+        return this.x * Cell.KEY_GEN_FACTOR + this.y;
     }
 
     public MoveTo(toX: number, toY: number)
@@ -272,6 +334,11 @@ export class Cell {
         this.x = toX;
         this.y = toY;
     }
+
+    public Clone(): Cell {
+        return new Cell(this.id, this.x, this.y, this.prosessedStep);
+    }
+
 
 }
 
@@ -309,4 +376,10 @@ export class CPoint {
     }
     public X: number;
     public Y: number;
+}
+
+export enum WorldCangesType {
+    edited,
+    loaded,
+    executed
 }

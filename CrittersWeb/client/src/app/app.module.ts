@@ -13,6 +13,8 @@ import { RegistrationComponent } from './views/registration.component';
 import { ArticleComponent } from './views/wiki/article.component';
 import { ArticlesComponent } from './views/wiki/articles.component';
 import { EditArticleComponent } from './views/wiki/edit.component';
+import { CrittersCanvasComponent } from './critters/critters-canvas/critters-canvas.component';
+import { TimeControlPanelComponent } from './critters/time-control-panel/time-control-panel.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { EditArticleComponent } from './views/wiki/edit.component';
     RegistrationComponent,
     ArticleComponent,
     ArticlesComponent,
-    EditArticleComponent
+    EditArticleComponent,
+    CrittersCanvasComponent,
+    TimeControlPanelComponent
   ],
   imports: [
     BrowserModule,

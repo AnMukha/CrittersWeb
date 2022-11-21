@@ -2,27 +2,26 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
-import { CEditController } from '../../critters/CEditController';
-import { CEditModel } from '../../critters/CEditModel';
-import { CrittersWorld, CrittersWorldSerializer } from '../../critters/CrittersWorld';
-import { CView } from '../../critters/CView';
+import { CEditController } from '../critters/CEditController';
+import { CEditModel } from '../critters/CEditModel';
+import { CrittersWorld, CrittersWorldSerializer, WorldCangesType } from '../critters/CrittersWorld';
+import { CrittersView } from '../critters/CrittersView';
 import { ComponentContainerDirective } from './component-container.directive';
-import { LoginComponent } from './login.component';
-import { RegistrationComponent } from './registration.component';
+import { CTimeController } from '../critters/CTimeController';
+import { ZeroTimeController } from '../critters/ZeroTimeController';
 
 @Component({
     selector: 'app-sandbox',
     templateUrl: 'sandbox.component.html',
     styles: [
-    ]
+    ],
+    providers: [CrittersWorld, CEditController, CEditModel, CrittersView, CTimeController, ZeroTimeController]
 })
 export class SandboxComponent implements OnInit {    
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient, private router: Router, private world: CrittersWorld, private zeroTimeController: ZeroTimeController) {
     }    
-
-    world!: CrittersWorld;
-    view!: CView;
+    view!: CrittersView;
     editController!: CEditController;
     editModel!: CEditModel;
 
@@ -48,23 +47,21 @@ export class SandboxComponent implements OnInit {
             console.log("add cell", data[i], data[i + 1]);
             this.world.AddCell(data[i], data[i + 1]);
         }
-        this.view.Repaint();
+        this.zeroTimeController.setThisTimeAsZero();
+        this.world.notifyAboutChanges(WorldCangesType.loaded);
     }
 
-    ngOnInit(): void {        
-        let canvas = document.getElementById("c_canvas") as HTMLCanvasElement;
-        this.world = new CrittersWorld();
+    ngOnInit(): void {                
         this.world.TestInit();
-        this.editModel = new CEditModel();
-        this.view = new CView(canvas, this.world, this.editModel);        
-        this.editController = new CEditController(canvas, this.world, this.editModel, () => this.view.Repaint());        
-        this.view.Repaint();        
+        this.zeroTimeController.setThisTimeAsZero();
+        this.world.notifyAboutChanges(WorldCangesType.edited);
+        console.log("sandbox ngOnInit()")
     }
 
     onNext() {
         console.log("onNext");
         this.world.RunSerie(1);
-        this.view.Repaint();
+        this.world.notifyAboutChanges(WorldCangesType.executed);
     }
 
 }
