@@ -12,7 +12,7 @@ export class CTimeController {
 
     public step() {
         this.world.RunSerie(1);
-        this.world.notifyAboutChanges(WorldCangesType.executed);
+        this.world.notifyAboutChanges([WorldCangesType.executed]);
         this.toOddStep();
     }
 
@@ -27,10 +27,9 @@ export class CTimeController {
 
     private stepOnTimer() {
         if (this.speed != 0) {
-            this.world.RunSerie(1);
-            console.log(this.world.stepNum);
-            this.world.notifyAboutChanges(WorldCangesType.executed);
-            if (this.world.stepNum != 1)
+            this.world.RunSerie(1);            
+            this.world.notifyAboutChanges([WorldCangesType.executed]);
+            if (!this.world.IsZeroTime())
                 this.execTimer = setTimeout(() => this.stepOnTimer(), 1 / this.speed * 1000);
             else {
                 this.speed = 0;
@@ -51,7 +50,7 @@ export class CTimeController {
             {                
                 if (this.world.IsEvenStep()) {
                     this.world.RunSerie(1);
-                    this.world.notifyAboutChanges(WorldCangesType.executed);
+                    this.world.notifyAboutChanges([WorldCangesType.executed]);
                 }
             }, 500);    
     }
@@ -59,7 +58,7 @@ export class CTimeController {
     public setTimeDirection(forward: boolean) {
         if (this.timeForward != forward)
             this.timeForward = forward;
-        if (this.world.forward != forward) {
+        if (this.world.isForwardTimeDirection() != forward) {
             this.world.ReverseTimeDirection();
             this.toOddStep();
         }        

@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
     
     constructor(private http: HttpClient) { }
 
-    @Output() result = new EventEmitter<String>();
+    @Output() result = new EventEmitter<string>();
 
     loginFailed: boolean = false;
 

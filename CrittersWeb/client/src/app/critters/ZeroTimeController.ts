@@ -7,9 +7,9 @@ import { CWorldSnapshot } from "./CWorldSnapshot";
 export class ZeroTimeController {
     constructor(private world: CrittersWorld) {
         world.subscribeToChanges(ch => {
-            if (ch == WorldCangesType.edited && !world.IsZeroTime())
+            if (ch.includes(WorldCangesType.cellsEditing) && !world.IsZeroTime())
                 this.wasEditedAtNotZeroTime = true;
-            if (ch == WorldCangesType.loaded)
+            if (ch.includes(WorldCangesType.loaded))
                 this.wasEditedAtNotZeroTime = false;
         });
     }
@@ -22,16 +22,15 @@ export class ZeroTimeController {
             return;
         this.snapshot = this.world.MakeSnapshot();
         this.world.SetThisTimeAsZero();
-        this.world.notifyAboutChanges(WorldCangesType.loaded);
+        this.world.notifyAboutChanges([WorldCangesType.loaded]);
     }
 
-    public goToZeroTime() {
-        // console.log("dddddddddddddddd");
+    public goToZeroTime() {        
         if (this.wasEditedAtNotZeroTime)
             this.world.RunToZeroTime();
         else if (this.snapshot)        
             this.world.LoadSnapshot(this.snapshot);
-        this.world.notifyAboutChanges(WorldCangesType.loaded);
+        this.world.notifyAboutChanges([WorldCangesType.loaded]);
         this.wasEditedAtNotZeroTime = false;
     }
 

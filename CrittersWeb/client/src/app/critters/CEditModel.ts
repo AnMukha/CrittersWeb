@@ -8,7 +8,7 @@ export class CEditModel {
     scale: number = 10;
     X: number = 0;
     Y: number = 0;
-    gridActual: boolean = false;
+    gridActual: boolean = false;    
 
     changesSubject: Subject<number> = new Subject();
 

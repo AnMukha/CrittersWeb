@@ -26,7 +26,7 @@ namespace CrittersWeb.Controllers
             return new UserInfoModel() 
             { 
                 SignedIn = User.Identity.IsAuthenticated,
-                Email = User.Identity.Name
+                Name = User.Identity.Name
             };
         }
 

@@ -11,7 +11,13 @@ import { WikiComponent } from './views/wiki/wiki.component';
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: "home", component: StartpageComponent },
-    { path: "sandbox", component: SandboxComponent },
+    {
+        path: "sandbox",
+        component: SandboxComponent,
+        canDeactivate: [(sandBox: SandboxComponent) =>        
+            sandBox.exitConfirmRequired() ? window.confirm(sandBox.getExitConfirmText()): true
+        ]
+    },
     {
         path: "wiki", component: WikiComponent, 
         children: [
@@ -22,6 +28,8 @@ const routes: Routes = [
             {
                 path: 'edit/:id',
                 component: EditArticleComponent,
+                canDeactivate: [(editArt: EditArticleComponent) =>
+                    editArt.exitConfirmRequired() ? window.confirm(editArt.getExitConfirmText()) : true]
             },
             {
                 path: 'articles/:request',

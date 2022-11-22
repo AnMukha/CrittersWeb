@@ -4,19 +4,28 @@ import { lastValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-    async Logout() {
-        return lastValueFrom(this.http.get("/account/logout"));
+
+    constructor(private http: HttpClient) {        
     }
 
-    constructor(private http: HttpClient) { }
+    userInfo: UserInfo | undefined = undefined;
 
-    async getCurrentUserInfo(): Promise<UserInfo> {
-        return lastValueFrom(this.http.get<UserInfo>("/account/userinfo"));
+
+    async Logout() {
+        var success = await lastValueFrom(this.http.get("/account/logout"));
+        if (success)
+            this.userInfo = { name: "", signedIn: false };
+    }    
+
+    async getCurrentUserInfo(cacheEnable: boolean): Promise<UserInfo> {
+        if (!this.userInfo === undefined || !cacheEnable)
+            this.userInfo = await lastValueFrom(this.http.get<UserInfo>("/account/userinfo"));        
+        return this.userInfo!;
     }    
 
 }
 
 export class UserInfo {
-    email!: string;
+    name!: string;
     signedIn!: boolean;
 }

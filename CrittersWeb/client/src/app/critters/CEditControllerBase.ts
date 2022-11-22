@@ -17,4 +17,14 @@ export class CEditControllerBase {
     public mouseWheelHandler(event: any) {
     }    
 
+    public touchStartHandler(event: any) {
+    }
+
+    public touchEndHandler(event: any) {
+    }
+
+    public touchMoveHandler(event: any) {
+    }
+
+
 }

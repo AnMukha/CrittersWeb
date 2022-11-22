@@ -39,7 +39,7 @@ export class ArticleComponent implements OnInit {
                     this.world.AddCell(data[i], data[i + 1]);
                 this.zeroTimeController.setThisTimeAsZero();                
                 setInterval(() =>
-                    this.world.notifyAboutChanges(WorldCangesType.loaded));
+                    this.world.notifyAboutChanges([WorldCangesType.loaded]));
             });
         });
     }

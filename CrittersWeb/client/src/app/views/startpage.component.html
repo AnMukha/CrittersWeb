@@ -1,6 +1,6 @@
-﻿<div class="container-fluid vh-100 bg-light">
-    <header class="container-fluid bg-light">
-        <nav class="navbar navbar-expand-lg navbar-light fs-4" style="background-color: #e3f2fd;">
+﻿<div class="container-fluid vh-100 p-0" style="background: rgb(79, 90, 110)">
+    <header class="container-fluid" style="background-color: rgb(48, 59, 68)">
+        <nav class="navbar navbar-expand-lg navbar-dark fs-4" style="background-color: rgb(48, 59, 68); color: white;">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,16 +20,15 @@
                             <a class="nav-link" routerLink="/play">Game</a>
                         </li>
                     </ul>
-                    <label *ngIf="userInfo.signedIn" class="text-body me-2 fs-5">User: {{userInfo.email}}</label>
-                    <button *ngIf="userInfo.signedIn" class="btn btn-outline-primary my-2 my-sm-0" type="submit" (click)="Logout()">Logout</button>
-                    <button *ngIf="!userInfo.signedIn" class="btn btn-outline-primary my-2 my-sm-0" type="submit" (click)="Login()">Login</button>
+                    <label *ngIf="userInfo.signedIn" class="text-light me-3 fs-5">{{userInfo.name}}</label>
+                    <button *ngIf="userInfo.signedIn" class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="Logout()"><i class="fas fa-sign-out me-2"></i>Logout</button>
+                    <button *ngIf="!userInfo.signedIn" class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="Login()"><i class="fas fa-sign-in me-2"></i>Login</button>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="container-fluid">
-        <br>
+    <div class="container-fluid p-4" style="color: white">        
         Critters is defined on a two-dimensional infinite grid of cells, which may be identified with the integer lattice. As in Conway's Game of Life, at any point in time each cell may be in one of two states: alive or dead. The Critters rule is a block cellular automaton using the Margolus neighborhood. This means that, at each step, the cells of the automaton are partitioned into 2 × 2 blocks and each block is updated independently of the other blocks. The center of a block at one time step becomes the corner of four blocks at the next time step, and vice versa; in this way, the four cells in each block belong to four different 2 × 2 blocks of the previous partition.
         <br> (Wikipedia)
     </div>

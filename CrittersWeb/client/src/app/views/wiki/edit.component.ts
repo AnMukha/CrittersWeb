@@ -39,13 +39,13 @@ export class EditArticleComponent implements OnInit {
                     for (let i = 0; i < data.length ; i = i + 2)
                         this.world.AddCell(data[i], data[i + 1]);
                     this.zeroTimeController.setThisTimeAsZero();                    
-                    setInterval(() =>
-                        this.world.notifyAboutChanges(WorldCangesType.loaded));
+                    setTimeout(() =>
+                        this.world.notifyAboutChanges([WorldCangesType.loaded]));
                 });
             else {                    
                 this.isNew = true;
                 this.world.Clear();
-                this.world.notifyAboutChanges(WorldCangesType.loaded);
+                this.world.notifyAboutChanges([WorldCangesType.loaded]);
             }
         });
     }
@@ -60,12 +60,17 @@ export class EditArticleComponent implements OnInit {
         this.article.cellsData = cellsData;
         if (this.isNew) {
             let newArticle = await lastValueFrom(await this.http.post<ArticleModel>("/article/new", this.article));
-            if (newArticle)
+            if (newArticle) {
+                this.world.resetModificationFlag();
                 this.router.navigateByUrl("/wiki/article/" + newArticle.id);
+            }
         }
         else {
-            await lastValueFrom(await this.http.put<ArticleModel>("/article/update", this.article));
-            this.router.navigateByUrl("/wiki/article/" + this.article.id);
+            var saved = await lastValueFrom(await this.http.put<ArticleModel>("/article/update", this.article));
+            if (saved) {
+                this.world.resetModificationFlag();
+                this.router.navigateByUrl("/wiki/article/" + this.article.id);
+            }
         }        
     }
 
@@ -80,6 +85,14 @@ export class EditArticleComponent implements OnInit {
     public OnApprove() {
         console.log("/article/approve/" + this.article.id);
         this.http.put("/article/approve/" + this.article.id, null).subscribe(() => { });
+    }
+
+    public exitConfirmRequired(): boolean {
+        return this.world.wasModified();
+    }
+
+    public getExitConfirmText(): string | undefined {
+        return "There are unsaved changes. Do you really want to leave this article page?";
     }
 
     public OnPublish() {

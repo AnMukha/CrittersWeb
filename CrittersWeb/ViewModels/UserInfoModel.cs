@@ -7,7 +7,7 @@ namespace CrittersWeb.ViewModels
 {
     public class UserInfoModel
     {
-        public string Email { get; set; }
+        public string Name { get; set; }
         public bool SignedIn { get; set; }
     }
 }

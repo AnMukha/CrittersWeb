@@ -8,15 +8,15 @@ export class CrittersWorld {
     constructor() {
     }
 
-    cells: Map<number, Cell> = new Map<number, Cell>();    
+    private cells: Map<number, Cell> = new Map<number, Cell>();    
 
-    stepNum: number = 1;
+    private stepNum: number = 1;
+    private forward: boolean = true;
+    private modified: boolean = false;
 
-    forward: boolean = true;
-
-    nextCellKey: number = 0;
-
-    private changesSubject: Subject<WorldCangesType> = new Subject();
+    private nextCellKey: number = 0;
+    
+    private changesSubject: Subject<WorldCangesType[]> = new Subject();    
 
     public AddCell(x: number, y: number): Cell {
         let key = x * Cell.KEY_GEN_FACTOR + y;
@@ -24,17 +24,31 @@ export class CrittersWorld {
         this.cells.set(key, resultCell);
         return resultCell;
     }
-   
+
+    public getCells(): IterableIterator<Cell> {
+        return this.cells.values();
+    }
+
     private NextCellKey(): number {
         this.nextCellKey++;
         return this.nextCellKey;
     }
 
-    public notifyAboutChanges(changesType: WorldCangesType) {
-        this.changesSubject.next(changesType);
+    public notifyAboutChanges(changeTypes: WorldCangesType[]) {
+        if (changeTypes.includes(WorldCangesType.cellsEditing))
+            this.modified = true;
+        this.changesSubject.next(changeTypes);
     }
 
-    public subscribeToChanges(next: (value: WorldCangesType) => void) {
+    public resetModificationFlag() {
+        this.modified = false;
+    }
+
+    public wasModified(): boolean {
+        return this.modified;
+    }
+
+    public subscribeToChanges(next: (value: WorldCangesType[]) => void) {
         this.changesSubject.subscribe(next);
     }
             
@@ -72,6 +86,10 @@ export class CrittersWorld {
         else
             this.stepNum++;
         this.forward = !this.forward;
+    }
+
+    public isForwardTimeDirection() {
+        return this.forward;
     }
 
     private Run() {
@@ -292,8 +310,7 @@ export class CrittersWorldSerializer {
 
     public SerializeCells(w: CrittersWorld): number[] {
         let result = [];
-        for (let cellD of w.cells.entries()) {
-            let c = cellD[1];
+        for (let c of w.getCells()) {            
             result.push(c.x);
             result.push(c.y);
         }
@@ -376,10 +393,17 @@ export class CPoint {
     }
     public X: number;
     public Y: number;
+
+    public dist(p: CPoint) {
+        return Math.sqrt((this.X - p.X) * (this.X - p.X) + (this.Y - p.Y) * (this.Y - p.Y));
+    }
+
 }
 
 export enum WorldCangesType {
-    edited,
+    cellsEditing,
+    frameChanging,
+    toolsChanging,
     loaded,
     executed
 }

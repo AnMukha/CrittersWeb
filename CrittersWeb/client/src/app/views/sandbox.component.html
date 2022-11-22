@@ -1,9 +1,9 @@
 <div style="background: black; height: 100vh; display: grid;
        grid-template-rows: max-content auto;">
-    <div style="background-color: #e3f2fd; ">
-        <button class="btn btn-outline-primary m-1" routerLink="/home">Home</button>
-        <button class="btn btn-outline-primary m-1" (click)="onSaveButton()">Save</button>
-        <button class="btn btn-outline-primary m-1" (click)="onLoadButton()">Load</button>
+    <div style="background: rgb(48, 59, 68); color: white; ">
+        <button class="btn btn-outline-light m-2" routerLink="/home"><i class="fas fa-home"></i> Home</button>
+        <button class="btn btn-outline-light m-2" (click)="onSaveButton()">Save</button>
+        <button class="btn btn-outline-light m-2" (click)="onLoadButton()">Load</button>
     </div>
     <div style="background-color: white; position: relative; overflow: hidden">
         <app-critters-canvas></app-critters-canvas>
@@ -33,12 +33,15 @@
                     <div #titleinput class="input-group mb-3">
                         <input #nameInput type="text" class="form-control" placeholder="World name" aria-label="Recipient's username" aria-describedby="basic-addon2"
                                value={{savePopup.saveName}}
+                               [disabled]="savePopup.selectedSave==null"
                                (input)="savePopup.saveName = nameInput.value">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary"
-                            (click)="savePopup.onPopupOk()">
+                            (click)="savePopup.onPopupOk()"
+                            [disabled]="savePopup.selectedSave==null"
+                            >
                         Save
                     </button>
                     <button type="button" class="btn btn-primary"
@@ -69,7 +72,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary"
-                            (click)="loadPopup.onPopupOk()">
+                            (click)="loadPopup.onPopupOk()"
+                            [disabled]="loadPopup.selectedLoad==null || loadPopup.selectedLoad.id == -1">
                         Load
                     </button>
                     <button type="button" class="btn btn-primary"
@@ -84,15 +88,3 @@
 
 </div>
 
-<!--
-<div style="background: black; height: 100vh; display: flex; flex-direction: column; align-items: stretch">
-    <div style="background-color:aquamarine; min-height: 60px">
-        panel 1
-    </div>    
-    <div style="background-color: coral; height: 100%; position: relative; overflow: hidden">        
-        <div style="background-color: burlywood">            
-            <div style="position: absolute; right:100px; bottom: 50px">ssssssssssssss</div>
-        </div>
-    </div>
-</div> 
-    !-->

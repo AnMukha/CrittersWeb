@@ -9,6 +9,9 @@ import { CrittersView } from '../critters/CrittersView';
 import { ComponentContainerDirective } from './component-container.directive';
 import { CTimeController } from '../critters/CTimeController';
 import { ZeroTimeController } from '../critters/ZeroTimeController';
+import { LoginService } from '../services/login.service';
+import { LoginComponent } from './login.component';
+import { RegistrationComponent } from './registration.component';
 
 @Component({
     selector: 'app-sandbox',
@@ -17,15 +20,13 @@ import { ZeroTimeController } from '../critters/ZeroTimeController';
     ],
     providers: [CrittersWorld, CEditController, CEditModel, CrittersView, CTimeController, ZeroTimeController]
 })
-export class SandboxComponent implements OnInit {    
+export class SandboxComponent implements OnInit {
 
-    constructor(private http: HttpClient, private router: Router, private world: CrittersWorld, private zeroTimeController: ZeroTimeController) {
-    }    
-    view!: CrittersView;
-    editController!: CEditController;
-    editModel!: CEditModel;
+    constructor(private http: HttpClient, private router: Router, private world: CrittersWorld,
+        private zeroTimeController: ZeroTimeController, private loginService: LoginService) {
+    }        
 
-    // --------------------------------------------------------------
+    // --------------------------------------------------------------    
 
     savePopup: SavePopup = new SavePopup();
 
@@ -33,36 +34,62 @@ export class SandboxComponent implements OnInit {
 
     @ViewChild(ComponentContainerDirective, { static: true }) dialogsHost!: ComponentContainerDirective;    
 
-    onSaveButton() {
-        this.savePopup.open(this.http, this.world);
+    public async onSaveButton() {
+        if ((await this.loginService.getCurrentUserInfo(false)).signedIn)
+            this.savePopup.open(this.http, this.world);
+        else {
+            this.dialogsHost.showLoginDialog(async (result) => {
+                if (result == "ok")
+                    if ((await this.loginService.getCurrentUserInfo(false)).signedIn)
+                        this.savePopup.open(this.http, this.world);
+            });
+        }        
     }
 
-    onLoadButton() {
-        this.loadPopup.open(this.http, (w) => this.deserializeWorld(w));
+    public async onLoadButton() {
+        if ((await this.loginService.getCurrentUserInfo(false)).signedIn)            
+            this.loadPopup.open(this.http, (w) => this.deserializeWorld(w));
+        else {
+            this.dialogsHost.showLoginDialog(async (result) => {
+                if (result == "ok")
+                    if ((await this.loginService.getCurrentUserInfo(false)).signedIn)
+                        this.loadPopup.open(this.http, (w) => this.deserializeWorld(w));
+            });
+        }                
     }
 
-    deserializeWorld(data: number[]) {
+    private deserializeWorld(data: number[]) {
         this.world.Clear();        
         for (let i = 0; i < data.length; i = i + 2) {
             console.log("add cell", data[i], data[i + 1]);
             this.world.AddCell(data[i], data[i + 1]);
         }
         this.zeroTimeController.setThisTimeAsZero();
-        this.world.notifyAboutChanges(WorldCangesType.loaded);
+        this.world.resetModificationFlag();
+        this.world.notifyAboutChanges([WorldCangesType.loaded]);
     }
 
     ngOnInit(): void {                
         this.world.TestInit();
         this.zeroTimeController.setThisTimeAsZero();
-        this.world.notifyAboutChanges(WorldCangesType.edited);
+        this.world.notifyAboutChanges([WorldCangesType.loaded]);
         console.log("sandbox ngOnInit()")
     }
 
-    onNext() {
+    public onNext() {
         console.log("onNext");
         this.world.RunSerie(1);
-        this.world.notifyAboutChanges(WorldCangesType.executed);
+        this.world.notifyAboutChanges([WorldCangesType.executed]);
     }
+
+    public getExitConfirmText(): string | undefined {
+        return "There are unsaved changes. Do you really want to leave Sandbox?";
+    }
+
+    public exitConfirmRequired() {
+        return this.world.wasModified();
+    }    
+
 
 }
 
@@ -86,10 +113,11 @@ class SavePopup {
         this.world = world;
         this.titles = [];
         this.saveName = "";
+        this.selectedSave = null;
         http.get<SandboxWorldTitleModel[]>("/sandboxworlds/titles").subscribe(titles => {
             this.titles = this.ToSlotList(titles);
         });
-        this.savePopupDisplayStyle = "block";
+        this.savePopupDisplayStyle = "block";        
     }
 
     ToSlotList(titles: SandboxWorldTitleModel[]): SandboxWorldTitleModel[] {
@@ -118,14 +146,17 @@ class SavePopup {
         // save current world to slot        
         this.selectedSave!.name = this.saveName;
         //this.selectedSave!.data = this.world.Serialize();
-        await this.SaveWorld(this.selectedSave).then(() => console.log("saved"));
+        await this.SaveWorld(this.selectedSave);
         console.log("after save");
     }
 
-    SaveWorld(worldTitle: SandboxWorldTitleModel | null) {
+    async SaveWorld(worldTitle: SandboxWorldTitleModel | null) {
         let s = new CrittersWorldSerializer();
         let cellsData = s.SerializeCells(this.world);
-        return lastValueFrom(this.http.post("/sandboxworlds/savetoslot", { slot: worldTitle?.slot, newName: worldTitle?.name, cellsData: cellsData }));
+        let result = await lastValueFrom(this.http.post("/sandboxworlds/savetoslot", { slot: worldTitle?.slot, newName: worldTitle?.name, cellsData: cellsData }));
+        console.log(result);
+        if (result)
+            this.world.resetModificationFlag();
     }
 
 }
@@ -142,7 +173,8 @@ class LoadPopup {
     open(http: HttpClient, resultCallback: (cellsData: number[]) => void) {    
         this.http = http;
         this.resultCallback = resultCallback;
-        this.titles = [];        
+        this.titles = [];   
+        this.selectedLoad = null;
         http.get<SandboxWorldTitleModel[]>("/sandboxworlds/titles").subscribe(titles => {
             this.titles = this.ToSlotList(titles);
         });
@@ -159,11 +191,7 @@ class LoadPopup {
     }
 
     onSlotSelect(slot: any) {
-        this.selectedLoad = this.titles[slot - 1];
-        console.log("onSlotSelect", slot);
-        if (this.selectedLoad != null && this.selectedLoad != undefined) {
-            // enable buttons
-        }
+        this.selectedLoad = this.titles[slot - 1];        
     }
 
     close() {

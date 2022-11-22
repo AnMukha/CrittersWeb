@@ -16,11 +16,10 @@ export class StartpageComponent implements OnInit {
 
   @ViewChild(ComponentContainerDirective, { static: true }) dialogsHost!: ComponentContainerDirective;
 
-    userInfo: UserInfo = { email: "", signedIn: false };
-;
+    userInfo: UserInfo = { name: "", signedIn: false };
 
     async ngOnInit() {
-        this.userInfo = await this.loginService.getCurrentUserInfo();
+        this.userInfo = await this.loginService.getCurrentUserInfo(false);
         console.log(this.userInfo);
     }
 
@@ -34,14 +33,14 @@ export class StartpageComponent implements OnInit {
                     this.dialogsHost.viewContainerRef.clear();
                 });
             }
-            this.userInfo = await this.loginService.getCurrentUserInfo();
+            this.userInfo = await this.loginService.getCurrentUserInfo(false);
         }
         );        
     }
 
     async Logout() {
         await this.loginService.Logout();
-        this.userInfo = await this.loginService.getCurrentUserInfo();
+        this.userInfo = await this.loginService.getCurrentUserInfo(false);
     }
 
 }

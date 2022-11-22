@@ -29,7 +29,7 @@ export class TimeControlPanelComponent implements OnInit {
 
     onStepOrStop() {
         if (this.speed == 0) {
-            if (this.world.IsZeroTime() && this.world.forward)
+            if (this.world.IsZeroTime() && this.world.isForwardTimeDirection())
                   this.zeroTimeController.setThisTimeAsZero();
             this.timeController.step();
         }

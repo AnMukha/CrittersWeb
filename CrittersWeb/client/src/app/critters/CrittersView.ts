@@ -15,8 +15,7 @@ export class CrittersView {
         this.PaintGrid(ctx!);
 
         ctx!.fillStyle = "green";
-        for (let c_e of this.world.cells.entries()) {
-            let c = c_e[1];
+        for (let c of this.world.getCells()) {            
             let x = this.editModel.CellXToScr(c.x);
             let y = this.editModel.CellYToScr(c.y);
             if (x < canvas.width && x > 0 - this.editModel.scale
