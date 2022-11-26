@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
-import { CEditController } from '../critters/CEditController';
+import { CEditController } from '../critters/CEditController/CEditController';
 import { CEditModel } from '../critters/CEditModel';
 import { CrittersWorld, CrittersWorldSerializer, WorldCangesType } from '../critters/CrittersWorld';
 import { CrittersView } from '../critters/CrittersView';
@@ -12,6 +12,7 @@ import { ZeroTimeController } from '../critters/ZeroTimeController';
 import { LoginService } from '../services/login.service';
 import { LoginComponent } from './login.component';
 import { RegistrationComponent } from './registration.component';
+import { count } from 'rxjs';
 
 @Component({
     selector: 'app-sandbox',
@@ -30,29 +31,36 @@ export class SandboxComponent implements OnInit {
 
     savePopup: SavePopup = new SavePopup();
 
-    loadPopup: LoadPopup = new LoadPopup();
+    loadPopup: LoadPopup = new LoadPopup();    
 
     @ViewChild(ComponentContainerDirective, { static: true }) dialogsHost!: ComponentContainerDirective;    
 
+    ngOnInit(): void {
+        this.world.TestInit();
+        this.zeroTimeController.setThisTimeAsZero();
+        this.world.notifyAboutChanges([WorldCangesType.loaded]);
+        console.log("sandbox ngOnInit()")        
+    }
+
     public async onSaveButton() {
-        if ((await this.loginService.getCurrentUserInfo(false)).signedIn)
+        if ((await this.loginService.getUserInfo()).signedIn)
             this.savePopup.open(this.http, this.world);
         else {
             this.dialogsHost.showLoginDialog(async (result) => {
                 if (result == "ok")
-                    if ((await this.loginService.getCurrentUserInfo(false)).signedIn)
+                    if ((await this.loginService.getUserInfo()).signedIn)
                         this.savePopup.open(this.http, this.world);
             });
         }        
     }
 
     public async onLoadButton() {
-        if ((await this.loginService.getCurrentUserInfo(false)).signedIn)            
+        if ((await this.loginService.getUserInfo()).signedIn)            
             this.loadPopup.open(this.http, (w) => this.deserializeWorld(w));
         else {
             this.dialogsHost.showLoginDialog(async (result) => {
                 if (result == "ok")
-                    if ((await this.loginService.getCurrentUserInfo(false)).signedIn)
+                    if ((await this.loginService.getUserInfo()).signedIn)
                         this.loadPopup.open(this.http, (w) => this.deserializeWorld(w));
             });
         }                
@@ -69,12 +77,6 @@ export class SandboxComponent implements OnInit {
         this.world.notifyAboutChanges([WorldCangesType.loaded]);
     }
 
-    ngOnInit(): void {                
-        this.world.TestInit();
-        this.zeroTimeController.setThisTimeAsZero();
-        this.world.notifyAboutChanges([WorldCangesType.loaded]);
-        console.log("sandbox ngOnInit()")
-    }
 
     public onNext() {
         console.log("onNext");

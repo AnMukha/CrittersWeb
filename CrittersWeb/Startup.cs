@@ -23,9 +23,9 @@ namespace CrittersWeb
         {
             services.AddIdentity<GameUser, IdentityRole>(cfg =>
             {
-                cfg.User.RequireUniqueEmail = true;                
-            })
-                .AddEntityFrameworkStores<CrittersContext>();
+                cfg.User.RequireUniqueEmail = true;
+            }).AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<CrittersContext>();            
             services.AddDbContext<CrittersContext>();
             services.AddScoped<ISandBoxWorldsRepository, SandBoxWorldsRepository>();
             services.AddScoped<ArticlesRepository, ArticlesRepository>();
@@ -36,7 +36,8 @@ namespace CrittersWeb
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {                        
+        {           
+            
             var options = new DefaultFilesOptions();                        
             options.DefaultFileNames.Add("client/index.html");
             app.UseDefaultFiles(options);

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ArticleModel } from './article.component';
+import { ArticleModel, ArticleStatus } from './article.component';
 
 @Component({
   selector: 'app-articles',
@@ -29,7 +29,21 @@ export class ArticlesComponent implements OnInit {
                     this.articles = articles;
                 });
         });
-  }
+    }
+
+    getArticleStatusDesc(st: ArticleStatus) {
+        if (st == ArticleStatus.draft)
+            return "(Draft)"
+        else if (st == ArticleStatus.archival)
+            return "(In archive)"
+        else if (st == ArticleStatus.awaitingApproval)
+            return "(Awaiting moderation)"
+        else if (st == ArticleStatus.regected)
+            return "(Adjustment required)"
+        else return "";
+    }
+
+
 }
 
 class ArticleTitleModel {
@@ -38,4 +52,5 @@ class ArticleTitleModel {
     shortContent!: string;
     author!: string;
     editionDate!: Date;
+    status!: ArticleStatus;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CEditController } from '../CEditController';
+import { bufferTime } from 'rxjs';
+import { CEditController } from '../CEditController/CEditController';
 import { CEditModel } from '../CEditModel';
 import { CrittersView } from '../CrittersView';
 import { CrittersWorld } from '../CrittersWorld';
@@ -20,10 +21,10 @@ export class CrittersCanvasComponent implements OnInit {
 
     ngOnInit(): void {
         this._canvas = document.getElementById("c_canvas") as HTMLCanvasElement;
-        this.crittersWorld.subscribeToChanges((n) => this.crittersView.paint(this._canvas));
-        this.editModel.subscribeToChanges((n) => this.crittersView.paint(this._canvas));
+        this.crittersWorld.changesSubject.pipe(bufferTime(1 / 50.0)).subscribe((n) => this.crittersView.paint(this._canvas));
+        this.editModel.changesSubject.pipe(bufferTime(1 / 50.0)).subscribe((n) => this.crittersView.paint(this._canvas));
         this.crittersView.paint(this._canvas)
-    }
+    }    
 
     onResized(event: any) {
         this.crittersView.paint(this._canvas);

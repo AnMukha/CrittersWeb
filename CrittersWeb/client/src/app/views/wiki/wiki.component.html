@@ -6,19 +6,29 @@
     </div>
     <div style="background: rgb(48, 59, 68); grid-area: header2; color: white; position: relative">
         <div class="input-group mt-2 float-start" style="width: 400px">
-            <input #searchInput class="form-control" placeholder="something to find" aria-label="Find" aria-describedby="basic-addon2">
+            <input #searchInput class="form-control" placeholder="find an article" aria-label="Find" aria-describedby="basic-addon2">
             <button class="btn btn-outline-secondary" type="button" (click)="OnSearch(searchInput.value)"><i class="fas fa-search"></i></button>
         </div>
-        <button class="btn btn-success m-2 float-end" style="grid-area: header2" routerLink="edit/new">Create article</button>
+        <button class="btn btn-success m-2 float-end" style="grid-area: header2" (click)="onCreateArticle()">Create article</button>
     </div>
     <div style="background: rgb(79, 90, 110); width: 200px; grid-area: menu; color: white ">
         <a routerLink='article/Contents' class="link-light m-3" style="display: block">Contents</a>
         <a routerLink='article/Random' class="link-light m-3" style="display: block">Random article</a>
         <a routerLink='articles/All' class="link-light m-3" style="display: block">All articles</a>
         <a routerLink='articles/My' class="link-light m-3" style="display: block">My articles</a>
+        <a *ngIf="userInfo?.admin" routerLink='articles/Moderation' class="link-light m-3" style="display: block">Moderation</a>
+        <a *ngIf="userInfo?.admin" routerLink='articles/Archive' class="link-light m-3" style="display: block">Archive</a>
+        <a *ngIf="userInfo?.admin" routerLink='articles/Drafts' class="link-light m-3" style="display: block">Drafts</a>
         <a routerLink='article/About' class="link-light m-3" style="display: block">About investigations</a>
     </div>
     <div style="background: white; grid-area: workArea; position: relative">
         <router-outlet></router-outlet>
     </div>
+
+    <div style="position: fixed">
+        <ng-template component-container style="position: fixed"></ng-template>
+    </div>
+
 </div>
+
+

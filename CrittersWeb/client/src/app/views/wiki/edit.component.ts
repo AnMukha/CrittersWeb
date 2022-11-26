@@ -6,10 +6,11 @@ import { lastValueFrom } from 'rxjs';
 import { CrittersWorld, CrittersWorldSerializer, WorldCangesType } from '../../critters/CrittersWorld';
 import { CEditModel } from '../../critters/CEditModel';
 import { CrittersView } from '../../critters/CrittersView';
-import { CEditController } from '../../critters/CEditController';
+import { CEditController } from '../../critters/CEditController/CEditController';
 import { CTimeController } from '../../critters/CTimeController';
 import { CWorldSnapshot } from '../../critters/CWorldSnapshot';
 import { ZeroTimeController } from '../../critters/ZeroTimeController';
+import { ArticleStatus } from './article.component';
 
 @Component({
   selector: 'app-edit-article',
@@ -44,6 +45,8 @@ export class EditArticleComponent implements OnInit {
                 });
             else {                    
                 this.isNew = true;
+                this.article.name = ""; ;
+                this.article.content = "";
                 this.world.Clear();
                 this.world.notifyAboutChanges([WorldCangesType.loaded]);
             }
@@ -51,10 +54,17 @@ export class EditArticleComponent implements OnInit {
     }
 
     public async OnSave(name: string, text: string) {
-        console.log(name, text);        
+        await this.save(name, text, ArticleStatus.draft);
+    }
+
+    public async OnPublish(name: string, text: string) {
+        await this.save(name, text, ArticleStatus.awaitingApproval);
+    }
+
+    public async save(name: string, text: string, status: ArticleStatus) {
         this.article.content = text;
         this.article.name = name;
-        this.article.status = 0;        
+        this.article.status = status;
         let s = new CrittersWorldSerializer();
         let cellsData = s.SerializeCells(this.world);
         this.article.cellsData = cellsData;
@@ -73,6 +83,7 @@ export class EditArticleComponent implements OnInit {
             }
         }        
     }
+
 
     public OnDelete() {
         console.log("/article/delete/" + this.article.id);
@@ -95,9 +106,6 @@ export class EditArticleComponent implements OnInit {
         return "There are unsaved changes. Do you really want to leave this article page?";
     }
 
-    public OnPublish() {
-
-    }
 }
 
 export class ArticleModel {
@@ -110,5 +118,5 @@ export class ArticleModel {
     creationDate!: string;
     lastEditionDate!: string;
     approvalDate!: string;
-    status!: Number;
+    status!: ArticleStatus;
 }

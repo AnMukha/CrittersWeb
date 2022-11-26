@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +10,8 @@ import { lastValueFrom } from 'rxjs';
   ]
 })
 export class LoginComponent implements OnInit {
-    
-    constructor(private http: HttpClient) { }
+
+    constructor(private http: HttpClient, private loginService: LoginService) { }
 
     @Output() result = new EventEmitter<string>();
 
@@ -19,9 +20,8 @@ export class LoginComponent implements OnInit {
     ngOnInit(): void {
     }    
 
-    async onOkButton(emailOrName: string, password: string) {        
-        let isEmail = emailOrName.indexOf('@') != -1;
-        let res = await lastValueFrom(this.http.post("/account/Login", { UserName: isEmail ? null : emailOrName, Mail: isEmail ? emailOrName: null, Password: password }));
+    async onOkButton(emailOrName: string, password: string) {
+        var res = await this.loginService.Login(emailOrName, password);        
         console.log(res);
         if (res)
             this.result.emit("ok");

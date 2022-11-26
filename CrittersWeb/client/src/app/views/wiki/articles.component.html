@@ -1,7 +1,9 @@
 <div class="p-2" *ngFor="let article of articles">
     <i class="fas fa-user"></i>
     <p style="display: inline; margin-left: 6px"><b>{{article.author}}</b></p>
-    <p style="display: inline; margin-left: 6px" class="text-muted">{{article.editionDate | date:'YYYY-MM-dd hh:mm:ss'}}</p><br>
+    <p style="display: inline; margin-left: 6px" class="text-muted">{{article.editionDate | date:'YYYY-MM-dd hh:mm:ss'}}</p>
+    <p style="display: inline; margin-left: 6px">{{getArticleStatusDesc(article.status)}}</p>
+    <br>
     <a routerLink="/wiki/article/{{article.id}}" class="link-primary">{{article.name?article.name:"no name" }}</a>
     <p class="text-muted"><small>{{article.shortContent}}</small></p>
     <hr>

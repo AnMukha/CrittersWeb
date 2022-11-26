@@ -18,7 +18,7 @@ namespace CrittersWeb.Data.Repositories
 
         public Article GetById(int id)
         {
-            return _dbContext.Articles.Find(id);
+            return _dbContext.Articles.Where(a=>a.Id==id).Include(a => a.Author).FirstOrDefault();
         }
 
         public Article Add(Article article)
@@ -46,12 +46,12 @@ namespace CrittersWeb.Data.Repositories
 
         public Article[] GetArticles(int[] articlesId)
         {
-            return _dbContext.Articles.Where(a => articlesId.Contains(a.Id)).Include(a => a.Author).ToArray();
+            return _dbContext.Articles.Where(a => articlesId.Contains(a.Id)).ToArray();
         }
 
-        public Article[] GetAll(int pageNum, int pageSize)
+        public Article[] GetAll(int pageNum, int pageSize, ArticleStatus status)
         {
-            return _dbContext.Articles.Include(a => a.Author).ToArray();
+            return _dbContext.Articles.Where(a=>a.Status == status).Include(a => a.Author).ToArray();
         }
 
         public bool Delete(int id)
@@ -68,7 +68,7 @@ namespace CrittersWeb.Data.Repositories
 
         public Article[] GetUserArticles(string userId)
         {
-            return _dbContext.Articles.Where(a=>a.Author.Id == userId).Include(a => a.Author).ToArray();
+            return _dbContext.Articles.Where(a => a.Author.Id == userId).Include(a => a.Author).ToArray();
         }
 
         public void Save()
@@ -76,6 +76,10 @@ namespace CrittersWeb.Data.Repositories
             _dbContext.SaveChanges();
         }
 
+        internal Article GetByName(string name)
+        {
+            return _dbContext.Articles.Where(a => a.Name == name).Include(a => a.Author).FirstOrDefault();
+        }
     }
 
 }

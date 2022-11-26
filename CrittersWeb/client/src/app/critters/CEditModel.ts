@@ -10,11 +10,7 @@ export class CEditModel {
     Y: number = 0;
     gridActual: boolean = false;    
 
-    changesSubject: Subject<number> = new Subject();
-
-    public subscribeToChanges(next: (value: number) => void) {
-        this.changesSubject.subscribe(next);
-    }
+    public readonly changesSubject: Subject<number> = new Subject();
 
     CellXToScr(x: number): number {
         return (x - this.X) * this.scale;

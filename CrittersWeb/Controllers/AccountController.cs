@@ -23,10 +23,11 @@ namespace CrittersWeb.Controllers
         [HttpGet]
         public ActionResult<UserInfoModel> UserInfo()
         {
-            return new UserInfoModel() 
-            { 
+            return new UserInfoModel()
+            {
                 SignedIn = User.Identity.IsAuthenticated,
-                Name = User.Identity.Name
+                Name = User.Identity.Name,
+                Admin = User.IsInRole("Admin")
             };
         }
 
@@ -70,7 +71,7 @@ namespace CrittersWeb.Controllers
         {
             var newUser = new GameUser();
             newUser.Email = m.Mail;
-            newUser.UserName = m.UserName;
+            newUser.UserName = m.UserName;            
             var result = await _signInManager.UserManager.CreateAsync(newUser, m.Password);
             return new RegistrationResultModel() { Success = result.Succeeded, ErrorDescription = result.Errors.FirstOrDefault()?.Description };
         }

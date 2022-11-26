@@ -14,14 +14,14 @@ export class TimeControlPanelComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.timeController.onZeroState(() => {
+        /*this.timeController.onZeroState(() => {
             this.speed = 0;
             this.timeController.setSpeed(0)
         }
-        );
+        );*/
     }
 
-    readonly MAX_SPEED = 100;
+    readonly MAX_SPEED = 1030;
 
     public speed: number = 0;
 
@@ -29,8 +29,6 @@ export class TimeControlPanelComponent implements OnInit {
 
     onStepOrStop() {
         if (this.speed == 0) {
-            if (this.world.IsZeroTime() && this.world.isForwardTimeDirection())
-                  this.zeroTimeController.setThisTimeAsZero();
             this.timeController.step();
         }
         else {

@@ -5,6 +5,7 @@ import { CWorldSnapshot } from "./CWorldSnapshot";
 
 @Injectable()
 export class CrittersWorld {
+    
     constructor() {
     }
 
@@ -16,7 +17,7 @@ export class CrittersWorld {
 
     private nextCellKey: number = 0;
     
-    private changesSubject: Subject<WorldCangesType[]> = new Subject();    
+    public readonly changesSubject: Subject<WorldCangesType[]> = new Subject();    
 
     public AddCell(x: number, y: number): Cell {
         let key = x * Cell.KEY_GEN_FACTOR + y;
@@ -47,10 +48,6 @@ export class CrittersWorld {
     public wasModified(): boolean {
         return this.modified;
     }
-
-    public subscribeToChanges(next: (value: WorldCangesType[]) => void) {
-        this.changesSubject.subscribe(next);
-    }
             
     // Очистить клетку, если занята        
     public ClearCell(x: number, y: number) {
@@ -67,6 +64,10 @@ export class CrittersWorld {
 
     public IsEvenStep(): boolean {
         return this.stepNum % 2 == 0;
+    }
+
+    public GetStepNum() {
+        return this.stepNum;
     }
 
     public RunSerie(stepCnt: number) {

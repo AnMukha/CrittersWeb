@@ -205,6 +205,33 @@ function isSubscriber(value) {
 
 /***/ }),
 
+/***/ 14:
+/*!**********************************************************!*\
+  !*** ./node_modules/rxjs/dist/esm/internal/Scheduler.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Scheduler": () => (/* binding */ Scheduler)
+/* harmony export */ });
+/* harmony import */ var _scheduler_dateTimestampProvider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scheduler/dateTimestampProvider */ 654);
+
+class Scheduler {
+  constructor(schedulerActionCtor, now = Scheduler.now) {
+    this.schedulerActionCtor = schedulerActionCtor;
+    this.now = now;
+  }
+
+  schedule(work, delay = 0, state) {
+    return new this.schedulerActionCtor(this, work).schedule(state, delay);
+  }
+
+}
+Scheduler.now = _scheduler_dateTimestampProvider__WEBPACK_IMPORTED_MODULE_0__.dateTimestampProvider.now;
+
+/***/ }),
+
 /***/ 228:
 /*!********************************************************!*\
   !*** ./node_modules/rxjs/dist/esm/internal/Subject.js ***!
@@ -1420,6 +1447,97 @@ class OperatorSubscriber extends _Subscriber__WEBPACK_IMPORTED_MODULE_0__.Subscr
 
 /***/ }),
 
+/***/ 186:
+/*!*********************************************************************!*\
+  !*** ./node_modules/rxjs/dist/esm/internal/operators/bufferTime.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bufferTime": () => (/* binding */ bufferTime)
+/* harmony export */ });
+/* harmony import */ var _Subscription__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Subscription */ 6078);
+/* harmony import */ var _util_lift__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/lift */ 1944);
+/* harmony import */ var _OperatorSubscriber__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./OperatorSubscriber */ 3945);
+/* harmony import */ var _util_arrRemove__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/arrRemove */ 9663);
+/* harmony import */ var _scheduler_async__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../scheduler/async */ 936);
+/* harmony import */ var _util_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/args */ 420);
+/* harmony import */ var _util_executeSchedule__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/executeSchedule */ 1817);
+
+
+
+
+
+
+
+function bufferTime(bufferTimeSpan, ...otherArgs) {
+  var _a, _b;
+
+  const scheduler = (_a = (0,_util_args__WEBPACK_IMPORTED_MODULE_0__.popScheduler)(otherArgs)) !== null && _a !== void 0 ? _a : _scheduler_async__WEBPACK_IMPORTED_MODULE_1__.asyncScheduler;
+  const bufferCreationInterval = (_b = otherArgs[0]) !== null && _b !== void 0 ? _b : null;
+  const maxBufferSize = otherArgs[1] || Infinity;
+  return (0,_util_lift__WEBPACK_IMPORTED_MODULE_2__.operate)((source, subscriber) => {
+    let bufferRecords = [];
+    let restartOnEmit = false;
+
+    const emit = record => {
+      const {
+        buffer,
+        subs
+      } = record;
+      subs.unsubscribe();
+      (0,_util_arrRemove__WEBPACK_IMPORTED_MODULE_3__.arrRemove)(bufferRecords, record);
+      subscriber.next(buffer);
+      restartOnEmit && startBuffer();
+    };
+
+    const startBuffer = () => {
+      if (bufferRecords) {
+        const subs = new _Subscription__WEBPACK_IMPORTED_MODULE_4__.Subscription();
+        subscriber.add(subs);
+        const buffer = [];
+        const record = {
+          buffer,
+          subs
+        };
+        bufferRecords.push(record);
+        (0,_util_executeSchedule__WEBPACK_IMPORTED_MODULE_5__.executeSchedule)(subs, scheduler, () => emit(record), bufferTimeSpan);
+      }
+    };
+
+    if (bufferCreationInterval !== null && bufferCreationInterval >= 0) {
+      (0,_util_executeSchedule__WEBPACK_IMPORTED_MODULE_5__.executeSchedule)(subscriber, scheduler, startBuffer, bufferCreationInterval, true);
+    } else {
+      restartOnEmit = true;
+    }
+
+    startBuffer();
+    const bufferTimeSubscriber = (0,_OperatorSubscriber__WEBPACK_IMPORTED_MODULE_6__.createOperatorSubscriber)(subscriber, value => {
+      const recordsCopy = bufferRecords.slice();
+
+      for (const record of recordsCopy) {
+        const {
+          buffer
+        } = record;
+        buffer.push(value);
+        maxBufferSize <= buffer.length && emit(record);
+      }
+    }, () => {
+      while (bufferRecords === null || bufferRecords === void 0 ? void 0 : bufferRecords.length) {
+        subscriber.next(bufferRecords.shift().buffer);
+      }
+
+      bufferTimeSubscriber === null || bufferTimeSubscriber === void 0 ? void 0 : bufferTimeSubscriber.unsubscribe();
+      subscriber.complete();
+      subscriber.unsubscribe();
+    }, undefined, () => bufferRecords = null);
+    source.subscribe(bufferTimeSubscriber);
+  });
+}
+
+/***/ }),
+
 /***/ 3158:
 /*!*********************************************************************!*\
   !*** ./node_modules/rxjs/dist/esm/internal/operators/catchError.js ***!
@@ -2560,6 +2678,279 @@ function scheduled(input, scheduler) {
 
   throw (0,_util_throwUnobservableError__WEBPACK_IMPORTED_MODULE_12__.createInvalidObservableTypeError)(input);
 }
+
+/***/ }),
+
+/***/ 733:
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs/dist/esm/internal/scheduler/Action.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Action": () => (/* binding */ Action)
+/* harmony export */ });
+/* harmony import */ var _Subscription__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Subscription */ 6078);
+
+class Action extends _Subscription__WEBPACK_IMPORTED_MODULE_0__.Subscription {
+  constructor(scheduler, work) {
+    super();
+  }
+
+  schedule(state, delay = 0) {
+    return this;
+  }
+
+}
+
+/***/ }),
+
+/***/ 198:
+/*!**********************************************************************!*\
+  !*** ./node_modules/rxjs/dist/esm/internal/scheduler/AsyncAction.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AsyncAction": () => (/* binding */ AsyncAction)
+/* harmony export */ });
+/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Action */ 733);
+/* harmony import */ var _intervalProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./intervalProvider */ 103);
+/* harmony import */ var _util_arrRemove__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/arrRemove */ 9663);
+
+
+
+class AsyncAction extends _Action__WEBPACK_IMPORTED_MODULE_0__.Action {
+  constructor(scheduler, work) {
+    super(scheduler, work);
+    this.scheduler = scheduler;
+    this.work = work;
+    this.pending = false;
+  }
+
+  schedule(state, delay = 0) {
+    var _a;
+
+    if (this.closed) {
+      return this;
+    }
+
+    this.state = state;
+    const id = this.id;
+    const scheduler = this.scheduler;
+
+    if (id != null) {
+      this.id = this.recycleAsyncId(scheduler, id, delay);
+    }
+
+    this.pending = true;
+    this.delay = delay;
+    this.id = (_a = this.id) !== null && _a !== void 0 ? _a : this.requestAsyncId(scheduler, this.id, delay);
+    return this;
+  }
+
+  requestAsyncId(scheduler, _id, delay = 0) {
+    return _intervalProvider__WEBPACK_IMPORTED_MODULE_1__.intervalProvider.setInterval(scheduler.flush.bind(scheduler, this), delay);
+  }
+
+  recycleAsyncId(_scheduler, id, delay = 0) {
+    if (delay != null && this.delay === delay && this.pending === false) {
+      return id;
+    }
+
+    if (id != null) {
+      _intervalProvider__WEBPACK_IMPORTED_MODULE_1__.intervalProvider.clearInterval(id);
+    }
+
+    return undefined;
+  }
+
+  execute(state, delay) {
+    if (this.closed) {
+      return new Error('executing a cancelled action');
+    }
+
+    this.pending = false;
+
+    const error = this._execute(state, delay);
+
+    if (error) {
+      return error;
+    } else if (this.pending === false && this.id != null) {
+      this.id = this.recycleAsyncId(this.scheduler, this.id, null);
+    }
+  }
+
+  _execute(state, _delay) {
+    let errored = false;
+    let errorValue;
+
+    try {
+      this.work(state);
+    } catch (e) {
+      errored = true;
+      errorValue = e ? e : new Error('Scheduled action threw falsy error');
+    }
+
+    if (errored) {
+      this.unsubscribe();
+      return errorValue;
+    }
+  }
+
+  unsubscribe() {
+    if (!this.closed) {
+      const {
+        id,
+        scheduler
+      } = this;
+      const {
+        actions
+      } = scheduler;
+      this.work = this.state = this.scheduler = null;
+      this.pending = false;
+      (0,_util_arrRemove__WEBPACK_IMPORTED_MODULE_2__.arrRemove)(actions, this);
+
+      if (id != null) {
+        this.id = this.recycleAsyncId(scheduler, id, null);
+      }
+
+      this.delay = null;
+      super.unsubscribe();
+    }
+  }
+
+}
+
+/***/ }),
+
+/***/ 744:
+/*!*************************************************************************!*\
+  !*** ./node_modules/rxjs/dist/esm/internal/scheduler/AsyncScheduler.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AsyncScheduler": () => (/* binding */ AsyncScheduler)
+/* harmony export */ });
+/* harmony import */ var _Scheduler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Scheduler */ 14);
+
+class AsyncScheduler extends _Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler {
+  constructor(SchedulerAction, now = _Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler.now) {
+    super(SchedulerAction, now);
+    this.actions = [];
+    this._active = false;
+  }
+
+  flush(action) {
+    const {
+      actions
+    } = this;
+
+    if (this._active) {
+      actions.push(action);
+      return;
+    }
+
+    let error;
+    this._active = true;
+
+    do {
+      if (error = action.execute(action.state, action.delay)) {
+        break;
+      }
+    } while (action = actions.shift());
+
+    this._active = false;
+
+    if (error) {
+      while (action = actions.shift()) {
+        action.unsubscribe();
+      }
+
+      throw error;
+    }
+  }
+
+}
+
+/***/ }),
+
+/***/ 936:
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs/dist/esm/internal/scheduler/async.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "async": () => (/* binding */ async),
+/* harmony export */   "asyncScheduler": () => (/* binding */ asyncScheduler)
+/* harmony export */ });
+/* harmony import */ var _AsyncAction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AsyncAction */ 198);
+/* harmony import */ var _AsyncScheduler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AsyncScheduler */ 744);
+
+
+const asyncScheduler = new _AsyncScheduler__WEBPACK_IMPORTED_MODULE_0__.AsyncScheduler(_AsyncAction__WEBPACK_IMPORTED_MODULE_1__.AsyncAction);
+const async = asyncScheduler;
+
+/***/ }),
+
+/***/ 654:
+/*!********************************************************************************!*\
+  !*** ./node_modules/rxjs/dist/esm/internal/scheduler/dateTimestampProvider.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "dateTimestampProvider": () => (/* binding */ dateTimestampProvider)
+/* harmony export */ });
+const dateTimestampProvider = {
+  now() {
+    return (dateTimestampProvider.delegate || Date).now();
+  },
+
+  delegate: undefined
+};
+
+/***/ }),
+
+/***/ 103:
+/*!***************************************************************************!*\
+  !*** ./node_modules/rxjs/dist/esm/internal/scheduler/intervalProvider.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "intervalProvider": () => (/* binding */ intervalProvider)
+/* harmony export */ });
+const intervalProvider = {
+  setInterval(handler, timeout, ...args) {
+    const {
+      delegate
+    } = intervalProvider;
+
+    if (delegate === null || delegate === void 0 ? void 0 : delegate.setInterval) {
+      return delegate.setInterval(handler, timeout, ...args);
+    }
+
+    return setInterval(handler, timeout, ...args);
+  },
+
+  clearInterval(handle) {
+    const {
+      delegate
+    } = intervalProvider;
+    return ((delegate === null || delegate === void 0 ? void 0 : delegate.clearInterval) || clearInterval)(handle);
+  },
+
+  delegate: undefined
+};
 
 /***/ }),
 

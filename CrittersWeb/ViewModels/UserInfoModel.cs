@@ -9,5 +9,6 @@ namespace CrittersWeb.ViewModels
     {
         public string Name { get; set; }
         public bool SignedIn { get; set; }
+        public bool Admin { get; set; }
     }
 }

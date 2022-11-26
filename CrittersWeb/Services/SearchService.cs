@@ -14,10 +14,10 @@ namespace CrittersWeb.Services
 
         List<ArticleTextContent> _articles = null;
 
-        public SearchResult Search(string request, ArticlesRepository articlesRep)
+        public SearchResult Search(string request, ArticleStatus[] statuses,  ArticlesRepository articlesRep)
         {
             RefreshArticlesCache(articlesRep);
-            return SearchInCache(request);
+            return SearchInCache(request, statuses);
         }
 
         public void OnArticleChanged(Article newArticle)
@@ -42,14 +42,14 @@ namespace CrittersWeb.Services
             }
         }
 
-        private SearchResult SearchInCache(string request)
+        private SearchResult SearchInCache(string request, ArticleStatus[] statuses)
         {
             if (string.IsNullOrWhiteSpace(request))
                 return new SearchResult() { ArticlesId= new int[0] }; 
             var keyWords = request.Split(' ');
             var req = keyWords.Where(w => !string.IsNullOrWhiteSpace(w)).ToArray();
             var resultArticlesId = new List<int>();
-            foreach(var a in _articles)
+            foreach(var a in _articles.Where(a=> statuses.Contains(a.Status)))
             {
                 bool matches = true;
                 foreach (var w in req)

@@ -16,31 +16,20 @@ export class StartpageComponent implements OnInit {
 
   @ViewChild(ComponentContainerDirective, { static: true }) dialogsHost!: ComponentContainerDirective;
 
-    userInfo: UserInfo = { name: "", signedIn: false };
+    userInfo: UserInfo = { name: "", signedIn: false, admin: false };
 
     async ngOnInit() {
-        this.userInfo = await this.loginService.getCurrentUserInfo(false);
+        this.loginService.userInfo.subscribe((ui) => this.userInfo = ui);
         console.log(this.userInfo);
     }
 
     Login() {
-        let login = this.dialogsHost.viewContainerRef.createComponent(LoginComponent);
-        login.instance.result.subscribe(async evt => {
-            this.dialogsHost.viewContainerRef.clear();
-            if (evt == 'register') {
-                let register = this.dialogsHost.viewContainerRef.createComponent(RegistrationComponent);
-                register.instance.result.subscribe(evt => {
-                    this.dialogsHost.viewContainerRef.clear();
-                });
-            }
-            this.userInfo = await this.loginService.getCurrentUserInfo(false);
-        }
-        );        
+        this.dialogsHost.showLoginDialog(() => { });
     }
 
     async Logout() {
         await this.loginService.Logout();
-        this.userInfo = await this.loginService.getCurrentUserInfo(false);
+        this.userInfo = await this.loginService.getUserInfo();
     }
 
 }

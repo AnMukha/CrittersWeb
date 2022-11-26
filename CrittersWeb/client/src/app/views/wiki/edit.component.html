@@ -3,12 +3,14 @@
     <div style="display: grid; grid-template-rows: 'max-content auto'; grid-area: area1; color: black; position: relative">
         <div class="m-2">
             <label class="form-label">Article title</label>
-            <input #articleName (input)="nameLength = articleName?.value?.length" [value]="article? article.name:''" class="form-control">            
+            <input #articleName (input)="nameLength = articleName?.value?.length" [value]="article? article.name:''" class="form-control"
+                   placeholder=" name of the configuration or principle">
             <label class="form-label text-danger" *ngIf="(nameLength??0)>80">the maximum name length is 80 ({{nameLength}})</label>
         </div>
         <div class="m-2" style="display: grid; grid-template-rows: 'max-content auto' ">
             <label class="form-label">Article text</label>
-            <textarea #articleContent (input)="contentLength = articleContent?.value?.length" [value]="article? article.content:''" class="form-control"></textarea>
+            <textarea #articleContent (input)="contentLength = articleContent?.value?.length" [value]="article? article.content:''" 
+                      class="form-control" placeholder="description of the configuration or principle you found"></textarea>
             <label class="form-label text-danger" *ngIf="(contentLength??0)>10000">the maximum content length is 10000 ({{contentLength}})</label>
         </div>
     </div>
@@ -23,7 +25,7 @@
         <button class="btn btn-outline-danger m-2" (click)="OnDelete()">Delete</button>
     </div>
     <div style="background: rgb(240, 240, 240); grid-area: buttons2; position: relative ">
-        <button class="btn btn-outline-success m-2 float-end" (click)="OnPublish()">Publish</button>
-        <button class="btn btn-outline-success m-2 float-end" (click)="OnSave(articleName.value, articleContent.value )">Save as draft</button>
+        <button class="btn btn-outline-success m-2 float-end" (click)="OnPublish(articleName.value, articleContent.value)">Publish</button>
+        <button class="btn btn-outline-success m-2 float-end" (click)="OnSave(articleName.value, articleContent.value)">Save as draft</button>
     </div>
 </div>

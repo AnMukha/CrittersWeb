@@ -1,8 +1,14 @@
 ﻿<div class="p-3">
     <button (click)="onStepOrStop()" class="btn btn-outline-primary m-1">
-        <i [ngClass]="speed==0?'fas fa-forward-step':'fas fa-stop'"></i>
+        <i [ngClass]="speed==0?(timeDirectionForward?'fas fa-forward-step':'fas fa-backward-step'):'fas fa-stop'"></i>
     </button>
-    <button (click)="onRunOrFaster()" class="btn btn-outline-primary m-1">{{speed+"  "}}<i class="fas fa-forward"></i></button>
-    <button (click)="onReverseTime()" class="btn btn-outline-primary m-1"><i [ngClass]="timeDirectionForward?'fas fa-rotate-back':'fas fa-rotate-forward'"></i></button>
-    <button (click)="onToStart()" class="btn btn-outline-primary m-1"><i class="fas fa-backward-fast"></i></button>    
+    <button (click)="onRunOrFaster()" class="btn btn-outline-primary m-1" [style.font-size]="speed>99?'12px':'18px'" >{{speed+"  "}}
+            <i [ngClass]="timeDirectionForward?'fas fa-forward fs-6':'fas fa-backward fs-6'"></i></button>
+    <button (click)="onReverseTime()" class="btn btn-outline-primary m-1">
+            <i [ngClass]="timeDirectionForward?'fas fa-rotate-back':'fas fa-rotate-forward'"></i></button>
+    <button (click)="onToStart()" class="btn btn-outline-primary m-1">
+        <i class="fas fa-caret-right"></i>
+        0
+        <i class="fas fa-caret-left"></i>
+    </button>    
 </div>

@@ -7,10 +7,20 @@
             <h4>{{article?.name}}<br></h4>
             <div [innerHtml]="ContentToHTML(article?.content)"></div>
         </div>
-        <button routerLink="/wiki/edit/{{article?.id}}"
-                class="btn btn-primary" style="position: absolute; bottom: 20px; right: 30px">
-            <i class="fas fa-edit"></i> Edit
+        <div style="position: absolute; bottom: 20px; right: 30px">
+        <button *ngIf="editAvaible" routerLink="/wiki/edit/{{article?.id}}"
+                class="btn btn-outline-primary me-2" >
+            <i class="fas fa-edit me-2"></i>Edit
         </button>
+        <button *ngIf="toArchiveAvaible" (click)="toArchive()"
+                class="btn btn-outline-primary me-2">
+            <i class="fas fa-edit me-2"></i>To archive
+        </button>
+        <button *ngIf="deleteAvaible" (click)="deleteArticle()"
+                class="btn btn-outline-primary">
+            <i class="fas fa-edit me-2"></i>Delete
+        </button>
+            </div>
     </div>
 
     <div style="color: black; position: relative;" [ngStyle]="{display: CellsFieldIsEmpy()?'none':'block'}">
