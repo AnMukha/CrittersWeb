@@ -1,5 +1,5 @@
 ﻿using CrittersWeb.Data.Entities;
-using CrittersWeb.ViewModels;
+using CrittersWeb.DtoModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace CrittersWeb.Controllers
 {
-    public class AccountController : Controller 
+    [ApiController]
+    [Route("[controller]")]
+    public class AccountController : ControllerBase 
     {
         readonly SignInManager<GameUser> _signInManager;
         readonly UserManager<GameUser> _userManager;
@@ -20,19 +22,19 @@ namespace CrittersWeb.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
-        public ActionResult<UserInfoModel> UserInfo()
+        [HttpGet("[action]")]        
+        public ActionResult<UserInfoDto> UserInfo()
         {
-            return new UserInfoModel()
+            return Ok(new UserInfoDto()
             {
                 SignedIn = User.Identity.IsAuthenticated,
                 Name = User.Identity.Name,
                 Admin = User.IsInRole("Admin")
-            };
+            });
         }
 
-        [HttpPost]
-        public async Task<ActionResult<bool>> Login([FromBody] LoginModel m)
+        [HttpPost("[action]")]        
+        public async Task<ActionResult<bool>> Login([FromBody] LoginDto m)
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -44,36 +46,36 @@ namespace CrittersWeb.Controllers
                         var result = await _signInManager.PasswordSignInAsync(user, m.Password, true, false);
                         return result.Succeeded;
                     }
-                    return false;
+                    return Ok(false);
                 }
                 else
                 {
                     var result = await _signInManager.PasswordSignInAsync(m.UserName, m.Password, true, false);
-                    return result.Succeeded;
+                    return Ok(result.Succeeded);
                 }
             }
-            return false;
+            return Ok(false);
         }
 
-        [HttpGet]
+        [HttpGet("[action]")]        
         public async Task<ActionResult<bool>> Logout()
         {
             if (User.Identity.IsAuthenticated)
             {
                 await _signInManager.SignOutAsync();
-                return true;
+                return Ok(true);
             }
-            return false;
+            return Ok(false);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<RegistrationResultModel>> Register([FromBody] LoginModel m)
+        [HttpPost("[action]")]        
+        public async Task<ActionResult<RegistrationResultDto>> Register([FromBody] LoginDto m)
         {
             var newUser = new GameUser();
             newUser.Email = m.Mail;
             newUser.UserName = m.UserName;            
             var result = await _signInManager.UserManager.CreateAsync(newUser, m.Password);
-            return new RegistrationResultModel() { Success = result.Succeeded, ErrorDescription = result.Errors.FirstOrDefault()?.Description };
+            return Ok(new RegistrationResultDto() { Success = result.Succeeded, ErrorDescription = result.Errors.FirstOrDefault()?.Description });
         }
 
     }

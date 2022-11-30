@@ -1,5 +1,5 @@
 ﻿using CrittersWeb.Data.Entities;
-using CrittersWeb.ViewModels;
+using CrittersWeb.DtoModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

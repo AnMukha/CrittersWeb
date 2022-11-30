@@ -1,8 +1,9 @@
 ﻿using CrittersWeb.Data.Entities;
-using CrittersWeb.ViewModels;
+using CrittersWeb.DtoModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,21 +17,21 @@ namespace CrittersWeb.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public Article GetById(int id)
+        public async Task<Article> GetById(int id)
         {
-            return _dbContext.Articles.Where(a=>a.Id==id).Include(a => a.Author).FirstOrDefault();
+            return await _dbContext.Articles.Where(a=>a.Id==id).Include(a => a.Author).FirstOrDefaultAsync();
         }
 
-        public Article Add(Article article)
+        public async Task<Article> Add(Article article)
         {
             _dbContext.Add(article);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return article;
         }
 
-        internal ArticleTextContent[] GetAllArticlesContent()
+        public async Task<ArticleTextContent[]> GetAllArticlesContent()
         {
-            return _dbContext.Articles//.Where(a=> a.Status == ArticleStatus.Approved)
+            return await _dbContext.Articles.Where(a=> a.Status == ArticleStatus.Approved)
                 .Select(a=> new ArticleTextContent()
                 {
                     Id = a.Id,
@@ -41,44 +42,44 @@ namespace CrittersWeb.Data.Repositories
                     CreationDate = a.CreationDate,
                     LastEditionDate = a.LastEditionDate,
                     AuthorName = a.Author.UserName
-                }).ToArray();
+                }).ToArrayAsync();
         }
 
-        public Article[] GetArticles(int[] articlesId)
+        public async Task<Article[]> GetArticles(int[] articlesId)
         {
-            return _dbContext.Articles.Where(a => articlesId.Contains(a.Id)).ToArray();
+            return await _dbContext.Articles.Where(a => articlesId.Contains(a.Id)).ToArrayAsync();
         }
 
-        public Article[] GetAll(int pageNum, int pageSize, ArticleStatus status)
+        public async Task<IEnumerable<Article>> GetAll(int pageNum, int pageSize, ArticleStatus status)
         {
-            return _dbContext.Articles.Where(a=>a.Status == status).Include(a => a.Author).ToArray();
+            return await _dbContext.Articles.Where(a=>a.Status == status).Include(a => a.Author).ToArrayAsync();
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var article = _dbContext.Articles.Find(id);
+            var article = await _dbContext.Articles.FindAsync(id);
             if (article != null)
             {
                 _dbContext.Articles.Remove(article);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public Article[] GetUserArticles(string userId)
+        public async Task<Article[]> GetUserArticles(string userId)
         {
-            return _dbContext.Articles.Where(a => a.Author.Id == userId).Include(a => a.Author).ToArray();
+            return await _dbContext.Articles.Where(a => a.Author.Id == userId).Include(a => a.Author).ToArrayAsync();
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        internal Article GetByName(string name)
+        public async Task<Article> GetByName(string name)
         {
-            return _dbContext.Articles.Where(a => a.Name == name).Include(a => a.Author).FirstOrDefault();
+            return await _dbContext.Articles.Where(a => a.Name == name).Include(a => a.Author).FirstOrDefaultAsync();
         }
     }
 

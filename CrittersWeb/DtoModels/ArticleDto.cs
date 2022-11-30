@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CrittersWeb.ViewModels
+namespace CrittersWeb.DtoModels
 {
-    public class ArticleModel
+    public class ArticleDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

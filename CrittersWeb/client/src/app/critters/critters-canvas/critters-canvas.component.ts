@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { bufferTime } from 'rxjs';
-import { CEditController } from '../CEditController/CEditController';
+import { CrittersEditController } from '../CEditController/CrittersEditController';
 import { CEditModel } from '../CEditModel';
 import { CrittersView } from '../CrittersView';
 import { CrittersWorld } from '../CrittersWorld';
@@ -13,7 +13,7 @@ import { CrittersWorld } from '../CrittersWorld';
 })
 export class CrittersCanvasComponent implements OnInit {
 
-    constructor(private editController: CEditController, private crittersView: CrittersView,
+    constructor(private editController: CrittersEditController, private crittersView: CrittersView,
         private editModel: CEditModel, private crittersWorld: CrittersWorld) {
     }
 

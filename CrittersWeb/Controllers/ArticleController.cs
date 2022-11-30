@@ -2,7 +2,7 @@
 using CrittersWeb.Data.Entities;
 using CrittersWeb.Data.Repositories;
 using CrittersWeb.Services;
-using CrittersWeb.ViewModels;
+using CrittersWeb.DtoModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +14,9 @@ using System.Threading.Tasks;
 
 namespace CrittersWeb.Controllers
 {
-    public class ArticleController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class ArticleController : ControllerBase
     {
 
         ArticlesRepository _articlesRep;
@@ -27,16 +29,17 @@ namespace CrittersWeb.Controllers
             _searchService = searchService;
         }
 
-        public ActionResult<ArticleModel> Get([FromRoute] string id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ArticleDto>> Get(string id)
         {
             Article article;
             if (!int.TryParse(id, out int articleId))
-                article =  GetReservedArticle(id);            
+                article = await GetReservedArticle(id);            
             else
-                article = _articlesRep.GetById(articleId);
+                article = await _articlesRep.GetById(articleId);
             if (article == null)
-                    return null;
-            return new ArticleModel()
+                    return NotFound();
+            return Ok(new ArticleDto()
             {
                  ApprovalDate = article.ApprovalDate,
                  AuthorId = article.Author?.Id,
@@ -48,14 +51,15 @@ namespace CrittersWeb.Controllers
                  LastEditionDate = article.LastEditionDate,
                  Name = article.Name,
                  Status = article.Status
-            };
+            });
         }
 
         [Authorize]
-        public async Task<ActionResult<ArticleModel>> Post([FromBody] ArticleModel article)
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] ArticleDto article)
         {
-            var currentUser = await _userManager.GetUserAsync(User);            
-            var newArticle = _articlesRep.Add(new Article() 
+            var currentUser = await _userManager.GetUserAsync(User);
+            var newArticle = await _articlesRep.Add(new Article()
             {
                 ApprovalDate = article.ApprovalDate,
                 Author = currentUser,
@@ -66,19 +70,20 @@ namespace CrittersWeb.Controllers
                 Name = article.Name,
                 Status = article.Status == ArticleStatus.AwaitingApproval ? ArticleStatus.AwaitingApproval : ArticleStatus.Draft
             });
-            _searchService.OnArticleChanged(newArticle);
-            return CreatedAtAction(nameof(Get), new { id = newArticle.Id });
+            _searchService.OnArticleChanged(newArticle);            
+            return CreatedAtAction(nameof(Get), new { id = newArticle.Id }, new ArticleDto() { Id = newArticle.Id });            
         }
 
         [Authorize]
-        public async Task<ActionResult<ArticleModel>> Put([FromBody] ArticleModel article)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] ArticleDto article)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var modified = _articlesRep.GetById(article.Id);
+            var modified = await _articlesRep.GetById(article.Id);
             if (modified == null)
-                return null;
+                return NotFound();
             if (!(User.IsInRole("Admin") || currentUser.Id == modified.Author.Id))
-                return null;            
+                return BadRequest();        
             if (article.Content?.Length > 10000)
                 article.Content = article.Content.Substring(10000);
             if (article.Name?.Length > 60)
@@ -88,57 +93,77 @@ namespace CrittersWeb.Controllers
             modified.LastEditionDate = DateTime.Now;
             modified.Name = article.Name;
             modified.Status = article.Status == ArticleStatus.AwaitingApproval ? ArticleStatus.AwaitingApproval : ArticleStatus.Draft;
-            _articlesRep.Save();
-            _searchService.OnArticleChanged(modified);
-            return CreatedAtAction(nameof(Get), new { id = article.Id });
+            await _articlesRep.Save();
+            _searchService.OnArticleChanged(modified);            
+            return Ok();
         }
 
-        [HttpPut]
         [Authorize]
-        public async Task<ActionResult<bool>> ToArchive(int id)
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> ToArchive(int id)
         {
             return await ChangeStatus(id, ArticleStatus.Archival);
         }
 
-        private async Task<bool> ChangeStatus(int id, ArticleStatus status)
+        private async Task<IActionResult> ChangeStatus(int id, ArticleStatus status)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var modified = _articlesRep.GetById(id);
+            var modified = await _articlesRep.GetById(id);
             if (modified == null)
-                return false;
+                return NotFound();
             if (!(User.IsInRole("Admin") || currentUser.Id == modified.Author.Id))
-                return false;
+                return NotFound();
             modified.Status = status;
-            _articlesRep.Save();
-            return true;
+            await _articlesRep.Save();
+            return Ok();
         }
-
-        [HttpPut]
+        
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<bool>> Approve(int id)
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Approve(int id)
         {
             return await ChangeStatus(id, ArticleStatus.Approved);
         }
 
-        [HttpPut]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<bool>> Reject(int id)
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Reject(int id)
         {
             return await ChangeStatus(id, ArticleStatus.Regected);
+        }        
+        
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (await _articlesRep.Delete(id))
+            {
+                _searchService.OnArticleDeleted(id);
+                return Ok();
+            }
+            else
+                return NotFound();
+        }
+
+        private async Task<Article> GetReservedArticle(string articleName)
+        {
+            if (articleName.ToLower() == "contents" || articleName.ToLower() == "about")
+                return await _articlesRep.GetByName(articleName);
+            return null;
         }
 
         private string RestrictHtmlInContent(string content)
         {
             // only i, br, b, a tags allowed in html;
             var result = new StringBuilder();
-            var i=0;
+            var i = 0;
             while (i < content.Length)
             {
-                var l = FindEnabledTagLength( content, i);
+                var l = FindEnabledTagLength(content, i);
                 if (l != -1)
                 {
                     result.Append(content.Substring(i, l));
-                    i+= l;
+                    i += l;
                 }
                 else
                 {
@@ -162,26 +187,10 @@ namespace CrittersWeb.Controllers
             if (lastTagPos == -1)
                 return -1;
             var tag = content.Substring(pos + 1, lastTagPos - pos - 1);
-            if (tag == "br"|| tag == "/br" || tag == "b" || tag == "/b" || tag == "i" || tag == "/i" || tag.StartsWith("a ") || tag=="/a")
+            if (tag == "br" || tag == "/br" || tag == "b" || tag == "/b" || tag == "i" || tag == "/i" || tag.StartsWith("a ") || tag == "/a")
                 return lastTagPos - pos + 1;
             return -1;
-        }    
-
-        [HttpDelete]
-        [Authorize]
-        public async Task<ActionResult<bool>> Delete(int id)
-        {
-            var result = _articlesRep.Delete(id);
-            _searchService.OnArticleDeleted(id);
-            return result;
         }
 
-
-        private Article GetReservedArticle(string articleName)
-        {
-            if (articleName == "Contents" || articleName == "About")
-                return _articlesRep.GetByName(articleName);            
-            return null;
-        }
     }
 }

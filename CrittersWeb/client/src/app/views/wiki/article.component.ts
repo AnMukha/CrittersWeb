@@ -1,26 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CEditController } from '../../critters/CEditController/CEditController';
 import { CEditModel } from '../../critters/CEditModel';
 import { CrittersWorld, WorldCangesType } from '../../critters/CrittersWorld';
 import { CrittersView } from '../../critters/CrittersView';
-import { CEditControllerBase } from '../../critters/CEditController/CEditControllerBase';
 import { CTimeController } from '../../critters/CTimeController';
 import { ZeroTimeController } from '../../critters/ZeroTimeController';
 import { LoginService } from '../../services/login.service';
+import { ViewOnlyCrittersEditController } from '../../critters/CEditController/ViewOnlyCrittersEditController';
+import { CrittersEditController } from '../../critters/CEditController/CrittersEditController';
+import { SandBoxCrittersEditController } from '../../critters/CEditController/SandBoxCrittersEditController';
 
 @Component({
   selector: 'app-article',
     templateUrl: "article.component.html",
   styles: [
     ],
-    providers: [CrittersWorld, { provide: CEditController, useClass: CEditControllerBase }, CEditModel, CrittersView,
+    providers: [CrittersWorld, { provide: CrittersEditController, useClass: ViewOnlyCrittersEditController }, CEditModel, CrittersView,
         CTimeController, ZeroTimeController]
 })
 export class ArticleComponent implements OnInit {
 
-    constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router,  private world: CrittersWorld, private zeroTimeController: ZeroTimeController,
+    constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private world: CrittersWorld,
+        private zeroTimeController: ZeroTimeController,
         private loginService: LoginService) { }
 
     article: ArticleModel | null = null; 
@@ -72,7 +74,7 @@ export class ArticleComponent implements OnInit {
 
     deleteArticle() {
         if (window.confirm("A you sure want to delete this article permanently?")) {
-            this.http.delete("/article/delete/" + this.article!.id).subscribe(() => {
+            this.http.delete("/article/" + this.article!.id).subscribe(() => {
                 this.router.navigateByUrl("/wiki/article/contents");
             });                
         }
@@ -80,7 +82,7 @@ export class ArticleComponent implements OnInit {
 
     toArchive() {
         if (window.confirm("A you sure want to move this article to the archive?")) {
-            this.http.put("article/toarchive/" + this.article!.id, this.article!.id).subscribe(() => {
+            this.http.put("/article/toarchive/" + this.article!.id, this.article!.id).subscribe(() => {
                 this.router.navigateByUrl("/wiki/article/contents");
             });
         }

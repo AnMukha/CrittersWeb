@@ -1,7 +1,7 @@
 ﻿using CrittersWeb.Data.Entities;
 using CrittersWeb.Data.Repositories;
 using CrittersWeb.Services;
-using CrittersWeb.ViewModels;
+using CrittersWeb.DtoModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,10 @@ using System.Threading.Tasks;
 
 namespace CrittersWeb.Controllers
 {
-    public class ArticlesController : Controller
+
+    [ApiController]
+    [Route("[controller]")]
+    public class ArticlesController : ControllerBase
     {
         readonly ArticlesRepository _articlesRep;
         readonly UserManager<GameUser> _userManager;
@@ -26,11 +29,11 @@ namespace CrittersWeb.Controllers
             _searchService = searchService;
         }
 
-        [HttpGet]
-        public ActionResult<ArticleTitleModel[]> All()
+        [HttpGet("[action]")]
+        public async Task<ActionResult<ArticleTitleDto[]>> All()
         {
-            var articles = _articlesRep.GetAll(0, 999999, ArticleStatus.Approved).ToArray();
-            return articles.Select(a => new ArticleTitleModel()
+            var articles = await _articlesRep.GetAll(0, 999999, ArticleStatus.Approved);
+            return Ok(articles.Select(a => new ArticleTitleDto()
             {
                 Author = a.Author?.UserName,
                 EditionDate = a.LastEditionDate,
@@ -38,41 +41,41 @@ namespace CrittersWeb.Controllers
                 Name = a.Name,
                 ShortContent = CutArticleContent(a.Content),
                 Status = a.Status
-            }).ToArray();
+            }).ToArray());
         }
 
-        [HttpGet]        
-        public async Task<ActionResult<ArticleTitleModel[]>> My()
+        [HttpGet("[action]")]
+        public async Task<ActionResult<ArticleTitleDto[]>> My()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var articles = _articlesRep.GetUserArticles(currentUser.Id).ToArray();
-            return articles.Select(a => MapArticleToArticleTitleModel(a)).ToArray();
+            var articles = await _articlesRep.GetUserArticles(currentUser.Id);
+            return Ok(articles.Select(a => MapArticleToArticleTitleModel(a)).ToArray());
         }
-
-        [HttpGet]
+        
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ArticleTitleModel[]>> Drafts()
+        [HttpGet("[action]")]
+        public async Task<ActionResult<ArticleTitleDto[]>> Drafts()
         {
-            return _articlesRep.GetAll(0, 0, ArticleStatus.Draft).Select(a => MapArticleToArticleTitleModel(a)).ToArray();
+            return Ok((await _articlesRep.GetAll(0, 0, ArticleStatus.Draft)).Select(a => MapArticleToArticleTitleModel(a)).ToArray());
         }
-
-        [HttpGet]
+        
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ArticleTitleModel[]>> Archive()
+        [HttpGet("[action]")]
+        public async Task<ActionResult<ArticleTitleDto[]>> Archive()
         {
-            return _articlesRep.GetAll(0, 0, ArticleStatus.Archival).Select(a => MapArticleToArticleTitleModel(a)).ToArray();
+            return Ok((await _articlesRep.GetAll(0, 0, ArticleStatus.Archival)).Select(a => MapArticleToArticleTitleModel(a)).ToArray());
         }
-
-        [HttpGet]
+        
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ArticleTitleModel[]>> Moderation()
+        [HttpGet("[action]")]
+        public async Task<ActionResult<ArticleTitleDto[]>> Moderation()
         {
-            return _articlesRep.GetAll(0, 0, ArticleStatus.AwaitingApproval).Select(a => MapArticleToArticleTitleModel(a)).ToArray();
+            return Ok((await _articlesRep.GetAll(0, 0, ArticleStatus.AwaitingApproval)).Select(a => MapArticleToArticleTitleModel(a)).ToArray());
         }
 
-        private ArticleTitleModel MapArticleToArticleTitleModel(Article a)
+        private ArticleTitleDto MapArticleToArticleTitleModel(Article a)
         {
-            return new ArticleTitleModel()
+            return new ArticleTitleDto()
             {
                 Author = a.Author?.UserName,
                 EditionDate = a.LastEditionDate,
@@ -83,11 +86,11 @@ namespace CrittersWeb.Controllers
             };
         }
 
-        [HttpGet]
-        public async Task<ActionResult<ArticleTitleModel[]>> Search([FromRoute]string request)
+        [HttpGet("[action]/{request}")]
+        public async Task<ActionResult<ArticleTitleDto[]>> Search(string request)
         {
-            var result = _searchService.Search(request, new [] { ArticleStatus.Approved }, _articlesRep);
-            return _articlesRep.GetArticles(result.ArticlesId).Select(a=> MapArticleToArticleTitleModel(a)).ToArray();
+            var result = await _searchService.Search(request, new [] { ArticleStatus.Approved }, _articlesRep);
+            return Ok((await _articlesRep.GetArticles(result.ArticlesId)).Select(a=> MapArticleToArticleTitleModel(a)).ToArray());
         }
 
         private string CutArticleContent(string content)

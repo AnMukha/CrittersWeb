@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CrittersWeb.ViewModels
+namespace CrittersWeb.DtoModels
 {
-    public class LoginModel
+    public class LoginDto
     {
         public string UserName { get; set; }
         public string Mail { get; set; }

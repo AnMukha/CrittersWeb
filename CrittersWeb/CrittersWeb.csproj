@@ -43,4 +43,9 @@
     <TypeScriptCompile Include="client\src\app\views\wiki\wiki.component.html" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="client\src\app\views\gameStart\" />
+    <Folder Include="client\src\app\views\gameScreen\" />
+  </ItemGroup>
+
 </Project>

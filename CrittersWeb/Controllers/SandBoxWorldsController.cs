@@ -1,6 +1,7 @@
 ﻿using CrittersWeb.Data.Entities;
 using CrittersWeb.Data.Repositories;
-using CrittersWeb.ViewModels;
+using CrittersWeb.DtoModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -8,7 +9,10 @@ using System.Threading.Tasks;
 
 namespace CrittersWeb.Controllers
 {
-    public class SandBoxWorldsController : Controller
+
+    [ApiController]
+    [Route("[controller]")]
+    public class SandBoxWorldsController : ControllerBase
     {
         readonly ISandBoxWorldsRepository _rep;
         readonly UserManager<GameUser> _userManager;
@@ -17,34 +21,37 @@ namespace CrittersWeb.Controllers
             _rep = rep;
             _userManager = userManager;
         }
-       
-        //[Authorize]
-        public async Task<ActionResult<SandboxWorldTitleModel[]>> Titles()
+
+        [Authorize]
+        [HttpGet("[action]")]
+        public async Task<ActionResult<SandboxWorldTitleDto[]>> Titles()
         {
             var currentUser = await _userManager.GetUserAsync(User);
 
             var saves = await _rep.GetAll(currentUser);
-            var sModels = saves.Select(s=> new SandboxWorldTitleModel() 
+            var sModels = saves.Select(s=> new SandboxWorldTitleDto() 
                     { Id = s.Id, Name = s.Name, Slot = s.Slot }).OrderBy(s=>s.Slot).
                     Where(s=>s.Slot>0&& s.Slot<=10).ToArray();                        
             return sModels;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<int>> SaveToSlot([FromBody] SandBoxWorldSavingModel saving)
+        [Authorize]
+        [HttpPost("[action]")]
+        public async Task<ActionResult<int>> SaveToSlot([FromBody] SandBoxWorldSavingDto saving)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var id = await _rep.SaveToSlot(currentUser, saving.Slot, saving.NewName, CellsDataInModelSerializer.ToCells(saving.CellsData));
             return id;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<SandBoxWorldSavingModel>> LoadFromSlot(int slot)
+        [Authorize]
+        [HttpGet("[action]")]
+        public async Task<ActionResult<SandBoxWorldSavingDto>> LoadFromSlot(int slot)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var w = await _rep.LoadFromSlot(currentUser, slot);
             var data = CellsDataInModelSerializer.CellsToData(w.GetCells());
-            var result = new SandBoxWorldSavingModel() { Slot = slot, NewName = w.Name, CellsData = data };
+            var result = new SandBoxWorldSavingDto() { Slot = slot, NewName = w.Name, CellsData = data };
             return result;
         }
 

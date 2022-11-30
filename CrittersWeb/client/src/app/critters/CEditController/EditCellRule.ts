@@ -7,6 +7,7 @@ export class EditCellRule {
     }
 
     startPos: CPoint | undefined = undefined;
+    static readonly mouse_shift_to_edit = 4;
 
     onMouseDown(event: any): WorldCangesType[] {
         this.startPos = new CPoint(event.offsetX, event.offsetY);
@@ -17,7 +18,7 @@ export class EditCellRule {
         let modified = false;
         if (this.startPos != undefined) {
             let endCell = this.editModel.CellXYInScr(event.offsetX, event.offsetY);
-            if (Math.abs(this.startPos.X - event.offsetX) < 2 && Math.abs(this.startPos.Y - event.offsetY) < 2) {
+            if (Math.abs(this.startPos.X - event.offsetX) < EditCellRule.mouse_shift_to_edit && Math.abs(this.startPos.Y - event.offsetY) < EditCellRule.mouse_shift_to_edit) {
                 if (this.cWorld.GetCell(endCell.X, endCell.Y) === undefined)
                     this.cWorld.AddCell(endCell.X, endCell.Y);
                 else

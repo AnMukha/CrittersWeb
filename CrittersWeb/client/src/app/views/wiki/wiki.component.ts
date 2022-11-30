@@ -21,6 +21,11 @@ export class WikiComponent implements OnInit {
 
     userInfo: UserInfo | null = null;
 
+    keyPress($event: any, request: string) {
+        if ($event.code == "Enter")
+            this.OnSearch(request);
+    }
+
     OnSearch(request: string) {
         this.router.navigateByUrl("/wiki/articles/q:" + request);
     }

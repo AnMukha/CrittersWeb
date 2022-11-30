@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CrittersWeb.ViewModels
+namespace CrittersWeb.DtoModels
 {
-    public class SandBoxWorldSavingModel
+    public class SandBoxWorldSavingDto
     {
         public int Slot { get; set; }
         public string NewName { get; set; }

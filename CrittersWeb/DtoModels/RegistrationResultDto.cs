@@ -1,6 +1,6 @@
-﻿namespace CrittersWeb.ViewModels
+﻿namespace CrittersWeb.DtoModels
 {
-    public class RegistrationResultModel
+    public class RegistrationResultDto
     {
         public string ErrorDescription { get; set; }
         public bool Success { get; set; }

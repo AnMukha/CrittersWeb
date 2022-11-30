@@ -56,6 +56,12 @@ namespace CrittersWeb
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
+            });
+
+
+            /*app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                     name: "article",
                     pattern: "article/{*id}",
@@ -75,7 +81,7 @@ namespace CrittersWeb
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            });*/
         }
     }
 }

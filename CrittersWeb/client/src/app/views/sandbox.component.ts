@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
-import { CEditController } from '../critters/CEditController/CEditController';
 import { CEditModel } from '../critters/CEditModel';
 import { CrittersWorld, CrittersWorldSerializer, WorldCangesType } from '../critters/CrittersWorld';
 import { CrittersView } from '../critters/CrittersView';
@@ -10,16 +9,15 @@ import { ComponentContainerDirective } from './component-container.directive';
 import { CTimeController } from '../critters/CTimeController';
 import { ZeroTimeController } from '../critters/ZeroTimeController';
 import { LoginService } from '../services/login.service';
-import { LoginComponent } from './login.component';
-import { RegistrationComponent } from './registration.component';
-import { count } from 'rxjs';
+import { SandBoxCrittersEditController } from '../critters/CEditController/SandBoxCrittersEditController';
+import { CrittersEditController } from '../critters/CEditController/CrittersEditController';
 
 @Component({
     selector: 'app-sandbox',
     templateUrl: 'sandbox.component.html',
     styles: [
     ],
-    providers: [CrittersWorld, CEditController, CEditModel, CrittersView, CTimeController, ZeroTimeController]
+    providers: [CrittersWorld, { provide: CrittersEditController, useClass: SandBoxCrittersEditController }, CEditModel, CrittersView, CTimeController, ZeroTimeController]
 })
 export class SandboxComponent implements OnInit {
 

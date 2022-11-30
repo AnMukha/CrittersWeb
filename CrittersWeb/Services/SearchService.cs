@@ -14,9 +14,9 @@ namespace CrittersWeb.Services
 
         List<ArticleTextContent> _articles = null;
 
-        public SearchResult Search(string request, ArticleStatus[] statuses,  ArticlesRepository articlesRep)
+        public async Task<SearchResult> Search(string request, ArticleStatus[] statuses,  ArticlesRepository articlesRep)
         {
-            RefreshArticlesCache(articlesRep);
+            await RefreshArticlesCache(articlesRep);
             return SearchInCache(request, statuses);
         }
 
@@ -55,8 +55,8 @@ namespace CrittersWeb.Services
                 foreach (var w in req)
                 {
                     var myRegex = new Regex($@"\b{w}\b");                    
-                    var matchesInContent = myRegex.Matches(a.Content);
-                    var matchesInTitle = myRegex.Matches(a.Name);
+                    var matchesInContent = myRegex.Matches(a.Content??"");
+                    var matchesInTitle = myRegex.Matches(a.Name??"");
                     if (matchesInContent.Count==0 && matchesInTitle.Count==0)
                     {
                         matches = false;
@@ -69,10 +69,10 @@ namespace CrittersWeb.Services
             return new SearchResult() { ArticlesId = resultArticlesId.ToArray() };
         }
 
-        private void RefreshArticlesCache(ArticlesRepository articlesRep)
+        private async Task RefreshArticlesCache(ArticlesRepository articlesRep)
         {
             if (_articles == null)
-                _articles = articlesRep.GetAllArticlesContent().ToList();
+                _articles = (await articlesRep.GetAllArticlesContent()).ToList();
         }
     }
 }
