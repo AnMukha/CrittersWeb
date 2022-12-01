@@ -36,30 +36,30 @@ export class EditArticleComponent implements OnInit {
             if ((routeParams as any).id != 'new')
                 this.http.get<ArticleModel>("/article/" + (routeParams as any).id).subscribe(article => {
                     this.article = article;
-                    this.world.Clear();
+                    this.world.clear();
                     let data = article.cellsData;
                     for (let i = 0; i < data.length ; i = i + 2)
-                        this.world.AddCell(data[i], data[i + 1]);
+                        this.world.addCell(data[i], data[i + 1]);
                     this.zeroTimeController.setThisTimeAsZero();                    
                     setTimeout(() =>
-                        this.world.notifyAboutChanges([WorldCangesType.loaded]));
+                        this.world.notifyAboutChanges([WorldCangesType.Loaded]));
                 });
             else {                    
                 this.isNew = true;
                 this.article.name = ""; ;
                 this.article.content = "";
-                this.world.Clear();
-                this.world.notifyAboutChanges([WorldCangesType.loaded]);
+                this.world.clear();
+                this.world.notifyAboutChanges([WorldCangesType.Loaded]);
             }
         });
     }
 
-    public async OnSave(name: string, text: string) {
-        await this.save(name, text, ArticleStatus.draft);
+    public async onSave(name: string, text: string) {
+        await this.save(name, text, ArticleStatus.Draft);
     }
 
-    public async OnPublish(name: string, text: string) {
-        await this.save(name, text, ArticleStatus.awaitingApproval);
+    public async onPublish(name: string, text: string) {
+        await this.save(name, text, ArticleStatus.AwaitingApproval);
     }
 
     public async save(name: string, text: string, status: ArticleStatus) {
@@ -67,7 +67,7 @@ export class EditArticleComponent implements OnInit {
         this.article.name = name;
         this.article.status = status;
         let s = new CrittersWorldSerializer();
-        let cellsData = s.SerializeCells(this.world);
+        let cellsData = s.serializeCells(this.world);
         this.article.cellsData = cellsData;
         if (this.isNew) {
             let article: any = await lastValueFrom(await this.http.post("/article", this.article));
@@ -84,15 +84,15 @@ export class EditArticleComponent implements OnInit {
     }
 
 
-    public OnDelete() {
+    public onDelete() {
         console.log("/article/" + this.article.id);
         this.http.delete("/article/" + this.article.id).subscribe(() => { });
     }
-    public OnReject() {
+    public onReject() {
         console.log("/article/reject/" + this.article.id);
         this.http.put("/article/reject/" + this.article.id, null).subscribe(() => { });
     }
-    public OnApprove() {
+    public onApprove() {
         console.log("/article/approve/" + this.article.id);
         this.http.put("/article/approve/" + this.article.id, null).subscribe(() => { });
     }

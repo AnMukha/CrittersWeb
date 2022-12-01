@@ -19,7 +19,7 @@ export class TouchScrollRule {
             this.startPos2 = new CPoint(event.touches[1].clientX - bcr.x, event.touches[1].clientY - bcr.y);
             this.startScale = this.editModel.scale;
         }
-        this.startFramePos = this.editModel.GetFramePos();
+        this.startFramePos = this.editModel.getFramePos();
         return [];
     }
 
@@ -35,19 +35,19 @@ export class TouchScrollRule {
         if (this.startPos1 != undefined) {
             var bcr = event.target.getBoundingClientRect();
             let curPos = new CPoint(event.changedTouches[0].clientX - bcr.x, event.changedTouches[0].clientY - bcr.y);
-            let endCell = this.editModel.CellXYInScr(curPos.X, curPos.Y);
-            if (event.changedTouches.length == 1 && Math.abs(this.startPos1.X - curPos.X) < 5 && Math.abs(this.startPos1.Y - curPos.Y) < 5) {
-                if (this.cWorld.GetCell(endCell.X, endCell.Y) === undefined)
-                    this.cWorld.AddCell(endCell.X, endCell.Y);
+            let endCell = this.editModel.cellXYInScr(curPos.x, curPos.y);
+            if (event.changedTouches.length == 1 && Math.abs(this.startPos1.x - curPos.x) < 5 && Math.abs(this.startPos1.y - curPos.y) < 5) {
+                if (this.cWorld.getCell(endCell.x, endCell.y) === undefined)
+                    this.cWorld.addCell(endCell.x, endCell.y);
                 else
-                    this.cWorld.ClearCell(endCell.X, endCell.Y);
-                return [WorldCangesType.cellsEditing];
+                    this.cWorld.clearCell(endCell.x, endCell.y);
+                return [WorldCangesType.CellsEditing];
             }
             else {
-                this.editModel.X = this.startFramePos!.X - this.editModel.ScrdXToCell(curPos.X - this.startPos1!.X);
-                this.editModel.Y = this.startFramePos!.Y - this.editModel.ScrdYToCell(curPos.Y - this.startPos1!.Y);
+                this.editModel.x = this.startFramePos!.x - this.editModel.scrdXToCell(curPos.x - this.startPos1!.x);
+                this.editModel.y = this.startFramePos!.y - this.editModel.scrdYToCell(curPos.y - this.startPos1!.y);
                 this.startPos1 = undefined;
-                return [WorldCangesType.frameChanging];
+                return [WorldCangesType.FrameChanging];
             }
         }
         return [];
@@ -72,9 +72,9 @@ export class TouchScrollRule {
             this.editModel.scale = this.startScale / this.startPos1.dist(this.startPos2) * curPos1.dist(curPos2);
         }
         if (this.startPos1 != undefined) {
-            this.editModel.X = this.startFramePos!.X - this.editModel.ScrdXToCell(curPos1.X - this.startPos1!.X);
-            this.editModel.Y = this.startFramePos!.Y - this.editModel.ScrdYToCell(curPos1.Y - this.startPos1!.Y);
-            return [WorldCangesType.frameChanging];
+            this.editModel.x = this.startFramePos!.x - this.editModel.scrdXToCell(curPos1.x - this.startPos1!.x);
+            this.editModel.y = this.startFramePos!.y - this.editModel.scrdYToCell(curPos1.y - this.startPos1!.y);
+            return [WorldCangesType.FrameChanging];
         }
         return [];
     }

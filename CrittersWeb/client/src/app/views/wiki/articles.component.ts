@@ -32,13 +32,13 @@ export class ArticlesComponent implements OnInit {
     }
 
     getArticleStatusDesc(st: ArticleStatus) {
-        if (st == ArticleStatus.draft)
+        if (st == ArticleStatus.Draft)
             return "(Draft)"
-        else if (st == ArticleStatus.archival)
+        else if (st == ArticleStatus.Archival)
             return "(In archive)"
-        else if (st == ArticleStatus.awaitingApproval)
+        else if (st == ArticleStatus.AwaitingApproval)
             return "(Awaiting moderation)"
-        else if (st == ArticleStatus.regected)
+        else if (st == ArticleStatus.Regected)
             return "(Adjustment required)"
         else return "";
     }

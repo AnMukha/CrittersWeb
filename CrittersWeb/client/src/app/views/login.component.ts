@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     }    
 
     async onOkButton(emailOrName: string, password: string) {
-        var res = await this.loginService.Login(emailOrName, password);        
+        var res = await this.loginService.login(emailOrName, password);        
         console.log(res);
         if (res)
             this.result.emit("ok");

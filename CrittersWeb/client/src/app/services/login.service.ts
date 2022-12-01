@@ -15,13 +15,13 @@ export class LoginService {
         return await lastValueFrom(this.http.get<UserInfo>("/account/userinfo"));
     }
 
-    async Logout() {
+    async logout() {
         var success = await lastValueFrom(this.http.get("/account/logout"));
         if (success)
             this.userInfo.next({ name: "", signedIn: false, admin: false });
     }    
 
-    async Login(emailOrName: string, password: string): Promise<boolean> {
+    async login(emailOrName: string, password: string): Promise<boolean> {
         let isEmail = emailOrName.indexOf('@') != -1;
         if (await lastValueFrom(this.http.post<boolean>("/account/Login", { UserName: isEmail ? null : emailOrName, Mail: isEmail ? emailOrName : null, password: password }))) {
             let userInfo = await lastValueFrom(this.http.get<UserInfo>("/account/userinfo"));

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GameStartComponent } from './views/gameStart/game-start.component';
 import { LoginComponent } from './views/login.component';
 import { SandboxComponent } from './views/sandbox.component';
 import { StartpageComponent } from './views/startpage.component';
@@ -18,6 +19,8 @@ const routes: Routes = [
             sandBox.exitConfirmRequired() ? window.confirm(sandBox.getExitConfirmText()): true
         ]
     },
+    {
+        path: 'play', component: GameStartComponent },
     {
         path: "wiki", component: WikiComponent, 
         children: [

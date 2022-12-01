@@ -21,17 +21,21 @@
                         </li>
                     </ul>
                     <label *ngIf="userInfo.signedIn" class="text-light me-3 fs-5">{{userInfo.name}}</label>
-                    <button *ngIf="userInfo.signedIn" class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="Logout()"><i class="fas fa-sign-out me-2"></i>Logout</button>
-                    <button *ngIf="!userInfo.signedIn" class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="Login()"><i class="fas fa-sign-in me-2"></i>Login</button>
+                    <button *ngIf="userInfo.signedIn" class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="logout()"><i class="fas fa-sign-out me-2"></i>Logout</button>
+                    <button *ngIf="!userInfo.signedIn" class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="login()"><i class="fas fa-sign-in me-2"></i>Login</button>
                 </div>
             </div>
         </nav>
     </header>
-
+    
+    <div style="width: 900px; height: 210px; display: block; position: relative; left: 50%; transform: translateX(-50%);" class="m-5" [ngStyle]="{'canvas.background-color': 'red'}">
+        <app-critters-canvas [canvasColor]="'rgb(79, 90, 110)'"></app-critters-canvas>       
+    </div>
     <div class="container-fluid p-4" style="color: white">
         Critters is defined on a two-dimensional infinite grid of cells, which may be identified with the integer lattice. As in Conway's Game of Life, at any point in time each cell may be in one of two states: alive or dead. The Critters rule is a block cellular automaton using the Margolus neighborhood. This means that, at each step, the cells of the automaton are partitioned into 2 × 2 blocks and each block is updated independently of the other blocks. The center of a block at one time step becomes the corner of four blocks at the next time step, and vice versa; in this way, the four cells in each block belong to four different 2 × 2 blocks of the previous partition.
-        <br> (Wikipedia)
-    </div>    
+        <br> (Wikipedia) 
+    </div>
+
 </div>
 
 <div style="position: fixed">

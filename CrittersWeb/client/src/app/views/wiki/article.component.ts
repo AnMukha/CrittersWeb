@@ -31,7 +31,7 @@ export class ArticleComponent implements OnInit {
     deleteAvaible: boolean = false;
     toArchiveAvaible: boolean = false;
 
-    CellsFieldIsEmpy(): boolean {        
+    cellsFieldIsEmpy(): boolean {        
         return (this.article?.cellsData?.length ?? 0)==0;
     }
 
@@ -44,7 +44,7 @@ export class ArticleComponent implements OnInit {
                 this.zeroTimeController.setThisTimeAsZero();                     
                 await this.showAccessibleButtons();
                 setInterval(() =>
-                    this.world.notifyAboutChanges([WorldCangesType.loaded]));
+                    this.world.notifyAboutChanges([WorldCangesType.Loaded]));
             });
         });
     }
@@ -56,20 +56,20 @@ export class ArticleComponent implements OnInit {
             // user can edit article when it in draft/rejected status or if user is admin
             this.editAvaible = 
             this.editAvaible = (this.article?.authorName == userInfo.name &&
-                [ArticleStatus.draft, ArticleStatus.regected].includes(this.article.status)) || userInfo.admin;
+                [ArticleStatus.Draft, ArticleStatus.Regected].includes(this.article.status)) || userInfo.admin;
             // user can delete article if he is admin or it is his article
             this.deleteAvaible = this.article?.authorName == userInfo.name || userInfo.admin;
             // user can send article to archive if it approved his article or user is a moderator
             this.toArchiveAvaible = (this.article?.authorName == userInfo.name &&
-                this.article.status == ArticleStatus.approved) || userInfo.admin;
+                this.article.status == ArticleStatus.Approved) || userInfo.admin;
         }
     }
 
     deserializeWorld(article: ArticleModel) {
-        this.world.Clear();
+        this.world.clear();
         let data = article.cellsData;
         for (let i = 0; i < data.length; i = i + 2)
-            this.world.AddCell(data[i], data[i + 1]);
+            this.world.addCell(data[i], data[i + 1]);
     }
 
     deleteArticle() {
@@ -88,7 +88,7 @@ export class ArticleComponent implements OnInit {
         }
     }
 
-    ContentToHTML(content: string | undefined): string | undefined {
+    contentToHTML(content: string | undefined): string | undefined {
         return content == undefined ? content: content.replace(/(?:\r\n|\r|\n)/g, '<br>');               
     }
 
@@ -104,10 +104,10 @@ export class ArticleModel {
 }
 
 export enum ArticleStatus {    
-    draft = 1,
-    awaitingApproval = 2,
-    regected = 3,
-    approved = 4,
-    archival = 5
+    Draft = 1,
+    AwaitingApproval = 2,
+    Regected = 3,
+    Approved = 4,
+    Archival = 5
 }
 

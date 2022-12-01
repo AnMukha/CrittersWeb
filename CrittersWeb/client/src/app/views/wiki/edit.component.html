@@ -20,12 +20,12 @@
         <app-time-control-panel class="m-1" style="position: absolute; right:30px; bottom: 30px;"></app-time-control-panel>
     </div>
     <div style="background: rgb(240, 240, 240); grid-area: buttons1; color: white; position: relative ">
-        <button class="btn btn-outline-danger m-2" (click)="OnApprove()">Approve</button>
-        <button class="btn btn-outline-danger m-2" (click)="OnReject()">Reject</button>
-        <button class="btn btn-outline-danger m-2" (click)="OnDelete()">Delete</button>
+        <button class="btn btn-outline-danger m-2" (click)="onApprove()">Approve</button>
+        <button class="btn btn-outline-danger m-2" (click)="onReject()">Reject</button>
+        <button class="btn btn-outline-danger m-2" (click)="onDelete()">Delete</button>
     </div>
     <div style="background: rgb(240, 240, 240); grid-area: buttons2; position: relative ">
-        <button class="btn btn-outline-success m-2 float-end" (click)="OnPublish(articleName.value, articleContent.value)">Publish</button>
-        <button class="btn btn-outline-success m-2 float-end" (click)="OnSave(articleName.value, articleContent.value)">Save as draft</button>
+        <button class="btn btn-outline-success m-2 float-end" (click)="onPublish(articleName.value, articleContent.value)">Publish</button>
+        <button class="btn btn-outline-success m-2 float-end" (click)="onSave(articleName.value, articleContent.value)">Save as draft</button>
     </div>
 </div>

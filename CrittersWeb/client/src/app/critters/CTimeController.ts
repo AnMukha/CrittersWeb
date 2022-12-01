@@ -12,17 +12,17 @@ export class CTimeController {
     execTimer: NodeJS.Timeout | undefined = undefined;
 
     public step() {
-        this.RunSerie(1);
-        this.world.notifyAboutChanges([WorldCangesType.executed]);
+        this.runSerie(1);
+        this.world.notifyAboutChanges([WorldCangesType.Executed]);
         this.toOddStep();        
     }
 
-    RunSerie(stepCount: number) {        
-        var stNum = this.world.GetStepNum();
+    runSerie(stepCount: number) {        
+        var stNum = this.world.getStepNum();
         for (let n = stNum; n < stNum + stepCount; n++) {
-            if (this.world.IsZeroTime())
+            if (this.world.isZeroTime())
                 this.ztContorller.beforeZeroTimePass();
-            this.world.RunSerie(stepCount);
+            this.world.runSerie(stepCount);
         }
     }
 
@@ -43,8 +43,8 @@ export class CTimeController {
                 stepCount = Math.round(20/interval);
                 interval = 20;                
             };
-            this.RunSerie(stepCount);
-            this.world.notifyAboutChanges([WorldCangesType.executed]);
+            this.runSerie(stepCount);
+            this.world.notifyAboutChanges([WorldCangesType.Executed]);
             //if (!this.world.IsZeroTime()) 
             this.execTimer = setTimeout(() => this.stepOnTimer(), interval);
             //else {
@@ -61,12 +61,12 @@ export class CTimeController {
     }   
 
     private toOddStep() {        
-        if (this.world.IsEvenStep())
+        if (this.world.isEvenStep())
             setTimeout(() =>
             {                
-                if (this.world.IsEvenStep()) {                    
-                    this.RunSerie(1);
-                    this.world.notifyAboutChanges([WorldCangesType.executed]);
+                if (this.world.isEvenStep()) {                    
+                    this.runSerie(1);
+                    this.world.notifyAboutChanges([WorldCangesType.Executed]);
                 }
             }, 500);    
     }
@@ -75,7 +75,7 @@ export class CTimeController {
         if (this.timeForward != forward)
             this.timeForward = forward;
         if (this.world.isForwardTimeDirection() != forward) {
-            this.world.ReverseTimeDirection();
+            this.world.reverseTimeDirection();
             this.toOddStep();            
         }        
     }    

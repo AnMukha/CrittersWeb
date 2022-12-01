@@ -10,14 +10,14 @@ export class WheelRule {
 
     onWheel(event: any): WorldCangesType[] {
         console.log(event);
-        let mouseX0 = this.editModel.ScrXToCell(event.offsetX);
+        let mouseX0 = this.editModel.scrXToCell(event.offsetX);
         let mouseY0 = this.editModel.ScrYToCell(event.offsetY);
         if (event.deltaY > 0 && this.editModel.scale > 0.7 || event.deltaY < 0 && this.editModel.scale < 100)
             this.editModel.scale = this.editModel.scale * Math.pow(1.1, -event.deltaY / 120);
-        let mouseX = this.editModel.ScrXToCell(event.offsetX);
+        let mouseX = this.editModel.scrXToCell(event.offsetX);
         let mouseY = this.editModel.ScrYToCell(event.offsetY);
-        this.editModel.X -= mouseX - mouseX0;
-        this.editModel.Y -= mouseY - mouseY0;
-        return [WorldCangesType.frameChanging];
+        this.editModel.x -= mouseX - mouseX0;
+        this.editModel.y -= mouseY - mouseY0;
+        return [WorldCangesType.FrameChanging];
     }
 }

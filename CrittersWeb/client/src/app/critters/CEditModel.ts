@@ -6,50 +6,50 @@ import { CPoint } from "./CrittersWorld";
 export class CEditModel {
 
     scale: number = 10;
-    X: number = 0;
-    Y: number = 0;
+    x: number = 0;
+    y: number = 0;
     gridActual: boolean = false;    
 
     public readonly changesSubject: Subject<number> = new Subject();
 
-    CellXToScr(x: number): number {
-        return (x - this.X) * this.scale;
+    cellXToScr(x: number): number {
+        return (x - this.x) * this.scale;
     }
 
-    CellYToScr(y: number): number {
-        return (y - this.Y) * this.scale;
+    cellYToScr(y: number): number {
+        return (y - this.y) * this.scale;
     }
 
-    CelldXToScr(dx: number) {
+    celldXToScr(dx: number) {
         return dx * this.scale;
     }
 
-    CelldYToScr(dy: number) {
+    celldYToScr(dy: number) {
         return dy * this.scale;
     }
 
-    ScrXToCell(x: number) {
-        return this.X + x / this.scale;
+    scrXToCell(x: number) {
+        return this.x + x / this.scale;
     }
 
     ScrYToCell(y: number) {
-        return this.Y + y / this.scale;
+        return this.y + y / this.scale;
     }
 
-    ScrdXToCell(x: number) {
+    scrdXToCell(x: number) {
         return x / this.scale;
     }
 
-    ScrdYToCell(y: number) {
+    scrdYToCell(y: number) {
         return y / this.scale;
     }
 
-    CellXYInScr(x: number, y: number): CPoint {
-        return new CPoint(Math.floor(this.ScrXToCell(x)), Math.floor(this.ScrYToCell(y)));
+    cellXYInScr(x: number, y: number): CPoint {
+        return new CPoint(Math.floor(this.scrXToCell(x)), Math.floor(this.ScrYToCell(y)));
     }
 
-    GetFramePos(): CPoint {
-        return new CPoint(this.X, this.Y)
+    getFramePos(): CPoint {
+        return new CPoint(this.x, this.y)
     }
 
 }

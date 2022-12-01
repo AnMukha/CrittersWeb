@@ -17,17 +17,17 @@ export class EditCellRule {
     onMouseUp(event: any): WorldCangesType[] {
         let modified = false;
         if (this.startPos != undefined) {
-            let endCell = this.editModel.CellXYInScr(event.offsetX, event.offsetY);
-            if (Math.abs(this.startPos.X - event.offsetX) < EditCellRule.mouse_shift_to_edit && Math.abs(this.startPos.Y - event.offsetY) < EditCellRule.mouse_shift_to_edit) {
-                if (this.cWorld.GetCell(endCell.X, endCell.Y) === undefined)
-                    this.cWorld.AddCell(endCell.X, endCell.Y);
+            let endCell = this.editModel.cellXYInScr(event.offsetX, event.offsetY);
+            if (Math.abs(this.startPos.x - event.offsetX) < EditCellRule.mouse_shift_to_edit && Math.abs(this.startPos.y - event.offsetY) < EditCellRule.mouse_shift_to_edit) {
+                if (this.cWorld.getCell(endCell.x, endCell.y) === undefined)
+                    this.cWorld.addCell(endCell.x, endCell.y);
                 else
-                    this.cWorld.ClearCell(endCell.X, endCell.Y);
+                    this.cWorld.clearCell(endCell.x, endCell.y);
                 modified = true;
             }
             this.startPos = undefined;
         }
-        return modified ? [WorldCangesType.cellsEditing] : [];
+        return modified ? [WorldCangesType.CellsEditing] : [];
     }
 
 }

@@ -22,21 +22,21 @@ import { CrittersEditController } from '../critters/CEditController/CrittersEdit
 export class SandboxComponent implements OnInit {
 
     constructor(private http: HttpClient, private router: Router, private world: CrittersWorld,
-        private zeroTimeController: ZeroTimeController, private loginService: LoginService) {
+        private zeroTimeController: ZeroTimeController, private loginService: LoginService, private ec: CrittersEditController) {
     }        
 
     // --------------------------------------------------------------    
 
-    savePopup: SavePopup = new SavePopup();
+    savePopup: SavePopup = new SavePopup(); 
 
     loadPopup: LoadPopup = new LoadPopup();    
 
     @ViewChild(ComponentContainerDirective, { static: true }) dialogsHost!: ComponentContainerDirective;    
 
     ngOnInit(): void {
-        this.world.TestInit();
+        this.world.testInit();
         this.zeroTimeController.setThisTimeAsZero();
-        this.world.notifyAboutChanges([WorldCangesType.loaded]);
+        this.world.notifyAboutChanges([WorldCangesType.Loaded]);
         console.log("sandbox ngOnInit()")        
     }
 
@@ -65,21 +65,21 @@ export class SandboxComponent implements OnInit {
     }
 
     private deserializeWorld(data: number[]) {
-        this.world.Clear();        
+        this.world.clear();        
         for (let i = 0; i < data.length; i = i + 2) {
             console.log("add cell", data[i], data[i + 1]);
-            this.world.AddCell(data[i], data[i + 1]);
+            this.world.addCell(data[i], data[i + 1]);
         }
         this.zeroTimeController.setThisTimeAsZero();
         this.world.resetModificationFlag();
-        this.world.notifyAboutChanges([WorldCangesType.loaded]);
+        this.world.notifyAboutChanges([WorldCangesType.Loaded]);
     }
 
 
     public onNext() {
         console.log("onNext");
-        this.world.RunSerie(1);
-        this.world.notifyAboutChanges([WorldCangesType.executed]);
+        this.world.runSerie(1);
+        this.world.notifyAboutChanges([WorldCangesType.Executed]);
     }
 
     public getExitConfirmText(): string | undefined {
@@ -146,13 +146,13 @@ class SavePopup {
         // save current world to slot        
         this.selectedSave!.name = this.saveName;
         //this.selectedSave!.data = this.world.Serialize();
-        await this.SaveWorld(this.selectedSave);
+        await this.saveWorld(this.selectedSave);
         console.log("after save");
     }
 
-    async SaveWorld(worldTitle: SandboxWorldTitleModel | null) {
+    async saveWorld(worldTitle: SandboxWorldTitleModel | null) {
         let s = new CrittersWorldSerializer();
-        let cellsData = s.SerializeCells(this.world);
+        let cellsData = s.serializeCells(this.world);
         let result = await lastValueFrom(this.http.post("/sandboxworlds/savetoslot", { slot: worldTitle?.slot, newName: worldTitle?.name, cellsData: cellsData }));
         console.log(result);
         if (result)
@@ -176,12 +176,12 @@ class LoadPopup {
         this.titles = [];   
         this.selectedLoad = null;
         http.get<SandboxWorldTitleModel[]>("/sandboxworlds/titles").subscribe(titles => {
-            this.titles = this.ToSlotList(titles);
+            this.titles = this.toSlotList(titles);
         });
         this.loadPopupDisplayStyle = "block";
     }
 
-    ToSlotList(titles: SandboxWorldTitleModel[]): SandboxWorldTitleModel[] {
+    toSlotList(titles: SandboxWorldTitleModel[]): SandboxWorldTitleModel[] {
         let result: SandboxWorldTitleModel[] = []
         for (let i = 1; i <= 10; i++)
             result.push({ id: -1, slot: i, name: "<empty>" });

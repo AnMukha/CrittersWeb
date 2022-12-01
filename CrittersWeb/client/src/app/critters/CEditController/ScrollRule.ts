@@ -10,17 +10,17 @@ export class ScrollRule {
 
     onMouseDown(event: any): WorldCangesType[] {
         this.startPos = new CPoint(event.offsetX, event.offsetY);
-        this.startFramePos = this.editModel.GetFramePos();
+        this.startFramePos = this.editModel.getFramePos();
         return [];
     }
 
     onMouseUp(event: any): WorldCangesType[] {
         if (this.startPos != undefined) {
             let curPos = new CPoint(event.offsetX, event.offsetY);
-            this.editModel.X = this.startFramePos!.X - this.editModel.ScrdXToCell(curPos.X - this.startPos!.X);
-            this.editModel.Y = this.startFramePos!.Y - this.editModel.ScrdYToCell(curPos.Y - this.startPos!.Y);
+            this.editModel.x = this.startFramePos!.x - this.editModel.scrdXToCell(curPos.x - this.startPos!.x);
+            this.editModel.y = this.startFramePos!.y - this.editModel.scrdYToCell(curPos.y - this.startPos!.y);
             this.startPos = undefined;
-            return [WorldCangesType.frameChanging];
+            return [WorldCangesType.FrameChanging];
         }
         return [];
     }
@@ -28,9 +28,9 @@ export class ScrollRule {
     onMouseMove(event: any): WorldCangesType[] {
         if (this.startPos != undefined) {
             let curPos = new CPoint(event.offsetX, event.offsetY);
-            this.editModel.X = this.startFramePos!.X - this.editModel.ScrdXToCell(curPos.X - this.startPos!.X);
-            this.editModel.Y = this.startFramePos!.Y - this.editModel.ScrdYToCell(curPos.Y - this.startPos!.Y);
-            return [WorldCangesType.frameChanging];
+            this.editModel.x = this.startFramePos!.x - this.editModel.scrdXToCell(curPos.x - this.startPos!.x);
+            this.editModel.y = this.startFramePos!.y - this.editModel.scrdYToCell(curPos.y - this.startPos!.y);
+            return [WorldCangesType.FrameChanging];
         }
         return [];
     }

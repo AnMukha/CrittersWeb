@@ -15,13 +15,13 @@ export class CrittersWorld {
     private forward: boolean = true;
     private modified: boolean = false;
 
-    private nextCellKey: number = 0;
+    private cellKeyGen: number = 0;
     
     public readonly changesSubject: Subject<WorldCangesType[]> = new Subject();    
 
-    public AddCell(x: number, y: number): Cell {
+    public addCell(x: number, y: number): Cell {
         let key = x * Cell.KEY_GEN_FACTOR + y;
-        let resultCell = new Cell(this.NextCellKey(), x, y, this.stepNum);
+        let resultCell = new Cell(this.nextCellKey(), x, y, this.stepNum);
         this.cells.set(key, resultCell);
         return resultCell;
     }
@@ -30,13 +30,13 @@ export class CrittersWorld {
         return this.cells.values();
     }
 
-    private NextCellKey(): number {
-        this.nextCellKey++;
-        return this.nextCellKey;
+    private nextCellKey(): number {
+        this.cellKeyGen++;
+        return this.cellKeyGen;
     }
 
     public notifyAboutChanges(changeTypes: WorldCangesType[]) {
-        if (changeTypes.includes(WorldCangesType.cellsEditing))
+        if (changeTypes.includes(WorldCangesType.CellsEditing))
             this.modified = true;
         this.changesSubject.next(changeTypes);
     }
@@ -50,38 +50,38 @@ export class CrittersWorld {
     }
             
     // Очистить клетку, если занята        
-    public ClearCell(x: number, y: number) {
+    public clearCell(x: number, y: number) {
         let key = x * Cell.KEY_GEN_FACTOR + y;
         let c = this.cells.get(key);
         if (c)
-            this.RemoveCell(key, c);
+            this.removeCell(key, c);
     }
 
-    private RemoveCell(key: number, cl: Cell) {
+    private removeCell(key: number, cl: Cell) {
         this.cells.delete(key);
     }
 
 
-    public IsEvenStep(): boolean {
+    public isEvenStep(): boolean {
         return this.stepNum % 2 == 0;
     }
 
-    public GetStepNum() {
+    public getStepNum() {
         return this.stepNum;
     }
 
-    public RunSerie(stepCnt: number) {
+    public runSerie(stepCnt: number) {
         for (let i = 0; i < stepCnt; i++)
-            this.Run();
+            this.run();
     }
 
-    public Clear() {
+    public clear() {
         this.cells.clear();
-        this.nextCellKey = 0;
+        this.cellKeyGen = 0;
         this.stepNum = 1;
     }
 
-    public ReverseTimeDirection() {
+    public reverseTimeDirection() {
         if (this.forward)
             this.stepNum--;
         else
@@ -93,7 +93,7 @@ export class CrittersWorld {
         return this.forward;
     }
 
-    private Run() {
+    private run() {
         if (this.forward)
             this.stepNum++;
         else
@@ -216,30 +216,30 @@ export class CrittersWorld {
         this.cells = cellsNew;        
     }
 
-    public GetCellsCount(): number {
+    public getCellsCount(): number {
         return this.cells.size;
     }
 
-    public GetCell(x: number, y: number): Cell | undefined {        
+    public getCell(x: number, y: number): Cell | undefined {        
         return this.cells.get(x * Cell.KEY_GEN_FACTOR + y);
     }
 
-    public FindInArea(rectangle: CRect): Cell[] {
+    public findInArea(rectangle: CRect): Cell[] {
         let result: Cell[] = [];
         for (let c of this.cells.entries()) {
             let cell = c[1];
-            if (rectangle.ContainsInXY(cell.x, cell.y))
+            if (rectangle.containsInXY(cell.x, cell.y))
                 result.push(cell);
         }
         return result;
     }
 
-    public DeleteCells(deleted: Cell[]) {        
+    public deleteCells(deleted: Cell[]) {        
         for (let c of deleted) 
-            this.cells.delete(c.GetKey());
+            this.cells.delete(c.getKey());
     }
 
-    public MoveCellsTo(cls: Cell[], dx: number, dy: number) {
+    public moveCellsTo(cls: Cell[], dx: number, dy: number) {
         /*foreach(var c in cls)
         cells.Remove(c.GetKey());
         foreach(var c in cls)
@@ -251,7 +251,7 @@ export class CrittersWorld {
         cells.Add(c.GetKey(), c);*/
     }
 
-    public SetThisTimeAsZero() {
+    public setThisTimeAsZero() {
         if (this.stepNum == 1)
             return;
         this.stepNum = 1;
@@ -260,48 +260,48 @@ export class CrittersWorld {
             c.prosessedStep = 1;
     }
 
-    public IsZeroTime(): boolean {
+    public isZeroTime(): boolean {
         return this.stepNum == 1;
     }
 
-    public RunToZeroTime() {
+    public runToZeroTime() {
         if (!this.forward) {
-            this.ReverseTimeDirection();
-            if (this.IsEvenStep())
-                this.RunSerie(1);
+            this.reverseTimeDirection();
+            if (this.isEvenStep())
+                this.runSerie(1);
         }
         if (this.stepNum == 1)
             return;
         let distToZero = Math.abs(this.stepNum - 1);        
         if (this.stepNum > 1) 
-            this.ReverseTimeDirection();
-         this.RunSerie(distToZero);
-         this.SetThisTimeAsZero();
+            this.reverseTimeDirection();
+         this.runSerie(distToZero);
+         this.setThisTimeAsZero();
     }
 
-    public MakeSnapshot(): CWorldSnapshot {        
+    public makeSnapshot(): CWorldSnapshot {        
         let resultCells: Cell[] = [];
         for (let value of this.cells.values()) {
-            resultCells.push(value.Clone());
+            resultCells.push(value.clone());
         }        
         return { cells: resultCells };
     }
 
-    public LoadSnapshot(snapshot: CWorldSnapshot) {
-        this.Clear();
+    public loadSnapshot(snapshot: CWorldSnapshot) {
+        this.clear();
         this.stepNum = 1;
         this.forward = true;
         for (let c of snapshot.cells) {
             c.prosessedStep = this.stepNum;
-            this.cells.set(c.x * Cell.KEY_GEN_FACTOR + c.y, c.Clone());
+            this.cells.set(c.x * Cell.KEY_GEN_FACTOR + c.y, c.clone());
         }
     }
 
-    public TestInit() {
-        this.AddCell(10, 10);
-        this.AddCell(11, 11);
-        this.AddCell(10, 11);
-        this.AddCell(12, 11);
+    public testInit() {
+        this.addCell(10, 10);
+        this.addCell(11, 11);
+        this.addCell(10, 11);
+        this.addCell(12, 11);
     }
 
 
@@ -309,7 +309,7 @@ export class CrittersWorld {
 
 export class CrittersWorldSerializer {
 
-    public SerializeCells(w: CrittersWorld): number[] {
+    public serializeCells(w: CrittersWorld): number[] {
         let result = [];
         for (let c of w.getCells()) {            
             result.push(c.x);
@@ -318,9 +318,9 @@ export class CrittersWorldSerializer {
         return result;
     }
 
-    public DeserializeCells(cellsData: number[], cw: CrittersWorld) {        
+    public deserializeCells(cellsData: number[], cw: CrittersWorld) {        
         for (let n = 0; n < cellsData.length; n=n+2) {
-            cw.AddCell(cellsData[n], cellsData[n + 1]);
+            cw.addCell(cellsData[n], cellsData[n + 1]);
         }
     }
 }
@@ -342,18 +342,18 @@ export class Cell {
     public y: number;
     public prosessedStep: number;
  
-    public GetKey(): number
+    public getKey(): number
     {
         return this.x * Cell.KEY_GEN_FACTOR + this.y;
     }
 
-    public MoveTo(toX: number, toY: number)
+    public moveTo(toX: number, toY: number)
     {
         this.x = toX;
         this.y = toY;
     }
 
-    public Clone(): Cell {
+    public clone(): Cell {
         return new Cell(this.id, this.x, this.y, this.prosessedStep);
     }
 
@@ -362,49 +362,49 @@ export class Cell {
 
 export class CRect {
     public constructor(x: number, y: number, width: number, height: number) {
-        this.X = x;
-        this.Y = y;
-        this.Width = width;
-        this.Height = height;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
 
-    public Width: number;
-    public Height: number;
-    public X: number;
-    public Y: number;
+    public width: number;
+    public height: number;
+    public x: number;
+    public y: number;
 
-    public GetTop(): number { return this.Y; }
-    public GetRight(): number { return this.X + this.Width; }
-    public GetLeft(): number { return this.X; }
-    public GetBottom(): number { return this.Y + this.Height; }
+    public getTop(): number { return this.y; }
+    public getRight(): number { return this.x + this.width; }
+    public getLeft(): number { return this.x; }
+    public getBottom(): number { return this.y + this.height; }
 
-    public ContainsInXY(x: number, y: number): boolean {
-        return x >= this.X && x < this.X + this.Width && y >= this.Y && y < this.Y + this.Height;
+    public containsInXY(x: number, y: number): boolean {
+        return x >= this.x && x < this.x + this.width && y >= this.y && y < this.y + this.height;
     }
 
-    public Contains(p: CPoint): boolean {
-        return p.X >= this.X && p.X < this.X + this.Width && p.Y >= this.Y && p.Y < this.Y + this.Height;
+    public contains(p: CPoint): boolean {
+        return p.x >= this.x && p.x < this.x + this.width && p.y >= this.y && p.y < this.y + this.height;
     }
 }
 
 export class CPoint {
     public constructor(x: number, y: number) {
-        this.X = x;
-        this.Y = y;
+        this.x = x;
+        this.y = y;
     }
-    public X: number;
-    public Y: number;
+    public x: number;
+    public y: number;
 
     public dist(p: CPoint) {
-        return Math.sqrt((this.X - p.X) * (this.X - p.X) + (this.Y - p.Y) * (this.Y - p.Y));
+        return Math.sqrt((this.x - p.x) * (this.x - p.x) + (this.y - p.y) * (this.y - p.y));
     }
 
 }
 
 export enum WorldCangesType {
-    cellsEditing,
-    frameChanging,
-    toolsChanging,
-    loaded,
-    executed
+    CellsEditing,
+    FrameChanging,
+    ToolsChanging,
+    Loaded,
+    Executed
 }

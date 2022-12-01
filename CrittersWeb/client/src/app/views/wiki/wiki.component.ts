@@ -23,10 +23,10 @@ export class WikiComponent implements OnInit {
 
     keyPress($event: any, request: string) {
         if ($event.code == "Enter")
-            this.OnSearch(request);
+            this.onSearch(request);
     }
 
-    OnSearch(request: string) {
+    onSearch(request: string) {
         this.router.navigateByUrl("/wiki/articles/q:" + request);
     }
 

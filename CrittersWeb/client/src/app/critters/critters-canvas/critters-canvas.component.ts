@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { bufferTime } from 'rxjs';
 import { CrittersEditController } from '../CEditController/CrittersEditController';
 import { CEditModel } from '../CEditModel';
@@ -18,6 +18,9 @@ export class CrittersCanvasComponent implements OnInit {
     }
 
     _canvas!: HTMLCanvasElement;
+
+    @Input()
+    canvasColor: string = 'white';
 
     ngOnInit(): void {
         this._canvas = document.getElementById("c_canvas") as HTMLCanvasElement;

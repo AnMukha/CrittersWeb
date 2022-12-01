@@ -11,15 +11,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppRoutingModule": () => (/* binding */ AppRoutingModule)
 /* harmony export */ });
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 124);
-/* harmony import */ var _views_login_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/login.component */ 3392);
-/* harmony import */ var _views_sandbox_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/sandbox.component */ 5957);
-/* harmony import */ var _views_startpage_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/startpage.component */ 542);
-/* harmony import */ var _views_wiki_article_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/wiki/article.component */ 7744);
-/* harmony import */ var _views_wiki_articles_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/wiki/articles.component */ 1786);
-/* harmony import */ var _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/wiki/edit.component */ 1767);
-/* harmony import */ var _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/wiki/wiki.component */ 8929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 124);
+/* harmony import */ var _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/gameStart/game-start.component */ 268);
+/* harmony import */ var _views_login_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/login.component */ 3392);
+/* harmony import */ var _views_sandbox_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/sandbox.component */ 5957);
+/* harmony import */ var _views_startpage_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/startpage.component */ 542);
+/* harmony import */ var _views_wiki_article_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/wiki/article.component */ 7744);
+/* harmony import */ var _views_wiki_articles_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/wiki/articles.component */ 1786);
+/* harmony import */ var _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/wiki/edit.component */ 1767);
+/* harmony import */ var _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/wiki/wiki.component */ 8929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 2560);
+
 
 
 
@@ -32,39 +34,42 @@ __webpack_require__.r(__webpack_exports__);
 
 const routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: "home", component: _views_startpage_component__WEBPACK_IMPORTED_MODULE_2__.StartpageComponent },
+    { path: "home", component: _views_startpage_component__WEBPACK_IMPORTED_MODULE_3__.StartpageComponent },
     {
         path: "sandbox",
-        component: _views_sandbox_component__WEBPACK_IMPORTED_MODULE_1__.SandboxComponent,
+        component: _views_sandbox_component__WEBPACK_IMPORTED_MODULE_2__.SandboxComponent,
         canDeactivate: [(sandBox) => sandBox.exitConfirmRequired() ? window.confirm(sandBox.getExitConfirmText()) : true
         ]
     },
     {
-        path: "wiki", component: _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_6__.WikiComponent,
+        path: 'play', component: _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_0__.GameStartComponent
+    },
+    {
+        path: "wiki", component: _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_7__.WikiComponent,
         children: [
             {
                 path: 'article/:id',
-                component: _views_wiki_article_component__WEBPACK_IMPORTED_MODULE_3__.ArticleComponent,
+                component: _views_wiki_article_component__WEBPACK_IMPORTED_MODULE_4__.ArticleComponent,
             },
             {
                 path: 'edit/:id',
-                component: _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_5__.EditArticleComponent,
+                component: _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_6__.EditArticleComponent,
                 canDeactivate: [(editArt) => editArt.exitConfirmRequired() ? window.confirm(editArt.getExitConfirmText()) : true]
             },
             {
                 path: 'articles/:request',
-                component: _views_wiki_articles_component__WEBPACK_IMPORTED_MODULE_4__.ArticlesComponent
+                component: _views_wiki_articles_component__WEBPACK_IMPORTED_MODULE_5__.ArticlesComponent
             },
         ],
     },
-    { path: "login", component: _views_login_component__WEBPACK_IMPORTED_MODULE_0__.LoginComponent },
+    { path: "login", component: _views_login_component__WEBPACK_IMPORTED_MODULE_1__.LoginComponent },
 ];
 class AppRoutingModule {
 }
 AppRoutingModule.ɵfac = function AppRoutingModule_Factory(t) { return new (t || AppRoutingModule)(); };
-AppRoutingModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineNgModule"]({ type: AppRoutingModule });
-AppRoutingModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjector"]({ imports: [_angular_router__WEBPACK_IMPORTED_MODULE_8__.RouterModule.forRoot(routes, { useHash: true }), _angular_router__WEBPACK_IMPORTED_MODULE_8__.RouterModule] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵsetNgModuleScope"](AppRoutingModule, { imports: [_angular_router__WEBPACK_IMPORTED_MODULE_8__.RouterModule], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_8__.RouterModule] }); })();
+AppRoutingModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineNgModule"]({ type: AppRoutingModule });
+AppRoutingModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjector"]({ imports: [_angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule.forRoot(routes, { useHash: true }), _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵsetNgModuleScope"](AppRoutingModule, { imports: [_angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule] }); })();
 
 
 /***/ }),
@@ -106,8 +111,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/platform-browser */ 4497);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/common/http */ 8987);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/platform-browser */ 4497);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/common/http */ 8987);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-routing.module */ 158);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 5041);
 /* harmony import */ var _views_sandbox_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/sandbox.component */ 5957);
@@ -121,7 +126,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./views/wiki/edit.component */ 1767);
 /* harmony import */ var _critters_critters_canvas_critters_canvas_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./critters/critters-canvas/critters-canvas.component */ 4986);
 /* harmony import */ var _critters_time_control_panel_time_control_panel_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./critters/time-control-panel/time-control-panel.component */ 8054);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/gameStart/game-start.component */ 268);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/core */ 2560);
+
 
 
 
@@ -141,11 +148,11 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
 }
 AppModule.ɵfac = function AppModule_Factory(t) { return new (t || AppModule)(); };
-AppModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent] });
-AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineInjector"]({ imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_14__.BrowserModule,
+AppModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent] });
+AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjector"]({ imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_15__.BrowserModule,
         _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule,
-        _angular_common_http__WEBPACK_IMPORTED_MODULE_15__.HttpClientModule] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent,
+        _angular_common_http__WEBPACK_IMPORTED_MODULE_16__.HttpClientModule] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent,
         _views_sandbox_component__WEBPACK_IMPORTED_MODULE_2__.SandboxComponent,
         _views_startpage_component__WEBPACK_IMPORTED_MODULE_3__.StartpageComponent,
         _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_4__.WikiComponent,
@@ -156,9 +163,10 @@ AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵ�
         _views_wiki_articles_component__WEBPACK_IMPORTED_MODULE_9__.ArticlesComponent,
         _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_10__.EditArticleComponent,
         _critters_critters_canvas_critters_canvas_component__WEBPACK_IMPORTED_MODULE_11__.CrittersCanvasComponent,
-        _critters_time_control_panel_time_control_panel_component__WEBPACK_IMPORTED_MODULE_12__.TimeControlPanelComponent], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_14__.BrowserModule,
+        _critters_time_control_panel_time_control_panel_component__WEBPACK_IMPORTED_MODULE_12__.TimeControlPanelComponent,
+        _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_13__.GameStartComponent], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_15__.BrowserModule,
         _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule,
-        _angular_common_http__WEBPACK_IMPORTED_MODULE_15__.HttpClientModule] }); })();
+        _angular_common_http__WEBPACK_IMPORTED_MODULE_16__.HttpClientModule] }); })();
 
 
 /***/ }),
@@ -218,17 +226,17 @@ class EditCellRule {
     onMouseUp(event) {
         let modified = false;
         if (this.startPos != undefined) {
-            let endCell = this.editModel.CellXYInScr(event.offsetX, event.offsetY);
-            if (Math.abs(this.startPos.X - event.offsetX) < EditCellRule.mouse_shift_to_edit && Math.abs(this.startPos.Y - event.offsetY) < EditCellRule.mouse_shift_to_edit) {
-                if (this.cWorld.GetCell(endCell.X, endCell.Y) === undefined)
-                    this.cWorld.AddCell(endCell.X, endCell.Y);
+            let endCell = this.editModel.cellXYInScr(event.offsetX, event.offsetY);
+            if (Math.abs(this.startPos.x - event.offsetX) < EditCellRule.mouse_shift_to_edit && Math.abs(this.startPos.y - event.offsetY) < EditCellRule.mouse_shift_to_edit) {
+                if (this.cWorld.getCell(endCell.x, endCell.y) === undefined)
+                    this.cWorld.addCell(endCell.x, endCell.y);
                 else
-                    this.cWorld.ClearCell(endCell.X, endCell.Y);
+                    this.cWorld.clearCell(endCell.x, endCell.y);
                 modified = true;
             }
             this.startPos = undefined;
         }
-        return modified ? [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.cellsEditing] : [];
+        return modified ? [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.CellsEditing] : [];
     }
 }
 EditCellRule.mouse_shift_to_edit = 4;
@@ -340,25 +348,25 @@ class ScrollRule {
     }
     onMouseDown(event) {
         this.startPos = new _CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CPoint(event.offsetX, event.offsetY);
-        this.startFramePos = this.editModel.GetFramePos();
+        this.startFramePos = this.editModel.getFramePos();
         return [];
     }
     onMouseUp(event) {
         if (this.startPos != undefined) {
             let curPos = new _CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CPoint(event.offsetX, event.offsetY);
-            this.editModel.X = this.startFramePos.X - this.editModel.ScrdXToCell(curPos.X - this.startPos.X);
-            this.editModel.Y = this.startFramePos.Y - this.editModel.ScrdYToCell(curPos.Y - this.startPos.Y);
+            this.editModel.x = this.startFramePos.x - this.editModel.scrdXToCell(curPos.x - this.startPos.x);
+            this.editModel.y = this.startFramePos.y - this.editModel.scrdYToCell(curPos.y - this.startPos.y);
             this.startPos = undefined;
-            return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.frameChanging];
+            return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.FrameChanging];
         }
         return [];
     }
     onMouseMove(event) {
         if (this.startPos != undefined) {
             let curPos = new _CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CPoint(event.offsetX, event.offsetY);
-            this.editModel.X = this.startFramePos.X - this.editModel.ScrdXToCell(curPos.X - this.startPos.X);
-            this.editModel.Y = this.startFramePos.Y - this.editModel.ScrdYToCell(curPos.Y - this.startPos.Y);
-            return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.frameChanging];
+            this.editModel.x = this.startFramePos.x - this.editModel.scrdXToCell(curPos.x - this.startPos.x);
+            this.editModel.y = this.startFramePos.y - this.editModel.scrdYToCell(curPos.y - this.startPos.y);
+            return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.FrameChanging];
         }
         return [];
     }
@@ -397,7 +405,7 @@ class TouchScrollRule {
             this.startPos2 = new _CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CPoint(event.touches[1].clientX - bcr.x, event.touches[1].clientY - bcr.y);
             this.startScale = this.editModel.scale;
         }
-        this.startFramePos = this.editModel.GetFramePos();
+        this.startFramePos = this.editModel.getFramePos();
         return [];
     }
     onTouchEnd(event) {
@@ -412,19 +420,19 @@ class TouchScrollRule {
         if (this.startPos1 != undefined) {
             var bcr = event.target.getBoundingClientRect();
             let curPos = new _CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CPoint(event.changedTouches[0].clientX - bcr.x, event.changedTouches[0].clientY - bcr.y);
-            let endCell = this.editModel.CellXYInScr(curPos.X, curPos.Y);
-            if (event.changedTouches.length == 1 && Math.abs(this.startPos1.X - curPos.X) < 5 && Math.abs(this.startPos1.Y - curPos.Y) < 5) {
-                if (this.cWorld.GetCell(endCell.X, endCell.Y) === undefined)
-                    this.cWorld.AddCell(endCell.X, endCell.Y);
+            let endCell = this.editModel.cellXYInScr(curPos.x, curPos.y);
+            if (event.changedTouches.length == 1 && Math.abs(this.startPos1.x - curPos.x) < 5 && Math.abs(this.startPos1.y - curPos.y) < 5) {
+                if (this.cWorld.getCell(endCell.x, endCell.y) === undefined)
+                    this.cWorld.addCell(endCell.x, endCell.y);
                 else
-                    this.cWorld.ClearCell(endCell.X, endCell.Y);
-                return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.cellsEditing];
+                    this.cWorld.clearCell(endCell.x, endCell.y);
+                return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.CellsEditing];
             }
             else {
-                this.editModel.X = this.startFramePos.X - this.editModel.ScrdXToCell(curPos.X - this.startPos1.X);
-                this.editModel.Y = this.startFramePos.Y - this.editModel.ScrdYToCell(curPos.Y - this.startPos1.Y);
+                this.editModel.x = this.startFramePos.x - this.editModel.scrdXToCell(curPos.x - this.startPos1.x);
+                this.editModel.y = this.startFramePos.y - this.editModel.scrdYToCell(curPos.y - this.startPos1.y);
                 this.startPos1 = undefined;
-                return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.frameChanging];
+                return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.FrameChanging];
             }
         }
         return [];
@@ -447,9 +455,9 @@ class TouchScrollRule {
             this.editModel.scale = this.startScale / this.startPos1.dist(this.startPos2) * curPos1.dist(curPos2);
         }
         if (this.startPos1 != undefined) {
-            this.editModel.X = this.startFramePos.X - this.editModel.ScrdXToCell(curPos1.X - this.startPos1.X);
-            this.editModel.Y = this.startFramePos.Y - this.editModel.ScrdYToCell(curPos1.Y - this.startPos1.Y);
-            return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.frameChanging];
+            this.editModel.x = this.startFramePos.x - this.editModel.scrdXToCell(curPos1.x - this.startPos1.x);
+            this.editModel.y = this.startFramePos.y - this.editModel.scrdYToCell(curPos1.y - this.startPos1.y);
+            return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.FrameChanging];
         }
         return [];
     }
@@ -558,15 +566,15 @@ class WheelRule {
     }
     onWheel(event) {
         console.log(event);
-        let mouseX0 = this.editModel.ScrXToCell(event.offsetX);
+        let mouseX0 = this.editModel.scrXToCell(event.offsetX);
         let mouseY0 = this.editModel.ScrYToCell(event.offsetY);
         if (event.deltaY > 0 && this.editModel.scale > 0.7 || event.deltaY < 0 && this.editModel.scale < 100)
             this.editModel.scale = this.editModel.scale * Math.pow(1.1, -event.deltaY / 120);
-        let mouseX = this.editModel.ScrXToCell(event.offsetX);
+        let mouseX = this.editModel.scrXToCell(event.offsetX);
         let mouseY = this.editModel.ScrYToCell(event.offsetY);
-        this.editModel.X -= mouseX - mouseX0;
-        this.editModel.Y -= mouseY - mouseY0;
-        return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.frameChanging];
+        this.editModel.x -= mouseX - mouseX0;
+        this.editModel.y -= mouseY - mouseY0;
+        return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.FrameChanging];
     }
 }
 
@@ -592,40 +600,40 @@ __webpack_require__.r(__webpack_exports__);
 class CEditModel {
     constructor() {
         this.scale = 10;
-        this.X = 0;
-        this.Y = 0;
+        this.x = 0;
+        this.y = 0;
         this.gridActual = false;
         this.changesSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject();
     }
-    CellXToScr(x) {
-        return (x - this.X) * this.scale;
+    cellXToScr(x) {
+        return (x - this.x) * this.scale;
     }
-    CellYToScr(y) {
-        return (y - this.Y) * this.scale;
+    cellYToScr(y) {
+        return (y - this.y) * this.scale;
     }
-    CelldXToScr(dx) {
+    celldXToScr(dx) {
         return dx * this.scale;
     }
-    CelldYToScr(dy) {
+    celldYToScr(dy) {
         return dy * this.scale;
     }
-    ScrXToCell(x) {
-        return this.X + x / this.scale;
+    scrXToCell(x) {
+        return this.x + x / this.scale;
     }
     ScrYToCell(y) {
-        return this.Y + y / this.scale;
+        return this.y + y / this.scale;
     }
-    ScrdXToCell(x) {
+    scrdXToCell(x) {
         return x / this.scale;
     }
-    ScrdYToCell(y) {
+    scrdYToCell(y) {
         return y / this.scale;
     }
-    CellXYInScr(x, y) {
-        return new _CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CPoint(Math.floor(this.ScrXToCell(x)), Math.floor(this.ScrYToCell(y)));
+    cellXYInScr(x, y) {
+        return new _CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CPoint(Math.floor(this.scrXToCell(x)), Math.floor(this.ScrYToCell(y)));
     }
-    GetFramePos() {
-        return new _CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CPoint(this.X, this.Y);
+    getFramePos() {
+        return new _CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CPoint(this.x, this.y);
     }
 }
 CEditModel.ɵfac = function CEditModel_Factory(t) { return new (t || CEditModel)(); };
@@ -660,16 +668,16 @@ class CTimeController {
         this.execTimer = undefined;
     }
     step() {
-        this.RunSerie(1);
-        this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.executed]);
+        this.runSerie(1);
+        this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.Executed]);
         this.toOddStep();
     }
-    RunSerie(stepCount) {
-        var stNum = this.world.GetStepNum();
+    runSerie(stepCount) {
+        var stNum = this.world.getStepNum();
         for (let n = stNum; n < stNum + stepCount; n++) {
-            if (this.world.IsZeroTime())
+            if (this.world.isZeroTime())
                 this.ztContorller.beforeZeroTimePass();
-            this.world.RunSerie(stepCount);
+            this.world.runSerie(stepCount);
         }
     }
     setSpeed(speed) {
@@ -689,8 +697,8 @@ class CTimeController {
                 interval = 20;
             }
             ;
-            this.RunSerie(stepCount);
-            this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.executed]);
+            this.runSerie(stepCount);
+            this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.Executed]);
             //if (!this.world.IsZeroTime()) 
             this.execTimer = setTimeout(() => this.stepOnTimer(), interval);
             //else {
@@ -706,11 +714,11 @@ class CTimeController {
         }
     }
     toOddStep() {
-        if (this.world.IsEvenStep())
+        if (this.world.isEvenStep())
             setTimeout(() => {
-                if (this.world.IsEvenStep()) {
-                    this.RunSerie(1);
-                    this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.executed]);
+                if (this.world.isEvenStep()) {
+                    this.runSerie(1);
+                    this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.Executed]);
                 }
             }, 500);
     }
@@ -718,7 +726,7 @@ class CTimeController {
         if (this.timeForward != forward)
             this.timeForward = forward;
         if (this.world.isForwardTimeDirection() != forward) {
-            this.world.ReverseTimeDirection();
+            this.world.reverseTimeDirection();
             this.toOddStep();
         }
     }
@@ -749,33 +757,36 @@ class CrittersView {
     constructor(world, editModel) {
         this.world = world;
         this.editModel = editModel;
+        this.paintConfig = new PaintConfig();
     }
     paint(canvas) {
         let ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.canvas.width = ctx.canvas.clientWidth;
         ctx.canvas.height = ctx.canvas.clientHeight;
-        this.PaintGrid(ctx);
-        this.PaintInfo(ctx);
-        ctx.fillStyle = "green";
+        if (this.paintConfig.paintGrid)
+            this.paintGrid(ctx);
+        if (this.paintConfig.paintInfo)
+            this.paintInfo(ctx);
+        ctx.fillStyle = this.paintConfig.cellFillStyle;
         for (let c of this.world.getCells()) {
-            let x = this.editModel.CellXToScr(c.x);
-            let y = this.editModel.CellYToScr(c.y);
+            let x = this.editModel.cellXToScr(c.x);
+            let y = this.editModel.cellYToScr(c.y);
             if (x < canvas.width && x > 0 - this.editModel.scale
                 && y > 0 - this.editModel.scale && y < canvas.height) {
                 ctx.fillRect(x, y, this.editModel.scale, this.editModel.scale);
             }
         }
     }
-    PaintGrid(ctx) {
+    paintGrid(ctx) {
         if (this.editModel.scale < 2)
             return;
-        let x0 = Math.floor(this.editModel.ScrXToCell(0) / 2) * 2 - 3;
-        let x1 = Math.floor(this.editModel.ScrXToCell(ctx.canvas.width) / 2) * 2 + 3;
+        let x0 = Math.floor(this.editModel.scrXToCell(0) / 2) * 2 - 3;
+        let x1 = Math.floor(this.editModel.scrXToCell(ctx.canvas.width) / 2) * 2 + 3;
         ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)';
         for (let x = x0; x <= x1; x = x + 2) {
             ctx.beginPath();
-            let xs = this.editModel.CellXToScr(x);
+            let xs = this.editModel.cellXToScr(x);
             ctx.moveTo(xs, 0);
             ctx.lineTo(xs, ctx.canvas.height);
             ctx.stroke();
@@ -793,7 +804,7 @@ class CrittersView {
         ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)';
         for (let y = y0; y <= y1; y = y + 2) {
             ctx.beginPath();
-            let ys = this.editModel.CellYToScr(y);
+            let ys = this.editModel.cellYToScr(y);
             ctx.moveTo(0, ys);
             ctx.lineTo(ctx.canvas.width, ys);
             ctx.stroke();
@@ -807,15 +818,28 @@ class CrittersView {
             ctx.stroke();
         }*/
     }
-    PaintInfo(ctx) {
-        let text = (this.world.GetStepNum() - 1).toString();
+    paintInfo(ctx) {
+        let text = (this.world.getStepNum() - 1).toString();
         ctx.font = "15px Arial";
         ctx.fillStyle = "rgb(13,110,253)";
         ctx.fillText(text, ctx.canvas.width - 50, 30);
     }
+    getPaintConfig() {
+        return this.paintConfig;
+    }
+    setPaintConfig(cfg) {
+        this.paintConfig = cfg;
+    }
 }
 CrittersView.ɵfac = function CrittersView_Factory(t) { return new (t || CrittersView)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.CrittersWorld), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_CEditModel__WEBPACK_IMPORTED_MODULE_1__.CEditModel)); };
 CrittersView.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjectable"]({ token: CrittersView, factory: CrittersView.ɵfac });
+class PaintConfig {
+    constructor() {
+        this.cellFillStyle = "green";
+        this.paintGrid = true;
+        this.paintInfo = true;
+    }
+}
 
 
 /***/ }),
@@ -845,24 +869,24 @@ class CrittersWorld {
         this.stepNum = 1;
         this.forward = true;
         this.modified = false;
-        this.nextCellKey = 0;
+        this.cellKeyGen = 0;
         this.changesSubject = new rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject();
     }
-    AddCell(x, y) {
+    addCell(x, y) {
         let key = x * Cell.KEY_GEN_FACTOR + y;
-        let resultCell = new Cell(this.NextCellKey(), x, y, this.stepNum);
+        let resultCell = new Cell(this.nextCellKey(), x, y, this.stepNum);
         this.cells.set(key, resultCell);
         return resultCell;
     }
     getCells() {
         return this.cells.values();
     }
-    NextCellKey() {
-        this.nextCellKey++;
-        return this.nextCellKey;
+    nextCellKey() {
+        this.cellKeyGen++;
+        return this.cellKeyGen;
     }
     notifyAboutChanges(changeTypes) {
-        if (changeTypes.includes(WorldCangesType.cellsEditing))
+        if (changeTypes.includes(WorldCangesType.CellsEditing))
             this.modified = true;
         this.changesSubject.next(changeTypes);
     }
@@ -873,31 +897,31 @@ class CrittersWorld {
         return this.modified;
     }
     // Очистить клетку, если занята        
-    ClearCell(x, y) {
+    clearCell(x, y) {
         let key = x * Cell.KEY_GEN_FACTOR + y;
         let c = this.cells.get(key);
         if (c)
-            this.RemoveCell(key, c);
+            this.removeCell(key, c);
     }
-    RemoveCell(key, cl) {
+    removeCell(key, cl) {
         this.cells.delete(key);
     }
-    IsEvenStep() {
+    isEvenStep() {
         return this.stepNum % 2 == 0;
     }
-    GetStepNum() {
+    getStepNum() {
         return this.stepNum;
     }
-    RunSerie(stepCnt) {
+    runSerie(stepCnt) {
         for (let i = 0; i < stepCnt; i++)
-            this.Run();
+            this.run();
     }
-    Clear() {
+    clear() {
         this.cells.clear();
-        this.nextCellKey = 0;
+        this.cellKeyGen = 0;
         this.stepNum = 1;
     }
-    ReverseTimeDirection() {
+    reverseTimeDirection() {
         if (this.forward)
             this.stepNum--;
         else
@@ -907,7 +931,7 @@ class CrittersWorld {
     isForwardTimeDirection() {
         return this.forward;
     }
-    Run() {
+    run() {
         if (this.forward)
             this.stepNum++;
         else
@@ -1028,26 +1052,26 @@ class CrittersWorld {
         }
         this.cells = cellsNew;
     }
-    GetCellsCount() {
+    getCellsCount() {
         return this.cells.size;
     }
-    GetCell(x, y) {
+    getCell(x, y) {
         return this.cells.get(x * Cell.KEY_GEN_FACTOR + y);
     }
-    FindInArea(rectangle) {
+    findInArea(rectangle) {
         let result = [];
         for (let c of this.cells.entries()) {
             let cell = c[1];
-            if (rectangle.ContainsInXY(cell.x, cell.y))
+            if (rectangle.containsInXY(cell.x, cell.y))
                 result.push(cell);
         }
         return result;
     }
-    DeleteCells(deleted) {
+    deleteCells(deleted) {
         for (let c of deleted)
-            this.cells.delete(c.GetKey());
+            this.cells.delete(c.getKey());
     }
-    MoveCellsTo(cls, dx, dy) {
+    moveCellsTo(cls, dx, dy) {
         /*foreach(var c in cls)
         cells.Remove(c.GetKey());
         foreach(var c in cls)
@@ -1058,7 +1082,7 @@ class CrittersWorld {
         foreach(var c in cls)
         cells.Add(c.GetKey(), c);*/
     }
-    SetThisTimeAsZero() {
+    setThisTimeAsZero() {
         if (this.stepNum == 1)
             return;
         this.stepNum = 1;
@@ -1066,50 +1090,50 @@ class CrittersWorld {
         for (let c of this.cells.values())
             c.prosessedStep = 1;
     }
-    IsZeroTime() {
+    isZeroTime() {
         return this.stepNum == 1;
     }
-    RunToZeroTime() {
+    runToZeroTime() {
         if (!this.forward) {
-            this.ReverseTimeDirection();
-            if (this.IsEvenStep())
-                this.RunSerie(1);
+            this.reverseTimeDirection();
+            if (this.isEvenStep())
+                this.runSerie(1);
         }
         if (this.stepNum == 1)
             return;
         let distToZero = Math.abs(this.stepNum - 1);
         if (this.stepNum > 1)
-            this.ReverseTimeDirection();
-        this.RunSerie(distToZero);
-        this.SetThisTimeAsZero();
+            this.reverseTimeDirection();
+        this.runSerie(distToZero);
+        this.setThisTimeAsZero();
     }
-    MakeSnapshot() {
+    makeSnapshot() {
         let resultCells = [];
         for (let value of this.cells.values()) {
-            resultCells.push(value.Clone());
+            resultCells.push(value.clone());
         }
         return { cells: resultCells };
     }
-    LoadSnapshot(snapshot) {
-        this.Clear();
+    loadSnapshot(snapshot) {
+        this.clear();
         this.stepNum = 1;
         this.forward = true;
         for (let c of snapshot.cells) {
             c.prosessedStep = this.stepNum;
-            this.cells.set(c.x * Cell.KEY_GEN_FACTOR + c.y, c.Clone());
+            this.cells.set(c.x * Cell.KEY_GEN_FACTOR + c.y, c.clone());
         }
     }
-    TestInit() {
-        this.AddCell(10, 10);
-        this.AddCell(11, 11);
-        this.AddCell(10, 11);
-        this.AddCell(12, 11);
+    testInit() {
+        this.addCell(10, 10);
+        this.addCell(11, 11);
+        this.addCell(10, 11);
+        this.addCell(12, 11);
     }
 }
 CrittersWorld.ɵfac = function CrittersWorld_Factory(t) { return new (t || CrittersWorld)(); };
 CrittersWorld.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: CrittersWorld, factory: CrittersWorld.ɵfac });
 class CrittersWorldSerializer {
-    SerializeCells(w) {
+    serializeCells(w) {
         let result = [];
         for (let c of w.getCells()) {
             result.push(c.x);
@@ -1117,9 +1141,9 @@ class CrittersWorldSerializer {
         }
         return result;
     }
-    DeserializeCells(cellsData, cw) {
+    deserializeCells(cellsData, cw) {
         for (let n = 0; n < cellsData.length; n = n + 2) {
-            cw.AddCell(cellsData[n], cellsData[n + 1]);
+            cw.addCell(cellsData[n], cellsData[n + 1]);
         }
     }
 }
@@ -1130,52 +1154,52 @@ class Cell {
         this.y = y;
         this.prosessedStep = procStep;
     }
-    GetKey() {
+    getKey() {
         return this.x * Cell.KEY_GEN_FACTOR + this.y;
     }
-    MoveTo(toX, toY) {
+    moveTo(toX, toY) {
         this.x = toX;
         this.y = toY;
     }
-    Clone() {
+    clone() {
         return new Cell(this.id, this.x, this.y, this.prosessedStep);
     }
 }
 Cell.KEY_GEN_FACTOR = 1000000000;
 class CRect {
     constructor(x, y, width, height) {
-        this.X = x;
-        this.Y = y;
-        this.Width = width;
-        this.Height = height;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
-    GetTop() { return this.Y; }
-    GetRight() { return this.X + this.Width; }
-    GetLeft() { return this.X; }
-    GetBottom() { return this.Y + this.Height; }
-    ContainsInXY(x, y) {
-        return x >= this.X && x < this.X + this.Width && y >= this.Y && y < this.Y + this.Height;
+    getTop() { return this.y; }
+    getRight() { return this.x + this.width; }
+    getLeft() { return this.x; }
+    getBottom() { return this.y + this.height; }
+    containsInXY(x, y) {
+        return x >= this.x && x < this.x + this.width && y >= this.y && y < this.y + this.height;
     }
-    Contains(p) {
-        return p.X >= this.X && p.X < this.X + this.Width && p.Y >= this.Y && p.Y < this.Y + this.Height;
+    contains(p) {
+        return p.x >= this.x && p.x < this.x + this.width && p.y >= this.y && p.y < this.y + this.height;
     }
 }
 class CPoint {
     constructor(x, y) {
-        this.X = x;
-        this.Y = y;
+        this.x = x;
+        this.y = y;
     }
     dist(p) {
-        return Math.sqrt((this.X - p.X) * (this.X - p.X) + (this.Y - p.Y) * (this.Y - p.Y));
+        return Math.sqrt((this.x - p.x) * (this.x - p.x) + (this.y - p.y) * (this.y - p.y));
     }
 }
 var WorldCangesType;
 (function (WorldCangesType) {
-    WorldCangesType[WorldCangesType["cellsEditing"] = 0] = "cellsEditing";
-    WorldCangesType[WorldCangesType["frameChanging"] = 1] = "frameChanging";
-    WorldCangesType[WorldCangesType["toolsChanging"] = 2] = "toolsChanging";
-    WorldCangesType[WorldCangesType["loaded"] = 3] = "loaded";
-    WorldCangesType[WorldCangesType["executed"] = 4] = "executed";
+    WorldCangesType[WorldCangesType["CellsEditing"] = 0] = "CellsEditing";
+    WorldCangesType[WorldCangesType["FrameChanging"] = 1] = "FrameChanging";
+    WorldCangesType[WorldCangesType["ToolsChanging"] = 2] = "ToolsChanging";
+    WorldCangesType[WorldCangesType["Loaded"] = 3] = "Loaded";
+    WorldCangesType[WorldCangesType["Executed"] = 4] = "Executed";
 })(WorldCangesType || (WorldCangesType = {}));
 
 
@@ -1202,41 +1226,41 @@ class ZeroTimeController {
         this.wasEditedAtNotZeroTime = false;
         this.wasEditedAtZeroTime = false;
         world.changesSubject.subscribe(ch => {
-            if (ch.includes(_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.cellsEditing) && !world.IsZeroTime())
+            if (ch.includes(_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.CellsEditing) && !world.isZeroTime())
                 this.wasEditedAtNotZeroTime = true;
-            if (ch.includes(_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.loaded))
+            if (ch.includes(_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.Loaded))
                 this.wasEditedAtNotZeroTime = false;
-            if (ch.includes(_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.cellsEditing) && world.IsZeroTime())
+            if (ch.includes(_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.CellsEditing) && world.isZeroTime())
                 this.wasEditedAtZeroTime = true;
         });
     }
     setThisTimeAsZero() {
-        if (this.world.IsEvenStep())
+        if (this.world.isEvenStep())
             return;
-        this.snapshot = this.world.MakeSnapshot();
-        this.world.SetThisTimeAsZero();
-        this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.loaded]);
+        this.snapshot = this.world.makeSnapshot();
+        this.world.setThisTimeAsZero();
+        this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.Loaded]);
     }
     goToZeroTime() {
         if (this.wasEditedAtNotZeroTime) {
-            this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.executed]);
-            this.world.RunToZeroTime();
-            this.snapshot = this.world.MakeSnapshot();
+            this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.Executed]);
+            this.world.runToZeroTime();
+            this.snapshot = this.world.makeSnapshot();
             this.wasEditedAtZeroTime = false;
             this.wasEditedAtNotZeroTime = false;
         }
         else if (this.snapshot) {
-            this.world.LoadSnapshot(this.snapshot);
+            this.world.loadSnapshot(this.snapshot);
             this.wasEditedAtZeroTime = false;
             this.wasEditedAtNotZeroTime = false;
-            this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.loaded]);
+            this.world.notifyAboutChanges([_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.Loaded]);
         }
     }
     beforeZeroTimePass() {
-        if (!this.world.IsZeroTime() || !this.world.isForwardTimeDirection())
+        if (!this.world.isZeroTime() || !this.world.isForwardTimeDirection())
             return;
         if (this.wasEditedAtZeroTime) {
-            this.snapshot = this.world.MakeSnapshot();
+            this.snapshot = this.world.makeSnapshot();
             this.wasEditedAtZeroTime = false;
         }
     }
@@ -1275,6 +1299,7 @@ class CrittersCanvasComponent {
         this.crittersView = crittersView;
         this.editModel = editModel;
         this.crittersWorld = crittersWorld;
+        this.canvasColor = 'white';
     }
     ngOnInit() {
         this._canvas = document.getElementById("c_canvas");
@@ -1315,10 +1340,12 @@ class CrittersCanvasComponent {
     }
 }
 CrittersCanvasComponent.ɵfac = function CrittersCanvasComponent_Factory(t) { return new (t || CrittersCanvasComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_CEditController_CrittersEditController__WEBPACK_IMPORTED_MODULE_0__.CrittersEditController), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_CrittersView__WEBPACK_IMPORTED_MODULE_1__.CrittersView), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_CEditModel__WEBPACK_IMPORTED_MODULE_2__.CEditModel), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_CrittersWorld__WEBPACK_IMPORTED_MODULE_3__.CrittersWorld)); };
-CrittersCanvasComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({ type: CrittersCanvasComponent, selectors: [["app-critters-canvas"]], decls: 1, vars: 0, consts: [["id", "c_canvas", 2, "position", "absolute", "top", "0px", "left", "0px", "width", "100%", "height", "100%", "background-color", "white", 3, "mousedown", "mouseup", "mousemove", "wheel", "touchstart", "touchend", "touchmove"]], template: function CrittersCanvasComponent_Template(rf, ctx) { if (rf & 1) {
+CrittersCanvasComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({ type: CrittersCanvasComponent, selectors: [["app-critters-canvas"]], inputs: { canvasColor: "canvasColor" }, decls: 1, vars: 2, consts: [["id", "c_canvas", 2, "position", "absolute", "top", "0px", "left", "0px", "width", "100%", "height", "100%", 3, "mousedown", "mouseup", "mousemove", "wheel", "touchstart", "touchend", "touchmove"]], template: function CrittersCanvasComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "canvas", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("mousedown", function CrittersCanvasComponent_Template_canvas_mousedown_0_listener($event) { return ctx.onMouseDown($event); })("mouseup", function CrittersCanvasComponent_Template_canvas_mouseup_0_listener($event) { return ctx.onMouseUp($event); })("mousemove", function CrittersCanvasComponent_Template_canvas_mousemove_0_listener($event) { return ctx.onMouseMove($event); })("wheel", function CrittersCanvasComponent_Template_canvas_wheel_0_listener($event) { return ctx.onMouseWheel($event); })("touchstart", function CrittersCanvasComponent_Template_canvas_touchstart_0_listener($event) { return ctx.onTouchStart($event); })("touchend", function CrittersCanvasComponent_Template_canvas_touchend_0_listener($event) { return ctx.onTouchEnd($event); })("touchmove", function CrittersCanvasComponent_Template_canvas_touchmove_0_listener($event) { return ctx.onTouchMove($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵstyleProp"]("background-color", ctx.canvasColor);
     } }, encapsulation: 2 });
 
 
@@ -1467,7 +1494,7 @@ class LoginService {
     })();
   }
 
-  Logout() {
+  logout() {
     var _this2 = this;
 
     return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
@@ -1480,7 +1507,7 @@ class LoginService {
     })();
   }
 
-  Login(emailOrName, password) {
+  login(emailOrName, password) {
     var _this3 = this;
 
     return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
@@ -1575,6 +1602,52 @@ ComponentContainerDirective.ɵdir = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED
 
 /***/ }),
 
+/***/ 268:
+/*!*********************************************************!*\
+  !*** ./src/app/views/gameStart/game-start.component.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GameStartComponent": () => (/* binding */ GameStartComponent)
+/* harmony export */ });
+/* harmony import */ var C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2560);
+
+
+class GameStartComponent {
+  constructor() {}
+
+  ngOnInit() {
+    return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {})();
+  }
+
+}
+
+GameStartComponent.ɵfac = function GameStartComponent_Factory(t) {
+  return new (t || GameStartComponent)();
+};
+
+GameStartComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+  type: GameStartComponent,
+  selectors: [["game-start"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([])],
+  decls: 2,
+  vars: 0,
+  consts: [[2, "background", "green", "height", "100vh", "display", "grid", "position", "relative"]],
+  template: function GameStartComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1, " sdfsdfsdf\n");
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    }
+  },
+  encapsulation: 2
+});
+
+/***/ }),
+
 /***/ 3392:
 /*!******************************************!*\
   !*** ./src/app/views/login.component.ts ***!
@@ -1623,7 +1696,7 @@ class LoginComponent {
     var _this = this;
 
     return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      var res = yield _this.loginService.Login(emailOrName, password);
+      var res = yield _this.loginService.login(emailOrName, password);
       console.log(res);
       if (res) _this.result.emit("ok");else {
         _this.loginFailed = true;
@@ -1937,6 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function SandboxComponent_ng_template_13_Template(rf, ctx) {}
 
 function SandboxComponent_option_23_Template(rf, ctx) {
@@ -1976,21 +2050,22 @@ const _c0 = function (a0) {
 };
 
 class SandboxComponent {
-  constructor(http, router, world, zeroTimeController, loginService) {
+  constructor(http, router, world, zeroTimeController, loginService, ec) {
     this.http = http;
     this.router = router;
     this.world = world;
     this.zeroTimeController = zeroTimeController;
-    this.loginService = loginService; // --------------------------------------------------------------    
+    this.loginService = loginService;
+    this.ec = ec; // --------------------------------------------------------------    
 
     this.savePopup = new SavePopup();
     this.loadPopup = new LoadPopup();
   }
 
   ngOnInit() {
-    this.world.TestInit();
+    this.world.testInit();
     this.zeroTimeController.setThisTimeAsZero();
-    this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.WorldCangesType.loaded]);
+    this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.WorldCangesType.Loaded]);
     console.log("sandbox ngOnInit()");
   }
 
@@ -2031,22 +2106,22 @@ class SandboxComponent {
   }
 
   deserializeWorld(data) {
-    this.world.Clear();
+    this.world.clear();
 
     for (let i = 0; i < data.length; i = i + 2) {
       console.log("add cell", data[i], data[i + 1]);
-      this.world.AddCell(data[i], data[i + 1]);
+      this.world.addCell(data[i], data[i + 1]);
     }
 
     this.zeroTimeController.setThisTimeAsZero();
     this.world.resetModificationFlag();
-    this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.WorldCangesType.loaded]);
+    this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.WorldCangesType.Loaded]);
   }
 
   onNext() {
     console.log("onNext");
-    this.world.RunSerie(1);
-    this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.WorldCangesType.executed]);
+    this.world.runSerie(1);
+    this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.WorldCangesType.Executed]);
   }
 
   getExitConfirmText() {
@@ -2060,7 +2135,7 @@ class SandboxComponent {
 }
 
 SandboxComponent.ɵfac = function SandboxComponent_Factory(t) {
-  return new (t || SandboxComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_13__.HttpClient), _angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_14__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.CrittersWorld), _angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_critters_ZeroTimeController__WEBPACK_IMPORTED_MODULE_6__.ZeroTimeController), _angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_services_login_service__WEBPACK_IMPORTED_MODULE_9__.LoginService));
+  return new (t || SandboxComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_13__.HttpClient), _angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_14__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.CrittersWorld), _angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_critters_ZeroTimeController__WEBPACK_IMPORTED_MODULE_6__.ZeroTimeController), _angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_services_login_service__WEBPACK_IMPORTED_MODULE_9__.LoginService), _angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdirectiveInject"](_critters_CEditController_CrittersEditController__WEBPACK_IMPORTED_MODULE_8__.CrittersEditController));
 };
 
 SandboxComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_12__["ɵɵdefineComponent"]({
@@ -2256,17 +2331,17 @@ class SavePopup {
 
       _this3.selectedSave.name = _this3.saveName; //this.selectedSave!.data = this.world.Serialize();
 
-      yield _this3.SaveWorld(_this3.selectedSave);
+      yield _this3.saveWorld(_this3.selectedSave);
       console.log("after save");
     })();
   }
 
-  SaveWorld(worldTitle) {
+  saveWorld(worldTitle) {
     var _this4 = this;
 
     return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       let s = new _critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.CrittersWorldSerializer();
-      let cellsData = s.SerializeCells(_this4.world);
+      let cellsData = s.serializeCells(_this4.world);
       let result = yield (0,rxjs_internal_lastValueFrom__WEBPACK_IMPORTED_MODULE_16__.lastValueFrom)(_this4.http.post("/sandboxworlds/savetoslot", {
         slot: worldTitle?.slot,
         newName: worldTitle?.name,
@@ -2292,12 +2367,12 @@ class LoadPopup {
     this.titles = [];
     this.selectedLoad = null;
     http.get("/sandboxworlds/titles").subscribe(titles => {
-      this.titles = this.ToSlotList(titles);
+      this.titles = this.toSlotList(titles);
     });
     this.loadPopupDisplayStyle = "block";
   }
 
-  ToSlotList(titles) {
+  toSlotList(titles) {
     let result = [];
 
     for (let i = 1; i <= 10; i++) result.push({
@@ -2357,11 +2432,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "StartpageComponent": () => (/* binding */ StartpageComponent)
 /* harmony export */ });
 /* harmony import */ var C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
-/* harmony import */ var _component_container_directive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./component-container.directive */ 702);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _services_login_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/login.service */ 4120);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 4666);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 124);
+/* harmony import */ var _critters_CEditController_CrittersEditController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../critters/CEditController/CrittersEditController */ 659);
+/* harmony import */ var _critters_CEditController_SandBoxCrittersEditController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../critters/CEditController/SandBoxCrittersEditController */ 333);
+/* harmony import */ var _critters_CEditModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../critters/CEditModel */ 7866);
+/* harmony import */ var _critters_CrittersView__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../critters/CrittersView */ 9197);
+/* harmony import */ var _critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../critters/CrittersWorld */ 6237);
+/* harmony import */ var _component_container_directive__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./component-container.directive */ 702);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _services_login_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services/login.service */ 4120);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 124);
+/* harmony import */ var _critters_critters_canvas_critters_canvas_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../critters/critters-canvas/critters-canvas.component */ 4986);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2372,55 +2462,64 @@ __webpack_require__.r(__webpack_exports__);
 
 function StartpageComponent_label_20_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "label", 18);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](0, "label", 20);
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]();
   }
 
   if (rf & 2) {
-    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](ctx_r0.userInfo.name);
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtextInterpolate"](ctx_r0.userInfo.name);
   }
 }
 
 function StartpageComponent_button_21_Template(rf, ctx) {
   if (rf & 1) {
-    const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵgetCurrentView"]();
 
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "button", 19);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("click", function StartpageComponent_button_21_Template_button_click_0_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r5);
-      const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r4.Logout());
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](0, "button", 21);
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵlistener"]("click", function StartpageComponent_button_21_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵrestoreView"](_r5);
+      const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵresetView"](ctx_r4.logout());
     });
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "i", 20);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Logout");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelement"](1, "i", 22);
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtext"](2, "Logout");
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]();
   }
 }
 
 function StartpageComponent_button_22_Template(rf, ctx) {
   if (rf & 1) {
-    const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵgetCurrentView"]();
 
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "button", 19);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("click", function StartpageComponent_button_22_Template_button_click_0_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r7);
-      const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r6.Login());
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](0, "button", 21);
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵlistener"]("click", function StartpageComponent_button_22_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵrestoreView"](_r7);
+      const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵresetView"](ctx_r6.login());
     });
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "i", 21);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Login");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelement"](1, "i", 23);
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtext"](2, "Login");
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]();
   }
 }
 
-function StartpageComponent_ng_template_28_Template(rf, ctx) {}
+function StartpageComponent_ng_template_30_Template(rf, ctx) {}
+
+const _c0 = function () {
+  return {
+    "canvas.background-color": "red"
+  };
+};
 
 class StartpageComponent {
-  constructor(loginService) {
+  constructor(loginService, world, editModel, cView) {
     this.loginService = loginService;
+    this.world = world;
+    this.editModel = editModel;
+    this.cView = cView;
     this.userInfo = {
       name: "",
       signedIn: false,
@@ -2435,18 +2534,49 @@ class StartpageComponent {
       _this.loginService.userInfo.subscribe(ui => _this.userInfo = ui);
 
       console.log(_this.userInfo);
+
+      for (let i = 0; i < 3000; i++) {
+        let x = Math.round(Math.random() * 150) + 75;
+        let y = Math.round(Math.random() * 35) + 12;
+        if (_this.world.getCell(x, y) === undefined) _this.world.addCell(x, y);
+      }
+
+      _this.editModel.scale = 3;
+
+      let cfg = _this.cView.getPaintConfig();
+
+      cfg.cellFillStyle = "white";
+      cfg.paintGrid = false;
+      cfg.paintInfo = false;
+
+      _this.cView.setPaintConfig(cfg);
+
+      _this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_5__.WorldCangesType.Loaded]);
+
+      _this.timer = setInterval(() => {
+        console.log("sdfsdsdf");
+
+        _this.world.runSerie(1);
+
+        _this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_5__.WorldCangesType.Executed]);
+      }, 100);
     })();
   }
 
-  Login() {
+  ngOnDestroy() {
+    console.log("ngOnDestroy");
+    clearInterval(this.timer);
+  }
+
+  login() {
     this.dialogsHost.showLoginDialog(() => {});
   }
 
-  Logout() {
+  logout() {
     var _this2 = this;
 
     return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      yield _this2.loginService.Logout();
+      yield _this2.loginService.logout();
       _this2.userInfo = yield _this2.loginService.getUserInfo();
     })();
   }
@@ -2454,67 +2584,78 @@ class StartpageComponent {
 }
 
 StartpageComponent.ɵfac = function StartpageComponent_Factory(t) {
-  return new (t || StartpageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_services_login_service__WEBPACK_IMPORTED_MODULE_2__.LoginService));
+  return new (t || StartpageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_services_login_service__WEBPACK_IMPORTED_MODULE_7__.LoginService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_5__.CrittersWorld), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_critters_CEditModel__WEBPACK_IMPORTED_MODULE_3__.CEditModel), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_critters_CrittersView__WEBPACK_IMPORTED_MODULE_4__.CrittersView));
 };
 
-StartpageComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
+StartpageComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineComponent"]({
   type: StartpageComponent,
   selectors: [["app-startpage"]],
   viewQuery: function StartpageComponent_Query(rf, ctx) {
     if (rf & 1) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵviewQuery"](_component_container_directive__WEBPACK_IMPORTED_MODULE_1__.ComponentContainerDirective, 7);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵviewQuery"](_component_container_directive__WEBPACK_IMPORTED_MODULE_6__.ComponentContainerDirective, 7);
     }
 
     if (rf & 2) {
       let _t;
 
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵloadQuery"]()) && (ctx.dialogsHost = _t.first);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵloadQuery"]()) && (ctx.dialogsHost = _t.first);
     }
   },
-  decls: 29,
-  vars: 3,
-  consts: [[1, "container-fluid", "vh-100", "p-0", 2, "background", "rgb(79, 90, 110)"], [1, "container-fluid", 2, "background-color", "rgb(48, 59, 68)"], [1, "navbar", "navbar-expand-lg", "navbar-dark", "fs-4", 2, "background-color", "rgb(48, 59, 68)", "color", "white"], [1, "container-fluid"], ["type", "button", "data-bs-toggle", "collapse", "data-bs-target", "#navbarSupportedContent", "aria-controls", "navbarSupportedContent", "aria-expanded", "false", "aria-label", "Toggle navigation", 1, "navbar-toggler"], [1, "navbar-toggler-icon"], ["id", "navbarSupportedContent", 1, "collapse", "navbar-collapse"], [1, "navbar-nav", "me-auto", "mb-2", "mb-lg-0", "justify-content-between", "w-50"], [1, "nav-item"], ["aria-current", "page", "routerLink", "/home", 1, "nav-link", "active"], ["routerLink", "/sandbox", 1, "nav-link"], ["routerLink", "/wiki/article/Contents", 1, "nav-link"], ["routerLink", "/play", 1, "nav-link"], ["class", "text-light me-3 fs-5", 4, "ngIf"], ["class", "btn btn-outline-light my-2 my-sm-0", "type", "submit", 3, "click", 4, "ngIf"], [1, "container-fluid", "p-4", 2, "color", "white"], [2, "position", "fixed"], ["component-container", "", "style", "position: fixed"], [1, "text-light", "me-3", "fs-5"], ["type", "submit", 1, "btn", "btn-outline-light", "my-2", "my-sm-0", 3, "click"], [1, "fas", "fa-sign-out", "me-2"], [1, "fas", "fa-sign-in", "me-2"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵProvidersFeature"]([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_5__.CrittersWorld, {
+    provide: _critters_CEditController_CrittersEditController__WEBPACK_IMPORTED_MODULE_1__.CrittersEditController,
+    useClass: _critters_CEditController_SandBoxCrittersEditController__WEBPACK_IMPORTED_MODULE_2__.SandBoxCrittersEditController
+  }, _critters_CEditModel__WEBPACK_IMPORTED_MODULE_3__.CEditModel, _critters_CrittersView__WEBPACK_IMPORTED_MODULE_4__.CrittersView])],
+  decls: 31,
+  vars: 6,
+  consts: [[1, "container-fluid", "vh-100", "p-0", 2, "background", "rgb(79, 90, 110)"], [1, "container-fluid", 2, "background-color", "rgb(48, 59, 68)"], [1, "navbar", "navbar-expand-lg", "navbar-dark", "fs-4", 2, "background-color", "rgb(48, 59, 68)", "color", "white"], [1, "container-fluid"], ["type", "button", "data-bs-toggle", "collapse", "data-bs-target", "#navbarSupportedContent", "aria-controls", "navbarSupportedContent", "aria-expanded", "false", "aria-label", "Toggle navigation", 1, "navbar-toggler"], [1, "navbar-toggler-icon"], ["id", "navbarSupportedContent", 1, "collapse", "navbar-collapse"], [1, "navbar-nav", "me-auto", "mb-2", "mb-lg-0", "justify-content-between", "w-50"], [1, "nav-item"], ["aria-current", "page", "routerLink", "/home", 1, "nav-link", "active"], ["routerLink", "/sandbox", 1, "nav-link"], ["routerLink", "/wiki/article/Contents", 1, "nav-link"], ["routerLink", "/play", 1, "nav-link"], ["class", "text-light me-3 fs-5", 4, "ngIf"], ["class", "btn btn-outline-light my-2 my-sm-0", "type", "submit", 3, "click", 4, "ngIf"], [1, "m-5", 2, "width", "900px", "height", "210px", "display", "block", "position", "relative", "left", "50%", "transform", "translateX(-50%)", 3, "ngStyle"], [3, "canvasColor"], [1, "container-fluid", "p-4", 2, "color", "white"], [2, "position", "fixed"], ["component-container", "", "style", "position: fixed"], [1, "text-light", "me-3", "fs-5"], ["type", "submit", 1, "btn", "btn-outline-light", "my-2", "my-sm-0", 3, "click"], [1, "fas", "fa-sign-out", "me-2"], [1, "fas", "fa-sign-in", "me-2"]],
   template: function StartpageComponent_Template(rf, ctx) {
     if (rf & 1) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 0)(1, "header", 1)(2, "nav", 2)(3, "div", 3)(4, "button", 4);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](5, "span", 5);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "div", 6)(7, "ul", 7)(8, "li", 8)(9, "a", 9);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](10, "Home");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](11, "li", 8)(12, "a", 10);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](13, "Sandbox");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](14, "li", 8)(15, "a", 11);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](16, "Investigation");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](17, "li", 8)(18, "a", 12);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](19, "Game");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](20, StartpageComponent_label_20_Template, 2, 1, "label", 13);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](21, StartpageComponent_button_21_Template, 3, 0, "button", 14);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](22, StartpageComponent_button_22_Template, 3, 0, "button", 14);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](23, "div", 15);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](24, " Critters is defined on a two-dimensional infinite grid of cells, which may be identified with the integer lattice. As in Conway's Game of Life, at any point in time each cell may be in one of two states: alive or dead. The Critters rule is a block cellular automaton using the Margolus neighborhood. This means that, at each step, the cells of the automaton are partitioned into 2 \u00D7 2 blocks and each block is updated independently of the other blocks. The center of a block at one time step becomes the corner of four blocks at the next time step, and vice versa; in this way, the four cells in each block belong to four different 2 \u00D7 2 blocks of the previous partition. ");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](25, "br");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](26, " (Wikipedia) ");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](27, "div", 16);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](28, StartpageComponent_ng_template_28_Template, 0, 0, "ng-template", 17);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](0, "div", 0)(1, "header", 1)(2, "nav", 2)(3, "div", 3)(4, "button", 4);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelement"](5, "span", 5);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](6, "div", 6)(7, "ul", 7)(8, "li", 8)(9, "a", 9);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtext"](10, "Home");
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](11, "li", 8)(12, "a", 10);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtext"](13, "Sandbox");
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](14, "li", 8)(15, "a", 11);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtext"](16, "Investigation");
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](17, "li", 8)(18, "a", 12);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtext"](19, "Game");
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]()()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtemplate"](20, StartpageComponent_label_20_Template, 2, 1, "label", 13);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtemplate"](21, StartpageComponent_button_21_Template, 3, 0, "button", 14);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtemplate"](22, StartpageComponent_button_22_Template, 3, 0, "button", 14);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]()()()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](23, "div", 15);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelement"](24, "app-critters-canvas", 16);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](25, "div", 17);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtext"](26, " Critters is defined on a two-dimensional infinite grid of cells, which may be identified with the integer lattice. As in Conway's Game of Life, at any point in time each cell may be in one of two states: alive or dead. The Critters rule is a block cellular automaton using the Margolus neighborhood. This means that, at each step, the cells of the automaton are partitioned into 2 \u00D7 2 blocks and each block is updated independently of the other blocks. The center of a block at one time step becomes the corner of four blocks at the next time step, and vice versa; in this way, the four cells in each block belong to four different 2 \u00D7 2 blocks of the previous partition. ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelement"](27, "br");
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtext"](28, " (Wikipedia) ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementStart"](29, "div", 18);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtemplate"](30, StartpageComponent_ng_template_30_Template, 0, 0, "ng-template", 19);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵelementEnd"]();
     }
 
     if (rf & 2) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](20);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.userInfo.signedIn);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.userInfo.signedIn);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", !ctx.userInfo.signedIn);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](20);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵproperty"]("ngIf", ctx.userInfo.signedIn);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](1);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵproperty"]("ngIf", ctx.userInfo.signedIn);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](1);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵproperty"]("ngIf", !ctx.userInfo.signedIn);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](1);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵpureFunction0"](5, _c0));
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](1);
+      _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵproperty"]("canvasColor", "rgb(79, 90, 110)");
     }
   },
-  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_4__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_5__.RouterLinkWithHref, _component_container_directive__WEBPACK_IMPORTED_MODULE_1__.ComponentContainerDirective],
+  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgStyle, _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouterLinkWithHref, _component_container_directive__WEBPACK_IMPORTED_MODULE_6__.ComponentContainerDirective, _critters_critters_canvas_critters_canvas_component__WEBPACK_IMPORTED_MODULE_8__.CrittersCanvasComponent],
   encapsulation: 2
 });
 
@@ -2637,7 +2778,7 @@ class ArticleComponent {
     this.toArchiveAvaible = false;
   }
 
-  CellsFieldIsEmpy() {
+  cellsFieldIsEmpy() {
     return (this.article?.cellsData?.length ?? 0) == 0;
   }
 
@@ -2657,7 +2798,7 @@ class ArticleComponent {
             _this.zeroTimeController.setThisTimeAsZero();
 
             yield _this.showAccessibleButtons();
-            setInterval(() => _this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.WorldCangesType.loaded]));
+            setInterval(() => _this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_2__.WorldCangesType.Loaded]));
           });
 
           return function (_x) {
@@ -2676,20 +2817,20 @@ class ArticleComponent {
 
       if (userInfo != undefined && userInfo.signedIn) {
         // user can edit article when it in draft/rejected status or if user is admin
-        _this2.editAvaible = _this2.editAvaible = _this2.article?.authorName == userInfo.name && [ArticleStatus.draft, ArticleStatus.regected].includes(_this2.article.status) || userInfo.admin; // user can delete article if he is admin or it is his article
+        _this2.editAvaible = _this2.editAvaible = _this2.article?.authorName == userInfo.name && [ArticleStatus.Draft, ArticleStatus.Regected].includes(_this2.article.status) || userInfo.admin; // user can delete article if he is admin or it is his article
 
         _this2.deleteAvaible = _this2.article?.authorName == userInfo.name || userInfo.admin; // user can send article to archive if it approved his article or user is a moderator
 
-        _this2.toArchiveAvaible = _this2.article?.authorName == userInfo.name && _this2.article.status == ArticleStatus.approved || userInfo.admin;
+        _this2.toArchiveAvaible = _this2.article?.authorName == userInfo.name && _this2.article.status == ArticleStatus.Approved || userInfo.admin;
       }
     })();
   }
 
   deserializeWorld(article) {
-    this.world.Clear();
+    this.world.clear();
     let data = article.cellsData;
 
-    for (let i = 0; i < data.length; i = i + 2) this.world.AddCell(data[i], data[i + 1]);
+    for (let i = 0; i < data.length; i = i + 2) this.world.addCell(data[i], data[i + 1]);
   }
 
   deleteArticle() {
@@ -2708,7 +2849,7 @@ class ArticleComponent {
     }
   }
 
-  ContentToHTML(content) {
+  contentToHTML(content) {
     return content == undefined ? content : content.replace(/(?:\r\n|\r|\n)/g, '<br>');
   }
 
@@ -2747,11 +2888,11 @@ ArticleComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_11_
     }
 
     if (rf & 2) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵpureFunction1"](7, _c0, ctx.CellsFieldIsEmpy() ? "100% 0%" : "50% 50%"));
+      _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵpureFunction1"](7, _c0, ctx.cellsFieldIsEmpy() ? "100% 0%" : "50% 50%"));
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵadvance"](4);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵtextInterpolate"](ctx.article == null ? null : ctx.article.name);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵadvance"](2);
-      _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("innerHtml", ctx.ContentToHTML(ctx.article == null ? null : ctx.article.content), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵsanitizeHtml"]);
+      _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("innerHtml", ctx.contentToHTML(ctx.article == null ? null : ctx.article.content), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵsanitizeHtml"]);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵadvance"](2);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("ngIf", ctx.editAvaible);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵadvance"](1);
@@ -2759,7 +2900,7 @@ ArticleComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_11_
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵadvance"](1);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("ngIf", ctx.deleteAvaible);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵadvance"](1);
-      _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵpureFunction1"](9, _c1, ctx.CellsFieldIsEmpy() ? "none" : "block"));
+      _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵpureFunction1"](9, _c1, ctx.cellsFieldIsEmpy() ? "none" : "block"));
     }
   },
   dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_14__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_14__.NgStyle, _angular_router__WEBPACK_IMPORTED_MODULE_13__.RouterLink, _critters_critters_canvas_critters_canvas_component__WEBPACK_IMPORTED_MODULE_9__.CrittersCanvasComponent, _critters_time_control_panel_time_control_panel_component__WEBPACK_IMPORTED_MODULE_10__.TimeControlPanelComponent],
@@ -2769,11 +2910,11 @@ class ArticleModel {}
 var ArticleStatus;
 
 (function (ArticleStatus) {
-  ArticleStatus[ArticleStatus["draft"] = 1] = "draft";
-  ArticleStatus[ArticleStatus["awaitingApproval"] = 2] = "awaitingApproval";
-  ArticleStatus[ArticleStatus["regected"] = 3] = "regected";
-  ArticleStatus[ArticleStatus["approved"] = 4] = "approved";
-  ArticleStatus[ArticleStatus["archival"] = 5] = "archival";
+  ArticleStatus[ArticleStatus["Draft"] = 1] = "Draft";
+  ArticleStatus[ArticleStatus["AwaitingApproval"] = 2] = "AwaitingApproval";
+  ArticleStatus[ArticleStatus["Regected"] = 3] = "Regected";
+  ArticleStatus[ArticleStatus["Approved"] = 4] = "Approved";
+  ArticleStatus[ArticleStatus["Archival"] = 5] = "Archival";
 })(ArticleStatus || (ArticleStatus = {}));
 
 /***/ }),
@@ -2857,13 +2998,13 @@ class ArticlesComponent {
         });
     }
     getArticleStatusDesc(st) {
-        if (st == _article_component__WEBPACK_IMPORTED_MODULE_0__.ArticleStatus.draft)
+        if (st == _article_component__WEBPACK_IMPORTED_MODULE_0__.ArticleStatus.Draft)
             return "(Draft)";
-        else if (st == _article_component__WEBPACK_IMPORTED_MODULE_0__.ArticleStatus.archival)
+        else if (st == _article_component__WEBPACK_IMPORTED_MODULE_0__.ArticleStatus.Archival)
             return "(In archive)";
-        else if (st == _article_component__WEBPACK_IMPORTED_MODULE_0__.ArticleStatus.awaitingApproval)
+        else if (st == _article_component__WEBPACK_IMPORTED_MODULE_0__.ArticleStatus.AwaitingApproval)
             return "(Awaiting moderation)";
-        else if (st == _article_component__WEBPACK_IMPORTED_MODULE_0__.ArticleStatus.regected)
+        else if (st == _article_component__WEBPACK_IMPORTED_MODULE_0__.ArticleStatus.Regected)
             return "(Adjustment required)";
         else
             return "";
@@ -2974,37 +3115,37 @@ class EditArticleComponent {
       console.log(routeParams);
       if (routeParams.id != 'new') this.http.get("/article/" + routeParams.id).subscribe(article => {
         this.article = article;
-        this.world.Clear();
+        this.world.clear();
         let data = article.cellsData;
 
-        for (let i = 0; i < data.length; i = i + 2) this.world.AddCell(data[i], data[i + 1]);
+        for (let i = 0; i < data.length; i = i + 2) this.world.addCell(data[i], data[i + 1]);
 
         this.zeroTimeController.setThisTimeAsZero();
-        setTimeout(() => this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_1__.WorldCangesType.loaded]));
+        setTimeout(() => this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_1__.WorldCangesType.Loaded]));
       });else {
         this.isNew = true;
         this.article.name = "";
         ;
         this.article.content = "";
-        this.world.Clear();
-        this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_1__.WorldCangesType.loaded]);
+        this.world.clear();
+        this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_1__.WorldCangesType.Loaded]);
       }
     });
   }
 
-  OnSave(name, text) {
+  onSave(name, text) {
     var _this = this;
 
     return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      yield _this.save(name, text, _article_component__WEBPACK_IMPORTED_MODULE_6__.ArticleStatus.draft);
+      yield _this.save(name, text, _article_component__WEBPACK_IMPORTED_MODULE_6__.ArticleStatus.Draft);
     })();
   }
 
-  OnPublish(name, text) {
+  onPublish(name, text) {
     var _this2 = this;
 
     return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      yield _this2.save(name, text, _article_component__WEBPACK_IMPORTED_MODULE_6__.ArticleStatus.awaitingApproval);
+      yield _this2.save(name, text, _article_component__WEBPACK_IMPORTED_MODULE_6__.ArticleStatus.AwaitingApproval);
     })();
   }
 
@@ -3016,7 +3157,7 @@ class EditArticleComponent {
       _this3.article.name = name;
       _this3.article.status = status;
       let s = new _critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_1__.CrittersWorldSerializer();
-      let cellsData = s.SerializeCells(_this3.world);
+      let cellsData = s.serializeCells(_this3.world);
       _this3.article.cellsData = cellsData;
 
       if (_this3.isNew) {
@@ -3037,17 +3178,17 @@ class EditArticleComponent {
     })();
   }
 
-  OnDelete() {
+  onDelete() {
     console.log("/article/" + this.article.id);
     this.http.delete("/article/" + this.article.id).subscribe(() => {});
   }
 
-  OnReject() {
+  onReject() {
     console.log("/article/reject/" + this.article.id);
     this.http.put("/article/reject/" + this.article.id, null).subscribe(() => {});
   }
 
-  OnApprove() {
+  onApprove() {
     console.log("/article/approve/" + this.article.id);
     this.http.put("/article/approve/" + this.article.id, null).subscribe(() => {});
   }
@@ -3113,19 +3254,19 @@ EditArticleComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵelementStart"](17, "div", 12)(18, "button", 13);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵlistener"]("click", function EditArticleComponent_Template_button_click_18_listener() {
-        return ctx.OnApprove();
+        return ctx.onApprove();
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵtext"](19, "Approve");
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵelementStart"](20, "button", 13);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵlistener"]("click", function EditArticleComponent_Template_button_click_20_listener() {
-        return ctx.OnReject();
+        return ctx.onReject();
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵtext"](21, "Reject");
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵelementStart"](22, "button", 13);
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵlistener"]("click", function EditArticleComponent_Template_button_click_22_listener() {
-        return ctx.OnDelete();
+        return ctx.onDelete();
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵtext"](23, "Delete");
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵelementEnd"]()();
@@ -3137,7 +3278,7 @@ EditArticleComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE
 
         const _r2 = _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵreference"](12);
 
-        return _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵresetView"](ctx.OnPublish(_r0.value, _r2.value));
+        return _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵresetView"](ctx.onPublish(_r0.value, _r2.value));
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵtext"](26, "Publish");
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵelementEnd"]();
@@ -3149,7 +3290,7 @@ EditArticleComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE
 
         const _r2 = _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵreference"](12);
 
-        return _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵresetView"](ctx.OnSave(_r0.value, _r2.value));
+        return _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵresetView"](ctx.onSave(_r0.value, _r2.value));
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵtext"](28, "Save as draft");
       _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵelementEnd"]()()();
@@ -3238,10 +3379,10 @@ class WikiComponent {
   }
 
   keyPress($event, request) {
-    if ($event.code == "Enter") this.OnSearch(request);
+    if ($event.code == "Enter") this.onSearch(request);
   }
 
-  OnSearch(request) {
+  onSearch(request) {
     this.router.navigateByUrl("/wiki/articles/q:" + request);
   }
 
@@ -3313,7 +3454,7 @@ WikiComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3__["�
 
         const _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵreference"](8);
 
-        return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx.OnSearch(_r0.value));
+        return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx.onSearch(_r0.value));
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](10, "i", 9);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
