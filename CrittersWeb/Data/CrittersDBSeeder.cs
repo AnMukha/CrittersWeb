@@ -72,12 +72,14 @@ namespace CrittersWeb.Data
             var admin = await userManager.FindByNameAsync("Admin");
             if (admin==null)
             {
-                var newUser = new GameUser() { Email = "Admin@admin.com", UserName = "Admin" };
+                var newUser = new GameUser() { Email = "Admin@admin.com", UserName = "Admin", EmailConfirmed = true, 
+                             registrationDate = DateTimeOffset.Now };
                 var result = await userManager.CreateAsync(newUser, "CrittersAdmin1#");
                 await userManager.AddToRoleAsync(newUser, "Admin");
             }
             else if (!await userManager.IsInRoleAsync(admin, "Admin"))
             {
+                admin.EmailConfirmed = true;
                 await userManager.AddToRoleAsync(admin, "Admin");
             }
         }

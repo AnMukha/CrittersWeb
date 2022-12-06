@@ -16,10 +16,11 @@ export class RegistrationComponent implements OnInit {
 
     registrationFailed: boolean = false;
     registrationError: string = "";
-    eMail!: string;
-    userName!: string;
-    password!: string;
-    password2!: string;
+    eMail: string = "";
+    userName: string = "";
+    password: string ="";
+    password2: string = "";
+    completed: boolean = false;
 
     ngOnInit(): void {
     }
@@ -28,14 +29,19 @@ export class RegistrationComponent implements OnInit {
         let res = await lastValueFrom(this.http.post("/account/Register", { Mail: this.eMail, Password: this.password, UserName: this.userName })) as any;
         console.log(res);
         if (res.success) {
-            console.log("Registration success");
-            this.result.emit("ok");
+            this.completed = true;
+            this.registrationFailed = false;
         }
         else {
             this.registrationFailed = true;
             this.registrationError = res.errorDescription;
             console.log("Registration failed:" + this.registrationError);
         }        
+    }
+
+    async onCloseButton() {
+        console.log("Registration success");
+        this.result.emit("ok");
     }
 
     onCancelButton() {

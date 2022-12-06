@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { LoginService } from '../services/login.service';
+import { LoginResult, LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -15,20 +15,16 @@ export class LoginComponent implements OnInit {
 
     @Output() result = new EventEmitter<string>();
 
-    loginFailed: boolean = false;
+    loginResult: LoginResult| undefined = undefined;
 
     ngOnInit(): void {
     }    
 
     async onOkButton(emailOrName: string, password: string) {
-        var res = await this.loginService.login(emailOrName, password);        
-        console.log(res);
-        if (res)
+        this.loginResult = await this.loginService.login(emailOrName, password);
+        console.log(this.loginResult);
+        if (this.loginResult == LoginResult.Success)
             this.result.emit("ok");
-        else {
-            this.loginFailed = true;
-            console.log("Login was not successful");
-        }
     }
 
     onCancelButton() {
@@ -38,6 +34,24 @@ export class LoginComponent implements OnInit {
     onRegisterButton() {
         this.result.emit("register");
     }
+
+    getErrorMessage(): string | null {
+        switch (this.loginResult) {
+            case undefined:
+                return null;
+            case LoginResult.Success:
+                return null;
+            case LoginResult.MailNotConfirmed:
+                return "User's emial has not been confirmed. Confirm email or try restoring password.";
+            case LoginResult.AlreadySignedIn:
+                return "Another user allready logined";
+            case LoginResult.UserNotFound:
+                return "User does not exist";
+            default: return null;
+        }
+    }
+
+
 
 }
 

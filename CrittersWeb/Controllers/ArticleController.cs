@@ -114,7 +114,7 @@ namespace CrittersWeb.Controllers
             await _articlesRep.Save();
             return Ok();
         }
-        
+
         [Authorize(Roles = "Admin")]
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Approve(int id)

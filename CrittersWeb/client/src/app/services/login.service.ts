@@ -21,20 +21,26 @@ export class LoginService {
             this.userInfo.next({ name: "", signedIn: false, admin: false });
     }    
 
-    async login(emailOrName: string, password: string): Promise<boolean> {
+    async login(emailOrName: string, password: string): Promise<LoginResult> {
         let isEmail = emailOrName.indexOf('@') != -1;
-        if (await lastValueFrom(this.http.post<boolean>("/account/Login", { UserName: isEmail ? null : emailOrName, Mail: isEmail ? emailOrName : null, password: password }))) {
-            let userInfo = await lastValueFrom(this.http.get<UserInfo>("/account/userinfo"));
-            this.userInfo.next(userInfo);
-            return true;
-        }
-        else return false;
+        var loginResult = await lastValueFrom(this.http.post<LoginResult>("/account/Login",
+            { UserName: isEmail ? null : emailOrName, Mail: isEmail ? emailOrName : null, password: password }));
+        let userInfo = await lastValueFrom(this.http.get<UserInfo>("/account/userinfo"));
+        this.userInfo.next(userInfo);
+        return loginResult;
     }
-
 }
 
 export class UserInfo {
     name!: string;
     signedIn!: boolean;
     admin!: boolean;
+}
+
+export enum LoginResult {
+    Success = 0,
+    UserNotFound = 1,
+    MailNotConfirmed = 2,
+    AlreadySignedIn = 3,
+    WrongPassword = 4
 }

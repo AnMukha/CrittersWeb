@@ -18,23 +18,16 @@ namespace CrittersWeb
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            using (var scope = host.Services.CreateScope())
-                new CrittersDBSeeder(scope.ServiceProvider).SeedData().Wait();
             host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                //.ConfigureAppConfiguration(AddConf)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
 
-        private static void AddConf(HostBuilderContext arg1, IConfigurationBuilder arg2)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 

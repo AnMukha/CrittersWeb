@@ -1,49 +1,54 @@
 <div class="modal"
-     tabindex="-1"
-     role="dialog"
+     tabindex="-1"     
      [ngStyle]="{'display':'block'}">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Register</h4>
+                <button type="button" class="btn-close" aria-label="Close" (click)="onCancelButton()"></button>
             </div>            
-            <div class="modal-body">
+            <form class="modal-body">
                 <p class="text-danger" [hidden]="!registrationFailed">{{registrationError}}</p>
                 <div #titleinput class="mb-3">
                     <label for="userInRegister" class="form-label">User name</label>
                     <input #userInput type="text" class="form-control" placeholder="User name" aria-label="User name" aria-describedby="basic-addon2"
                            value={{userName}} id="userInRegister"
-                           (input)="userName = userInput.value">
+                           (input)="userName = userInput.value" [disabled]="completed">
                 </div>
                 <div #titleinput class="mb-3">
                     <label for="emailInRegister" class="form-label">Email</label>
-                    <input #nameInput type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2"
+                    <input #nameInput type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2"
                            value={{eMail}} id="emailInRegister"
-                           (input)="eMail = nameInput.value">
+                           (input)="eMail = nameInput.value" [disabled]="completed">
                 </div>
                 <div #titleinput class="mb-3">
                     <label for="passwordInRegister" class="form-label">Password</label>
                     <input #passInput type="password" class="form-control" aria-label="Password" aria-describedby="basic-addon2"
-                           value={{password}} id="passwordInRegister"
-                           (input)="password = passInput.value">
+                           value={{password}} id="new-password"
+                           (input)="password = passInput.value"
+                           autocomplete="new-password" [disabled]="completed">
                 </div>
                 <div #titleinput class="mb-3">
                     <label for="passwordInRegister2" class="form-label">Repeat password</label>
                     <input #passInput2 type="password" class="form-control" aria-label="Repeat password" aria-describedby="basic-addon2"
-                           value={{password2}} id="passwordInRegister2"
-                           (input)="password2 = passInput2.value">
+                           value={{password2}} id="new-password2"
+                           (input)="password2 = passInput2.value"
+                           autocomplete="new-password" [disabled]="completed">
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary"
-                        (click)="onOkButton()">
-                    Register
-                </button>
-                <button type="button" class="btn btn-primary"
-                        (click)="onCancelButton()">
-                    Cancel
-                </button>
-            </div>
+                <div class="text-center" *ngIf="completed">
+                    <label class="form-label">To complete registration open your email</label>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" *ngIf="!completed"
+                            (click)="onOkButton()" style="width: 150px">
+                        Register
+                    </button>
+                    <button type="button" class="btn btn-success" *ngIf="completed"
+                            (click)="onCloseButton()" style="width: 150px">
+                        Close
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

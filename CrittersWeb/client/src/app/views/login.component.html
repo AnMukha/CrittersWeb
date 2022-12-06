@@ -1,35 +1,38 @@
 ﻿<div class="modal"
      tabindex="-1"
-     role="dialog"
      [ngStyle]="{'display':'block'}">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+
             <div class="modal-header">
                 <h4 class="modal-title">Login</h4>
+                <button type="button" class="btn-close" aria-label="Close" (click)="onCancelButton()"></button>
             </div>
-            <div class="modal-body">
-                <p class="text-danger" [hidden]="!loginFailed">Incorrect password or login</p>
+            <form class="modal-body">
+                <p class="text-danger" [hidden]="getErrorMessage()==null">{{getErrorMessage()}}</p>
                 <div #titleinput class="mb-3">
                     <label for="emailInLogin" class="form-label">User name or email</label>
-                    <input #nameInput type="text" class="form-control" placeholder="example@mail.com" aria-label="Email" aria-describedby="basic-addon2">                           
+                    <input #nameInput type="text" class="form-control" placeholder="example@mail.com" aria-label="Email" aria-describedby="basic-addon2">
                 </div>
                 <div #titleinput class="mb-3">
                     <label for="passwordInLogin" class="form-label">Password</label>
-                    <input #passInput type="password" autocomplete="off" class="form-control" id="passwordInLogin" 
-                           aria-label="Password" aria-describedby="basic-addon2">                           
+                    <input #passInput type="password" autocomplete="current-password" class="form-control" id="current-password"
+                           aria-label="Password" aria-describedby="basic-addon2">
                 </div>
-                <a [routerLink]="[]" class="link-primary float-end" (click)="onRegisterButton()">Register</a>
-            </div>
-            <div class="modal-footer">
-                <button type="button"  class="btn btn-outline-primary"
-                        (click)="onOkButton(nameInput.value, passInput.value)">
-                    Sign in
-                </button>
-                <button type="button" class="btn btn-outline-primary"
-                        (click)="onCancelButton()">
-                    Cancel
-                </button>
-            </div>
+                <div class="text-center">
+                    <a [routerLink]="[]" class="link-primary p-0" (click)="onRegisterButton()">Forgot password?</a>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary m-4" style="width: 250px; height: 50px"
+                            (click)="onOkButton(nameInput.value, passInput.value)">
+                        Sign in
+                    </button>
+                </div>
+                <div class="text-center">
+                    <label class="form-label">Don't have an account?</label>
+                    <a [routerLink]="[]" class="link-primary m-3" (click)="onRegisterButton()">Sing up</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>

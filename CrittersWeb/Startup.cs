@@ -2,10 +2,12 @@ using CrittersWeb.Data;
 using CrittersWeb.Data.Entities;
 using CrittersWeb.Data.Repositories;
 using CrittersWeb.Services;
+using CrittersWeb.Services.Mail;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -17,6 +19,13 @@ namespace CrittersWeb
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        IConfiguration _configuration;
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -30,6 +39,10 @@ namespace CrittersWeb
             services.AddScoped<ISandBoxWorldsRepository, SandBoxWorldsRepository>();
             services.AddScoped<ArticlesRepository, ArticlesRepository>();
             services.AddSingleton<SearchService, SearchService>();
+            var mailConfig = _configuration.GetSection("MailSettings").Get<MailConfig>();
+            var setc = services.AddSingleton(mailConfig);
+            services.AddTransient<MailService>();
+            services.AddHostedService<RemoveUnconfirmedUsersService>();
 
             services.AddControllers();
         }
@@ -58,30 +71,6 @@ namespace CrittersWeb
             {
                 endpoints.MapControllers();
             });
-
-
-            /*app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "article",
-                    pattern: "article/{*id}",
-                    defaults: new { controller = "Article", action = "Get" });
-                endpoints.MapControllerRoute(
-                    name: "article",
-                    pattern: "article/new",
-                    defaults: new { controller = "Article", action = "Post" });
-                endpoints.MapControllerRoute(
-                    name: "article",
-                    pattern: "article/update",
-                    defaults: new { controller = "Article", action = "Put" });
-                endpoints.MapControllerRoute(
-                    name: "articles",
-                    pattern: "articles/search/{request?}",
-                    defaults: new { controller = "Articles", action = "Search" });
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });*/
         }
     }
 }

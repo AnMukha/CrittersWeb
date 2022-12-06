@@ -42,8 +42,7 @@ export class StartpageComponent implements OnInit {
         cfg.paintInfo = false;
         this.cView.setPaintConfig(cfg);
         this.world.notifyAboutChanges([WorldCangesType.Loaded]);
-        this.timer = setInterval(() => {
-            console.log("sdfsdsdf");
+        this.timer = setInterval(() => {            
             this.world.runSerie(1);
             this.world.notifyAboutChanges([WorldCangesType.Executed]);
         }, 100);
