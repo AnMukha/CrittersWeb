@@ -50,4 +50,19 @@
     <Folder Include="client\src\app\views\gameScreen\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Controllers\Assets\StaticHtml.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StaticHtml.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Controllers\Assets\StaticHtml.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StaticHtml.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

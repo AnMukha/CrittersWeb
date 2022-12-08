@@ -22,18 +22,13 @@
                            (input)="eMail = nameInput.value" [disabled]="completed">
                 </div>
                 <div #titleinput class="mb-3">
-                    <label for="passwordInRegister" class="form-label">Password</label>
-                    <input #passInput type="password" class="form-control" aria-label="Password" aria-describedby="basic-addon2"
+                    <label for="new-password" class="form-label">Password</label>
+                    <input #passInput [type]="showPassword?'text':'password'" class="form-control" aria-label="Password" aria-describedby="basic-addon2"
                            value={{password}} id="new-password"
                            (input)="password = passInput.value"
                            autocomplete="new-password" [disabled]="completed">
-                </div>
-                <div #titleinput class="mb-3">
-                    <label for="passwordInRegister2" class="form-label">Repeat password</label>
-                    <input #passInput2 type="password" class="form-control" aria-label="Repeat password" aria-describedby="basic-addon2"
-                           value={{password2}} id="new-password2"
-                           (input)="password2 = passInput2.value"
-                           autocomplete="new-password" [disabled]="completed">
+                    <input #passwordCheckbox type="checkbox" (click)="setPasswordVisiblity(passwordCheckbox.checked)" id="password-check" class="ms-0">
+                    <label for="password-check" class="form-label ms-2">Show password</label>
                 </div>
                 <div class="text-center" *ngIf="completed">
                     <label class="form-label">To complete registration open your email</label>

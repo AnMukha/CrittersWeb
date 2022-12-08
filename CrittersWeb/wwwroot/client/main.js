@@ -1674,10 +1674,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ 8611);
 /* harmony import */ var _services_login_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/login.service */ 4120);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ 8987);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 4666);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 124);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ 8987);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 124);
 
 
 
@@ -1686,15 +1687,52 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+function LoginComponent_label_23_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "label", 22);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+  }
+
+  if (rf & 2) {
+    const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate"](ctx_r4.getPasswordChangeMessage());
+  }
+}
 
 const _c0 = function () {
+  return [];
+};
+
+function LoginComponent_a_24_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
+
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "a", 23);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function LoginComponent_a_24_Template_a_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r7);
+      const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+
+      const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵreference"](15);
+
+      return _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵresetView"](ctx_r6.onForgotPasswordLink(_r1.value));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](1, "Forgot password?");
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+  }
+
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpureFunction0"](1, _c0));
+  }
+}
+
+const _c1 = function () {
   return {
     "display": "block"
   };
-};
-
-const _c1 = function () {
-  return [];
 };
 
 class LoginComponent {
@@ -1703,6 +1741,7 @@ class LoginComponent {
     this.loginService = loginService;
     this.result = new _angular_core__WEBPACK_IMPORTED_MODULE_2__.EventEmitter();
     this.loginResult = undefined;
+    this.passwordChangeResult = null;
   }
 
   ngOnInit() {}
@@ -1725,6 +1764,15 @@ class LoginComponent {
     this.result.emit("register");
   }
 
+  onForgotPasswordLink(eMail) {
+    var _this2 = this;
+
+    return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      _this2.passwordChangeResult = yield (0,rxjs__WEBPACK_IMPORTED_MODULE_3__.lastValueFrom)(_this2.http.get("/account/RestorePassword/" + eMail));
+      console.log(_this2.passwordChangeResult);
+    })();
+  }
+
   getErrorMessage() {
     switch (this.loginResult) {
       case undefined:
@@ -1742,6 +1790,22 @@ class LoginComponent {
       case _services_login_service__WEBPACK_IMPORTED_MODULE_1__.LoginResult.UserNotFound:
         return "User does not exist";
 
+      case _services_login_service__WEBPACK_IMPORTED_MODULE_1__.LoginResult.WrongPassword:
+        return "Password is incorrect";
+
+      default:
+        return null;
+    }
+  }
+
+  getPasswordChangeMessage() {
+    switch (this.passwordChangeResult) {
+      case false:
+        return "This user was not found. Enter correct user name or email and try to restore password again.";
+
+      case true:
+        return "A link to change password has been sent to your email";
+
       default:
         return null;
     }
@@ -1750,7 +1814,7 @@ class LoginComponent {
 }
 
 LoginComponent.ɵfac = function LoginComponent_Factory(t) {
-  return new (t || LoginComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpClient), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_services_login_service__WEBPACK_IMPORTED_MODULE_1__.LoginService));
+  return new (t || LoginComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpClient), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_services_login_service__WEBPACK_IMPORTED_MODULE_1__.LoginService));
 };
 
 LoginComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineComponent"]({
@@ -1761,10 +1825,10 @@ LoginComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__["
   },
   decls: 33,
   vars: 8,
-  consts: [["tabindex", "-1", 1, "modal", 3, "ngStyle"], [1, "modal-dialog", "modal-dialog-centered"], [1, "modal-content"], [1, "modal-header"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "btn-close", 3, "click"], [1, "modal-body"], [1, "text-danger", 3, "hidden"], [1, "mb-3"], ["titleinput", ""], ["for", "emailInLogin", 1, "form-label"], ["type", "text", "placeholder", "example@mail.com", "aria-label", "Email", "aria-describedby", "basic-addon2", 1, "form-control"], ["nameInput", ""], ["for", "passwordInLogin", 1, "form-label"], ["type", "password", "autocomplete", "current-password", "id", "current-password", "aria-label", "Password", "aria-describedby", "basic-addon2", 1, "form-control"], ["passInput", ""], [1, "text-center"], [1, "link-primary", "p-0", 3, "routerLink", "click"], ["type", "button", 1, "btn", "btn-primary", "m-4", 2, "width", "250px", "height", "50px", 3, "click"], [1, "form-label"], [1, "link-primary", "m-3", 3, "routerLink", "click"]],
+  consts: [["tabindex", "-1", 1, "modal", 3, "ngStyle"], [1, "modal-dialog", "modal-dialog-centered"], [1, "modal-content"], [1, "modal-header"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "btn-close", 3, "click"], [1, "modal-body"], [1, "text-danger", 3, "hidden"], [1, "mb-3"], ["titleinput", ""], ["for", "emailInLogin", 1, "form-label"], ["type", "text", "placeholder", "example@mail.com", "aria-label", "Email", "aria-describedby", "basic-addon2", 1, "form-control"], ["nameInput", ""], ["for", "passwordInLogin", 1, "form-label"], ["type", "password", "autocomplete", "current-password", "id", "current-password", "aria-label", "Password", "aria-describedby", "basic-addon2", 1, "form-control"], ["passInput", ""], [1, "text-center"], ["class", "form-label", "style", "display: block", 4, "ngIf"], ["class", "link-primary p-0", 3, "routerLink", "click", 4, "ngIf"], ["type", "button", 1, "btn", "btn-primary", "m-4", 2, "width", "250px", "height", "50px", 3, "click"], [1, "form-label"], [1, "link-primary", "m-3", 3, "routerLink", "click"], [1, "form-label", 2, "display", "block"], [1, "link-primary", "p-0", 3, "routerLink", "click"]],
   template: function LoginComponent_Template(rf, ctx) {
     if (rf & 1) {
-      const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
+      const _r8 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
 
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "div", 0)(1, "div", 1)(2, "div", 2)(3, "div", 3)(4, "h4", 4);
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](5, "Login");
@@ -1787,15 +1851,13 @@ LoginComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__["
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelement"](20, "input", 14, 15);
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](22, "div", 16)(23, "a", 17);
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function LoginComponent_Template_a_click_23_listener() {
-        return ctx.onRegisterButton();
-      });
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](24, "Forgot password?");
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](25, "div", 16)(26, "button", 18);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](22, "div", 16);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](23, LoginComponent_label_23_Template, 2, 1, "label", 17);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](24, LoginComponent_a_24_Template, 2, 2, "a", 18);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](25, "div", 16)(26, "button", 19);
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function LoginComponent_Template_button_click_26_listener() {
-        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r8);
 
         const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵreference"](15);
 
@@ -1805,10 +1867,10 @@ LoginComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__["
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](27, " Sign in ");
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](28, "div", 16)(29, "label", 19);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](28, "div", 16)(29, "label", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](30, "Don't have an account?");
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](31, "a", 20);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](31, "a", 21);
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function LoginComponent_Template_a_click_31_listener() {
         return ctx.onRegisterButton();
       });
@@ -1817,18 +1879,20 @@ LoginComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__["
     }
 
     if (rf & 2) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpureFunction0"](5, _c0));
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpureFunction0"](6, _c1));
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](8);
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("hidden", ctx.getErrorMessage() == null);
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate"](ctx.getErrorMessage());
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](14);
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpureFunction0"](6, _c1));
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](8);
-      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpureFunction0"](7, _c1));
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.getPasswordChangeMessage() != null);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.passwordChangeResult == null || ctx.passwordChangeResult == false);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](7);
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpureFunction0"](7, _c0));
     }
   },
-  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_4__.NgStyle, _angular_router__WEBPACK_IMPORTED_MODULE_5__.RouterLinkWithHref],
+  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_5__.NgStyle, _angular_router__WEBPACK_IMPORTED_MODULE_6__.RouterLinkWithHref],
   encapsulation: 2
 });
 
@@ -1856,7 +1920,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function RegistrationComponent_div_34_Template(rf, ctx) {
+function RegistrationComponent_div_32_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 23)(1, "label", 26);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](2, "To complete registration open your email");
@@ -1864,30 +1928,30 @@ function RegistrationComponent_div_34_Template(rf, ctx) {
   }
 }
 
-function RegistrationComponent_button_36_Template(rf, ctx) {
+function RegistrationComponent_button_34_Template(rf, ctx) {
   if (rf & 1) {
-    const _r12 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    const _r11 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
 
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "button", 27);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function RegistrationComponent_button_36_Template_button_click_0_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r12);
-      const ctx_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx_r11.onOkButton());
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function RegistrationComponent_button_34_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r11);
+      const ctx_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx_r10.onOkButton());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1, " Register ");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
   }
 }
 
-function RegistrationComponent_button_37_Template(rf, ctx) {
+function RegistrationComponent_button_35_Template(rf, ctx) {
   if (rf & 1) {
-    const _r14 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    const _r13 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
 
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "button", 28);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function RegistrationComponent_button_37_Template_button_click_0_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r14);
-      const ctx_r13 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx_r13.onCloseButton());
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function RegistrationComponent_button_35_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r13);
+      const ctx_r12 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx_r12.onCloseButton());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1, " Close ");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
@@ -1911,6 +1975,7 @@ class RegistrationComponent {
     this.password = "";
     this.password2 = "";
     this.completed = false;
+    this.showPassword = false;
   }
 
   ngOnInit() {}
@@ -1947,6 +2012,10 @@ class RegistrationComponent {
     })();
   }
 
+  setPasswordVisiblity(value) {
+    this.showPassword = value;
+  }
+
   onCancelButton() {
     this.result.emit("cancel");
   }
@@ -1963,12 +2032,12 @@ RegistrationComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
   outputs: {
     result: "result"
   },
-  decls: 38,
-  vars: 15,
-  consts: [["tabindex", "-1", 1, "modal", 3, "ngStyle"], [1, "modal-dialog", "modal-dialog-centered"], [1, "modal-content"], [1, "modal-header"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "btn-close", 3, "click"], [1, "modal-body"], [1, "text-danger", 3, "hidden"], [1, "mb-3"], ["titleinput", ""], ["for", "userInRegister", 1, "form-label"], ["type", "text", "placeholder", "User name", "aria-label", "User name", "aria-describedby", "basic-addon2", "id", "userInRegister", 1, "form-control", 3, "value", "disabled", "input"], ["userInput", ""], ["for", "emailInRegister", 1, "form-label"], ["type", "text", "placeholder", "Email", "aria-label", "Email", "aria-describedby", "basic-addon2", "id", "emailInRegister", 1, "form-control", 3, "value", "disabled", "input"], ["nameInput", ""], ["for", "passwordInRegister", 1, "form-label"], ["type", "password", "aria-label", "Password", "aria-describedby", "basic-addon2", "id", "new-password", "autocomplete", "new-password", 1, "form-control", 3, "value", "disabled", "input"], ["passInput", ""], ["for", "passwordInRegister2", 1, "form-label"], ["type", "password", "aria-label", "Repeat password", "aria-describedby", "basic-addon2", "id", "new-password2", "autocomplete", "new-password", 1, "form-control", 3, "value", "disabled", "input"], ["passInput2", ""], ["class", "text-center", 4, "ngIf"], [1, "text-center"], ["type", "button", "class", "btn btn-primary", "style", "width: 150px", 3, "click", 4, "ngIf"], ["type", "button", "class", "btn btn-success", "style", "width: 150px", 3, "click", 4, "ngIf"], [1, "form-label"], ["type", "button", 1, "btn", "btn-primary", 2, "width", "150px", 3, "click"], ["type", "button", 1, "btn", "btn-success", 2, "width", "150px", 3, "click"]],
+  decls: 36,
+  vars: 14,
+  consts: [["tabindex", "-1", 1, "modal", 3, "ngStyle"], [1, "modal-dialog", "modal-dialog-centered"], [1, "modal-content"], [1, "modal-header"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "btn-close", 3, "click"], [1, "modal-body"], [1, "text-danger", 3, "hidden"], [1, "mb-3"], ["titleinput", ""], ["for", "userInRegister", 1, "form-label"], ["type", "text", "placeholder", "User name", "aria-label", "User name", "aria-describedby", "basic-addon2", "id", "userInRegister", 1, "form-control", 3, "value", "disabled", "input"], ["userInput", ""], ["for", "emailInRegister", 1, "form-label"], ["type", "text", "placeholder", "Email", "aria-label", "Email", "aria-describedby", "basic-addon2", "id", "emailInRegister", 1, "form-control", 3, "value", "disabled", "input"], ["nameInput", ""], ["for", "new-password", 1, "form-label"], ["aria-label", "Password", "aria-describedby", "basic-addon2", "id", "new-password", "autocomplete", "new-password", 1, "form-control", 3, "type", "value", "disabled", "input"], ["passInput", ""], ["type", "checkbox", "id", "password-check", 1, "ms-0", 3, "click"], ["passwordCheckbox", ""], ["for", "password-check", 1, "form-label", "ms-2"], ["class", "text-center", 4, "ngIf"], [1, "text-center"], ["type", "button", "class", "btn btn-primary", "style", "width: 150px", 3, "click", 4, "ngIf"], ["type", "button", "class", "btn btn-success", "style", "width: 150px", 3, "click", 4, "ngIf"], [1, "form-label"], ["type", "button", 1, "btn", "btn-primary", 2, "width", "150px", 3, "click"], ["type", "button", 1, "btn", "btn-success", 2, "width", "150px", 3, "click"]],
   template: function RegistrationComponent_Template(rf, ctx) {
     if (rf & 1) {
-      const _r15 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+      const _r14 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
 
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0)(1, "div", 1)(2, "div", 2)(3, "div", 3)(4, "h4", 4);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](5, "Register");
@@ -1986,7 +2055,7 @@ RegistrationComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](14, "input", 11, 12);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("input", function RegistrationComponent_Template_input_input_14_listener() {
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r14);
 
         const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](15);
 
@@ -1998,7 +2067,7 @@ RegistrationComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](20, "input", 14, 15);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("input", function RegistrationComponent_Template_input_input_20_listener() {
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r14);
 
         const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](21);
 
@@ -2010,34 +2079,34 @@ RegistrationComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](26, "input", 17, 18);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("input", function RegistrationComponent_Template_input_input_26_listener() {
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r14);
 
         const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](27);
 
         return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx.password = _r5.value);
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](28, "div", 8, 9)(30, "label", 19);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](31, "Repeat password");
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](32, "input", 20, 21);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("input", function RegistrationComponent_Template_input_input_32_listener() {
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r15);
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](28, "input", 19, 20);
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function RegistrationComponent_Template_input_click_28_listener() {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r14);
 
-        const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](33);
+        const _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](29);
 
-        return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx.password2 = _r7.value);
+        return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx.setPasswordVisiblity(_r6.checked));
       });
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](30, "label", 21);
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](31, "Show password");
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](34, RegistrationComponent_div_34_Template, 3, 0, "div", 22);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](35, "div", 23);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](36, RegistrationComponent_button_36_Template, 2, 0, "button", 24);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](37, RegistrationComponent_button_37_Template, 2, 0, "button", 25);
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](32, RegistrationComponent_div_32_Template, 3, 0, "div", 22);
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](33, "div", 23);
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](34, RegistrationComponent_button_34_Template, 2, 0, "button", 24);
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](35, RegistrationComponent_button_35_Template, 2, 0, "button", 25);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()()()();
     }
 
     if (rf & 2) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpureFunction0"](14, _c0));
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpureFunction0"](13, _c0));
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](8);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("hidden", !ctx.registrationFailed);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
@@ -2050,11 +2119,8 @@ RegistrationComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", ctx.completed);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](6);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate"]("value", ctx.password);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", ctx.completed);
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("type", ctx.showPassword ? "text" : "password")("disabled", ctx.completed);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](6);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate"]("value", ctx.password2);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", ctx.completed);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx.completed);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", !ctx.completed);

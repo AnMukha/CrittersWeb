@@ -34,7 +34,8 @@ namespace CrittersWeb
             {
                 cfg.User.RequireUniqueEmail = true;
             }).AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<CrittersContext>();            
+            .AddEntityFrameworkStores<CrittersContext>()
+            .AddDefaultTokenProviders();            
             services.AddDbContext<CrittersContext>();
             services.AddScoped<ISandBoxWorldsRepository, SandBoxWorldsRepository>();
             services.AddScoped<ArticlesRepository, ArticlesRepository>();

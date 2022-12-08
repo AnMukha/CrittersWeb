@@ -18,7 +18,7 @@ namespace CrittersWeb.Services.Mail
 
         MailConfig _mailConfig;
 
-        public async void SendMail(MailRequest mailRequest)
+        public async Task SendMail(MailRequest mailRequest)
         {
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(_mailConfig.Mail);

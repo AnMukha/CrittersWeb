@@ -4,10 +4,10 @@ import { lastValueFrom } from 'rxjs';
 import { LoginResult, LoginService } from '../services/login.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: 'login.component.html',
-  styles: [
-  ]
+    selector: 'app-login',
+    templateUrl: 'login.component.html',
+    styles: [
+    ]
 })
 export class LoginComponent implements OnInit {
 
@@ -15,10 +15,11 @@ export class LoginComponent implements OnInit {
 
     @Output() result = new EventEmitter<string>();
 
-    loginResult: LoginResult| undefined = undefined;
+    loginResult: LoginResult | undefined = undefined;
+    passwordChangeResult: boolean | null = null;
 
     ngOnInit(): void {
-    }    
+    }
 
     async onOkButton(emailOrName: string, password: string) {
         this.loginResult = await this.loginService.login(emailOrName, password);
@@ -35,6 +36,11 @@ export class LoginComponent implements OnInit {
         this.result.emit("register");
     }
 
+    async onForgotPasswordLink(eMail: string) {
+        this.passwordChangeResult = await lastValueFrom(this.http.get<boolean>("/account/RestorePassword/" + eMail));
+        console.log(this.passwordChangeResult);
+    }
+
     getErrorMessage(): string | null {
         switch (this.loginResult) {
             case undefined:
@@ -47,8 +53,21 @@ export class LoginComponent implements OnInit {
                 return "Another user allready logined";
             case LoginResult.UserNotFound:
                 return "User does not exist";
+            case LoginResult.WrongPassword:
+                return "Password is incorrect";
             default: return null;
         }
+    }
+
+    getPasswordChangeMessage(): string | null {
+        switch (this.passwordChangeResult) {
+            case false:
+                return "This user was not found. Enter correct user name or email and try to restore password again.";
+            case true:
+                return "A link to change password has been sent to your email";
+            default:
+                return null;
+        }                 
     }
 
 

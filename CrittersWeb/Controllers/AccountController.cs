@@ -1,4 +1,5 @@
-﻿using CrittersWeb.Data;
+﻿using CrittersWeb.Controllers.Assets;
+using CrittersWeb.Data;
 using CrittersWeb.Data.Entities;
 using CrittersWeb.DtoModels;
 using CrittersWeb.Services;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Resources;
 using System.Threading.Tasks;
 
 namespace CrittersWeb.Controllers
@@ -82,7 +84,7 @@ namespace CrittersWeb.Controllers
             newUser.mailConfirmKey = Guid.NewGuid();
             newUser.registrationDate = DateTimeOffset.Now;
             var result = await _signInManager.UserManager.CreateAsync(newUser, m.Password);
-            _emailService.SendMail(BuildEmailRequest(newUser));            
+            await _emailService.SendMail(BuildConfirmEmailRequest(newUser));
             return Ok(new RegistrationResultDto() { Success = result.Succeeded, ErrorDescription = result.Errors.FirstOrDefault()?.Description });
         }
 
@@ -102,10 +104,10 @@ namespace CrittersWeb.Controllers
             return Ok();
         }
 
-        [HttpGet("[action]/{key}")]        
+        [HttpGet("[action]/{key}")]
         public async Task<IActionResult> ConfirmEmail(Guid key)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.mailConfirmKey == key);                       
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.mailConfirmKey == key);
             if (user == null)
                 return NotFound();
             if (!user.EmailConfirmed)
@@ -113,16 +115,76 @@ namespace CrittersWeb.Controllers
                 user.EmailConfirmed = true;
                 await _dbContext.SaveChangesAsync();
             }
-            var html = System.IO.File.ReadAllText(@"./Controllers/Assets/MailConfirmed.html");
+            var html = StaticHtml.MailConfirmed_html;
+            // var html =  System.IO.File.ReadAllText(@"./Controllers/Assets/MailConfirmed.html");
             return base.Content(html, "text/html");
         }
 
-        private MailRequest BuildEmailRequest(GameUser user)
+        [HttpGet("[action]/{mailOrUser}")]
+        public async Task<ActionResult<bool>> RestorePassword(string mailOrUser)
         {
-            var baseUrl = Request.GetTypedHeaders().Referer.ToString().Replace("client/","");
-            var body = "To confirm you Critters account eMail click the link: "+Environment.NewLine+
+            GameUser user = null;
+            if (IsValidEmailAddress(mailOrUser))            
+                user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == mailOrUser);
+            if (user==null)
+                user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == mailOrUser);
+            if (user == null)
+            {
+                return Ok(false);
+            }
+            var key = Guid.NewGuid();
+            user.mailConfirmKey = key;
+            await _dbContext.SaveChangesAsync();
+            await _emailService.SendMail(BuildPasswordRestoreEmailRequest(user.Email, key));
+            return Ok(true);
+        }
+
+        [HttpGet("[action]/{key}")]
+        public async Task<IActionResult> ChangePassword(Guid key)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.mailConfirmKey == key);
+            if (user == null)
+                return NotFound();
+            var html = StaticHtml.ChangePassword_html;
+            html =  System.IO.File.ReadAllText(@"./Controllers/Assets/ChangePassword.html");            
+            html = html.Replace("{key}", key.ToString());            
+            return base.Content(html, "text/html");
+        }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult<StringResult>> SetPassword([FromBody] PasswordChange passwordChangeData)
+        {
+            var key = Guid.Parse(passwordChangeData.key);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.mailConfirmKey == key);
+            if (user == null)
+                return NotFound();
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, resetToken, passwordChangeData.password);                        
+            return result.Succeeded? new StringResult("Password was been successfully changed"): new StringResult(result.Errors.FirstOrDefault()?.Description);
+        }
+
+        private MailRequest BuildConfirmEmailRequest(GameUser user)
+        {
+            var baseUrl = Request.GetTypedHeaders().Referer.ToString().Replace("client/", "");
+            var body = "To confirm you Critters account eMail click the link: " + Environment.NewLine +
                 $"{baseUrl}account/confirmemail/{user.mailConfirmKey}";
             return new MailRequest() { ToEmail = user.Email, Body = body, Subject = "Your Critters mail comfirmation" };
+        }
+
+        private MailRequest BuildPasswordRestoreEmailRequest(string mail, Guid key)
+        {
+            var baseUrl = Request.GetTypedHeaders().Referer.ToString().Replace("client/", "");
+            var body = "To change password click the link: " + Environment.NewLine +
+                $"{baseUrl}account/changepassword/{key}";
+            return new MailRequest() { ToEmail = mail, Body = body, Subject = "Password changing in Critters account" };
+        }
+
+        public static bool IsValidEmailAddress(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+            var arr = email.Split('@', StringSplitOptions.RemoveEmptyEntries);
+            return arr.Length == 2 && arr[1].Contains(".");
         }
 
     }

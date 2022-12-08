@@ -12,7 +12,7 @@ export class RegistrationComponent implements OnInit {
 
     constructor(private http: HttpClient) {}
 
-    @Output() result = new EventEmitter<String>();
+    @Output() result = new EventEmitter<String>();    
 
     registrationFailed: boolean = false;
     registrationError: string = "";
@@ -20,7 +20,8 @@ export class RegistrationComponent implements OnInit {
     userName: string = "";
     password: string ="";
     password2: string = "";
-    completed: boolean = false;
+    completed: boolean = false;    
+    showPassword: boolean = false;
 
     ngOnInit(): void {
     }
@@ -42,6 +43,10 @@ export class RegistrationComponent implements OnInit {
     async onCloseButton() {
         console.log("Registration success");
         this.result.emit("ok");
+    }
+
+    setPasswordVisiblity(value: any) {
+        this.showPassword = value;
     }
 
     onCancelButton() {
