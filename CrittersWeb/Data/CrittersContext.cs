@@ -1,6 +1,7 @@
 ﻿using CrittersWeb.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,12 @@ namespace CrittersWeb.Data
     public class CrittersContext: IdentityDbContext<GameUser>
     {
 
-        public CrittersContext()
+        public CrittersContext(IConfiguration configuration)
         {
+            _configuration = configuration;
         }
+
+        IConfiguration _configuration;
 
         public DbSet<SandBoxSave> SandBoxSaves { get; set; }
         public DbSet<Article> Articles { get; set; }
@@ -21,7 +25,7 @@ namespace CrittersWeb.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            var constring = "Data Source=critters.database.windows.net;Initial Catalog=Critters;User ID=AnMukha;Password=crittersDB1;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            var constring = _configuration.GetConnectionString("CrittersSQL");
             optionsBuilder.UseSqlServer(constring);
 
         }

@@ -146,7 +146,7 @@ namespace CrittersWeb.Controllers
             if (user == null)
                 return NotFound();
             var html = StaticHtml.ChangePassword_html;
-            html =  System.IO.File.ReadAllText(@"./Controllers/Assets/ChangePassword.html");            
+            //html =  System.IO.File.ReadAllText(@"./Controllers/Assets/ChangePassword.html");            
             html = html.Replace("{key}", key.ToString());            
             return base.Content(html, "text/html");
         }

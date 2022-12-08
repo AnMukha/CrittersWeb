@@ -67,23 +67,18 @@ namespace CrittersWeb.Controllers.Assets {
         ///    &lt;meta charset=&quot;utf-8&quot; /&gt;
         ///    &lt;title&gt;&lt;/title&gt;
         ///&lt;/head&gt;
-        ///&lt;body style=&quot;margin: 0px; height: 100vh; font-family: arial&quot;&gt;
-        ///    &lt;div style=&quot;background: rgb(79, 90, 110); width: 100%; height: 100%;&quot;&gt;
-        ///        &lt;div style=&quot;border: solid darkgray; width: 500px; height: 300px; color: white; position: absolute; top: 50%; right: 50%; transform: translate(50%, -50%);
-        ///             padding: 0px; font-size: 20px; display: flex; flex-direction: column; align-items: center; justify-conte [rest of string was truncated]&quot;;.
+        ///&lt;body style=&quot;margin: 0px; height: 100vh; font-family: arial; font-size: 18px;&quot;&gt;
+        ///    &lt;script&gt;
+        ///        function sendPassword() {            
+        ///            let password = document.getElementById(&quot;password&quot;).value;
+        ///            let xhr = new XMLHttpRequest();
+        ///            xhr.open(&quot;POST&quot;, &quot;/account/setpassword/&quot;);
+        ///            xhr.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;);
+        ///            xhr.setRequestHeader(&quot;Conten [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangePassword_html {
             get {
                 return ResourceManager.GetString("ChangePassword_html", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ddd.
-        /// </summary>
-        internal static string ChangePasswordResult_html {
-            get {
-                return ResourceManager.GetString("ChangePasswordResult_html", resourceCulture);
             }
         }
         
