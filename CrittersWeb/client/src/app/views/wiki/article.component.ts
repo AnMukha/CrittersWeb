@@ -68,8 +68,8 @@ export class ArticleComponent implements OnInit {
     deserializeWorld(article: ArticleModel) {
         this.world.clear();
         let data = article.cellsData;
-        for (let i = 0; i < data.length; i = i + 2)
-            this.world.addCell(data[i], data[i + 1]);
+        for (let i = 0; i < data.length; i = i + 3)
+            this.world.addCell(data[i], data[i + 1], data[i + 2]);
     }
 
     deleteArticle() {

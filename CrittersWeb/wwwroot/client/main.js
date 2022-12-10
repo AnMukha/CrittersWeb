@@ -11,16 +11,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppRoutingModule": () => (/* binding */ AppRoutingModule)
 /* harmony export */ });
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 124);
-/* harmony import */ var _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/gameStart/game-start.component */ 3268);
-/* harmony import */ var _views_login_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/login.component */ 3392);
-/* harmony import */ var _views_sandbox_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/sandbox.component */ 5957);
-/* harmony import */ var _views_startpage_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/startpage.component */ 542);
-/* harmony import */ var _views_wiki_article_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/wiki/article.component */ 7744);
-/* harmony import */ var _views_wiki_articles_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/wiki/articles.component */ 1786);
-/* harmony import */ var _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/wiki/edit.component */ 1767);
-/* harmony import */ var _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/wiki/wiki.component */ 8929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 124);
+/* harmony import */ var _views_gameScreen_game_play_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/gameScreen/game-play-component */ 6719);
+/* harmony import */ var _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/gameStart/game-start.component */ 3268);
+/* harmony import */ var _views_login_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/login.component */ 3392);
+/* harmony import */ var _views_sandbox_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/sandbox.component */ 5957);
+/* harmony import */ var _views_startpage_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/startpage.component */ 542);
+/* harmony import */ var _views_wiki_article_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/wiki/article.component */ 7744);
+/* harmony import */ var _views_wiki_articles_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/wiki/articles.component */ 1786);
+/* harmony import */ var _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/wiki/edit.component */ 1767);
+/* harmony import */ var _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/wiki/wiki.component */ 8929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 2560);
+
 
 
 
@@ -34,42 +36,45 @@ __webpack_require__.r(__webpack_exports__);
 
 const routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: "home", component: _views_startpage_component__WEBPACK_IMPORTED_MODULE_3__.StartpageComponent },
+    { path: "home", component: _views_startpage_component__WEBPACK_IMPORTED_MODULE_4__.StartpageComponent },
     {
         path: "sandbox",
-        component: _views_sandbox_component__WEBPACK_IMPORTED_MODULE_2__.SandboxComponent,
+        component: _views_sandbox_component__WEBPACK_IMPORTED_MODULE_3__.SandboxComponent,
         canDeactivate: [(sandBox) => sandBox.exitConfirmRequired() ? window.confirm(sandBox.getExitConfirmText()) : true
         ]
     },
     {
-        path: 'play', component: _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_0__.GameStartComponent
+        path: 'play', component: _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_1__.GameStartComponent
     },
     {
-        path: "wiki", component: _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_7__.WikiComponent,
+        path: 'gameplay/:id', component: _views_gameScreen_game_play_component__WEBPACK_IMPORTED_MODULE_0__.GamePlayComponent
+    },
+    {
+        path: "wiki", component: _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_8__.WikiComponent,
         children: [
             {
                 path: 'article/:id',
-                component: _views_wiki_article_component__WEBPACK_IMPORTED_MODULE_4__.ArticleComponent,
+                component: _views_wiki_article_component__WEBPACK_IMPORTED_MODULE_5__.ArticleComponent,
             },
             {
                 path: 'edit/:id',
-                component: _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_6__.EditArticleComponent,
+                component: _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_7__.EditArticleComponent,
                 canDeactivate: [(editArt) => editArt.exitConfirmRequired() ? window.confirm(editArt.getExitConfirmText()) : true]
             },
             {
                 path: 'articles/:request',
-                component: _views_wiki_articles_component__WEBPACK_IMPORTED_MODULE_5__.ArticlesComponent
+                component: _views_wiki_articles_component__WEBPACK_IMPORTED_MODULE_6__.ArticlesComponent
             },
         ],
     },
-    { path: "login", component: _views_login_component__WEBPACK_IMPORTED_MODULE_1__.LoginComponent },
+    { path: "login", component: _views_login_component__WEBPACK_IMPORTED_MODULE_2__.LoginComponent },
 ];
 class AppRoutingModule {
 }
 AppRoutingModule.ɵfac = function AppRoutingModule_Factory(t) { return new (t || AppRoutingModule)(); };
-AppRoutingModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineNgModule"]({ type: AppRoutingModule });
-AppRoutingModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjector"]({ imports: [_angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule.forRoot(routes, { useHash: true }), _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵsetNgModuleScope"](AppRoutingModule, { imports: [_angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule] }); })();
+AppRoutingModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineNgModule"]({ type: AppRoutingModule });
+AppRoutingModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineInjector"]({ imports: [_angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterModule.forRoot(routes, { useHash: true }), _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterModule] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵsetNgModuleScope"](AppRoutingModule, { imports: [_angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterModule], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterModule] }); })();
 
 
 /***/ }),
@@ -111,8 +116,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/platform-browser */ 4497);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/common/http */ 8987);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/platform-browser */ 4497);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/common/http */ 8987);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-routing.module */ 158);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 5041);
 /* harmony import */ var _views_sandbox_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/sandbox.component */ 5957);
@@ -127,7 +132,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _critters_critters_canvas_critters_canvas_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./critters/critters-canvas/critters-canvas.component */ 4986);
 /* harmony import */ var _critters_time_control_panel_time_control_panel_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./critters/time-control-panel/time-control-panel.component */ 8054);
 /* harmony import */ var _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/gameStart/game-start.component */ 3268);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _views_gameScreen_game_play_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/gameScreen/game-play-component */ 6719);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ 2560);
+
 
 
 
@@ -148,11 +155,11 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
 }
 AppModule.ɵfac = function AppModule_Factory(t) { return new (t || AppModule)(); };
-AppModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent] });
-AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjector"]({ imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_15__.BrowserModule,
+AppModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent] });
+AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵdefineInjector"]({ imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_16__.BrowserModule,
         _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule,
-        _angular_common_http__WEBPACK_IMPORTED_MODULE_16__.HttpClientModule] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent,
+        _angular_common_http__WEBPACK_IMPORTED_MODULE_17__.HttpClientModule] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent,
         _views_sandbox_component__WEBPACK_IMPORTED_MODULE_2__.SandboxComponent,
         _views_startpage_component__WEBPACK_IMPORTED_MODULE_3__.StartpageComponent,
         _views_wiki_wiki_component__WEBPACK_IMPORTED_MODULE_4__.WikiComponent,
@@ -164,9 +171,10 @@ AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵ�
         _views_wiki_edit_component__WEBPACK_IMPORTED_MODULE_10__.EditArticleComponent,
         _critters_critters_canvas_critters_canvas_component__WEBPACK_IMPORTED_MODULE_11__.CrittersCanvasComponent,
         _critters_time_control_panel_time_control_panel_component__WEBPACK_IMPORTED_MODULE_12__.TimeControlPanelComponent,
-        _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_13__.GameStartComponent], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_15__.BrowserModule,
+        _views_gameStart_game_start_component__WEBPACK_IMPORTED_MODULE_13__.GameStartComponent,
+        _views_gameScreen_game_play_component__WEBPACK_IMPORTED_MODULE_14__.GamePlayComponent], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_16__.BrowserModule,
         _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule,
-        _angular_common_http__WEBPACK_IMPORTED_MODULE_16__.HttpClientModule] }); })();
+        _angular_common_http__WEBPACK_IMPORTED_MODULE_17__.HttpClientModule] }); })();
 
 
 /***/ }),
@@ -229,7 +237,7 @@ class EditCellRule {
             let endCell = this.editModel.cellXYInScr(event.offsetX, event.offsetY);
             if (Math.abs(this.startPos.x - event.offsetX) < EditCellRule.mouse_shift_to_edit && Math.abs(this.startPos.y - event.offsetY) < EditCellRule.mouse_shift_to_edit) {
                 if (this.cWorld.getCell(endCell.x, endCell.y) === undefined)
-                    this.cWorld.addCell(endCell.x, endCell.y);
+                    this.cWorld.addCell(endCell.x, endCell.y, null);
                 else
                     this.cWorld.clearCell(endCell.x, endCell.y);
                 modified = true;
@@ -423,7 +431,7 @@ class TouchScrollRule {
             let endCell = this.editModel.cellXYInScr(curPos.x, curPos.y);
             if (event.changedTouches.length == 1 && Math.abs(this.startPos1.x - curPos.x) < 5 && Math.abs(this.startPos1.y - curPos.y) < 5) {
                 if (this.cWorld.getCell(endCell.x, endCell.y) === undefined)
-                    this.cWorld.addCell(endCell.x, endCell.y);
+                    this.cWorld.addCell(endCell.x, endCell.y, null);
                 else
                     this.cWorld.clearCell(endCell.x, endCell.y);
                 return [_CrittersWorld__WEBPACK_IMPORTED_MODULE_0__.WorldCangesType.CellsEditing];
@@ -872,9 +880,9 @@ class CrittersWorld {
         this.cellKeyGen = 0;
         this.changesSubject = new rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject();
     }
-    addCell(x, y) {
+    addCell(x, y, heroId) {
         let key = x * Cell.KEY_GEN_FACTOR + y;
-        let resultCell = new Cell(this.nextCellKey(), x, y, this.stepNum);
+        let resultCell = new Cell(this.nextCellKey(), x, y, heroId, this.stepNum);
         this.cells.set(key, resultCell);
         return resultCell;
     }
@@ -1124,10 +1132,10 @@ class CrittersWorld {
         }
     }
     testInit() {
-        this.addCell(10, 10);
-        this.addCell(11, 11);
-        this.addCell(10, 11);
-        this.addCell(12, 11);
+        this.addCell(10, 10, null);
+        this.addCell(11, 11, null);
+        this.addCell(10, 11, null);
+        this.addCell(12, 11, null);
     }
 }
 CrittersWorld.ɵfac = function CrittersWorld_Factory(t) { return new (t || CrittersWorld)(); };
@@ -1138,20 +1146,22 @@ class CrittersWorldSerializer {
         for (let c of w.getCells()) {
             result.push(c.x);
             result.push(c.y);
+            result.push(c.heroId ?? -1);
         }
         return result;
     }
     deserializeCells(cellsData, cw) {
-        for (let n = 0; n < cellsData.length; n = n + 2) {
-            cw.addCell(cellsData[n], cellsData[n + 1]);
+        for (let n = 0; n < cellsData.length; n += 3) {
+            cw.addCell(cellsData[n], cellsData[n + 1], cellsData[n + 2]);
         }
     }
 }
 class Cell {
-    constructor(id, x, y, procStep) {
+    constructor(id, x, y, heroId, procStep) {
         this.id = id;
         this.x = x;
         this.y = y;
+        this.heroId = heroId;
         this.prosessedStep = procStep;
     }
     getKey() {
@@ -1162,7 +1172,7 @@ class Cell {
         this.y = toY;
     }
     clone() {
-        return new Cell(this.id, this.x, this.y, this.prosessedStep);
+        return new Cell(this.id, this.x, this.y, this.heroId, this.prosessedStep);
     }
 }
 Cell.KEY_GEN_FACTOR = 1000000000;
@@ -1610,6 +1620,89 @@ ComponentContainerDirective.ɵdir = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED
 
 /***/ }),
 
+/***/ 6719:
+/*!*********************************************************!*\
+  !*** ./src/app/views/gameScreen/game-play-component.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GamePlayComponent": () => (/* binding */ GamePlayComponent)
+/* harmony export */ });
+/* harmony import */ var C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var _critters_CEditController_CrittersEditController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../critters/CEditController/CrittersEditController */ 4659);
+/* harmony import */ var _critters_CEditController_SandBoxCrittersEditController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../critters/CEditController/SandBoxCrittersEditController */ 6333);
+/* harmony import */ var _critters_CEditModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../critters/CEditModel */ 7866);
+/* harmony import */ var _critters_CrittersView__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../critters/CrittersView */ 9197);
+/* harmony import */ var _critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../critters/CrittersWorld */ 6237);
+/* harmony import */ var _critters_CTimeController__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../critters/CTimeController */ 576);
+/* harmony import */ var _critters_ZeroTimeController__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../critters/ZeroTimeController */ 8329);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _critters_critters_canvas_critters_canvas_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../critters/critters-canvas/critters-canvas.component */ 4986);
+/* harmony import */ var _critters_time_control_panel_time_control_panel_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../critters/time-control-panel/time-control-panel.component */ 8054);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class GamePlayComponent {
+  constructor(world, zeroTimeController, ec) {
+    this.world = world;
+    this.zeroTimeController = zeroTimeController;
+    this.ec = ec;
+  }
+
+  ngOnInit() {
+    return (0,C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      LoadWorld();
+    })();
+  }
+
+}
+
+GamePlayComponent.ɵfac = function GamePlayComponent_Factory(t) {
+  return new (t || GamePlayComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_5__.CrittersWorld), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_critters_ZeroTimeController__WEBPACK_IMPORTED_MODULE_7__.ZeroTimeController), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_critters_CEditController_CrittersEditController__WEBPACK_IMPORTED_MODULE_1__.CrittersEditController));
+};
+
+GamePlayComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineComponent"]({
+  type: GamePlayComponent,
+  selectors: [["game-play"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵProvidersFeature"]([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_5__.CrittersWorld, {
+    provide: _critters_CEditController_CrittersEditController__WEBPACK_IMPORTED_MODULE_1__.CrittersEditController,
+    useClass: _critters_CEditController_SandBoxCrittersEditController__WEBPACK_IMPORTED_MODULE_2__.SandBoxCrittersEditController
+  }, _critters_CEditModel__WEBPACK_IMPORTED_MODULE_3__.CEditModel, _critters_CrittersView__WEBPACK_IMPORTED_MODULE_4__.CrittersView, _critters_CTimeController__WEBPACK_IMPORTED_MODULE_6__.CTimeController, _critters_ZeroTimeController__WEBPACK_IMPORTED_MODULE_7__.ZeroTimeController])],
+  decls: 6,
+  vars: 0,
+  consts: [[2, "background", "rgb(79, 90, 110)", "height", "100vh", "position", "relative", "display", "grid", "grid-template-areas", "tools field info", "grid-template-columns", "100px auto 100px"], [2, "background-color", "aquamarine"], [2, "background-color", "white", "position", "relative", "overflow", "hidden", "height", "100%"], [1, "m-1", 2, "position", "absolute", "right", "30px", "bottom", "30px"]],
+  template: function GamePlayComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 0);
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](1, "div", 1);
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](2, "div", 2);
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](3, "app-critters-canvas")(4, "app-time-control-panel", 3);
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](5, "div", 1);
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    }
+  },
+  dependencies: [_critters_critters_canvas_critters_canvas_component__WEBPACK_IMPORTED_MODULE_8__.CrittersCanvasComponent, _critters_time_control_panel_time_control_panel_component__WEBPACK_IMPORTED_MODULE_9__.TimeControlPanelComponent],
+  encapsulation: 2
+});
+
+function LoadWorld() {}
+
+/***/ }),
+
 /***/ 3268:
 /*!*********************************************************!*\
   !*** ./src/app/views/gameStart/game-start.component.ts ***!
@@ -1622,6 +1715,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var C_Users_A_Mukha_source_repos_AnMukha_CrittersWeb_CrittersWeb_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 124);
+
 
 
 class GameStartComponent {
@@ -1641,22 +1736,17 @@ GameStartComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_1
   type: GameStartComponent,
   selectors: [["game-start"]],
   features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([])],
-  decls: 7,
+  decls: 3,
   vars: 0,
-  consts: [[2, "background", "rgb(79, 90, 110)", "height", "100vh", "display", "flex", "justify-content", "center", "align-items", "center", "position", "relative", "flex-direction", "column"], [1, "m-2", "btn", "btn-outline-light", 2, "width", "200px", "height", "40px"]],
+  consts: [[2, "background", "rgb(79, 90, 110)", "height", "100vh", "display", "flex", "justify-content", "center", "align-items", "center", "position", "relative", "flex-direction", "column"], ["routerLink", "/gameplay/main", 1, "m-2", "btn", "btn-outline-light", 2, "width", "200px", "height", "40px"]],
   template: function GameStartComponent_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0)(1, "button", 1);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](2, "Create New World");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](3, "button", 1);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](4, "Play Selected World");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](5, "button", 1);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](6, "Options");
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](2, "Play in the main world");
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
     }
   },
+  dependencies: [_angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterLink],
   encapsulation: 2
 });
 
@@ -2280,9 +2370,9 @@ class SandboxComponent {
   deserializeWorld(data) {
     this.world.clear();
 
-    for (let i = 0; i < data.length; i = i + 2) {
+    for (let i = 0; i < data.length; i = i + 3) {
       console.log("add cell", data[i], data[i + 1]);
-      this.world.addCell(data[i], data[i + 1]);
+      this.world.addCell(data[i], data[i + 1], data[i + 2]);
     }
 
     this.zeroTimeController.setThisTimeAsZero();
@@ -2710,7 +2800,7 @@ class StartpageComponent {
       for (let i = 0; i < 3000; i++) {
         let x = Math.round(Math.random() * 150) + 75;
         let y = Math.round(Math.random() * 35) + 12;
-        if (_this.world.getCell(x, y) === undefined) _this.world.addCell(x, y);
+        if (_this.world.getCell(x, y) === undefined) _this.world.addCell(x, y, null);
       }
 
       _this.editModel.scale = 3;
@@ -3000,7 +3090,7 @@ class ArticleComponent {
     this.world.clear();
     let data = article.cellsData;
 
-    for (let i = 0; i < data.length; i = i + 2) this.world.addCell(data[i], data[i + 1]);
+    for (let i = 0; i < data.length; i = i + 3) this.world.addCell(data[i], data[i + 1], data[i + 2]);
   }
 
   deleteArticle() {
@@ -3288,7 +3378,7 @@ class EditArticleComponent {
         this.world.clear();
         let data = article.cellsData;
 
-        for (let i = 0; i < data.length; i = i + 2) this.world.addCell(data[i], data[i + 1]);
+        for (let i = 0; i < data.length; i = i + 3) this.world.addCell(data[i], data[i + 1], data[i + 2]);
 
         this.zeroTimeController.setThisTimeAsZero();
         setTimeout(() => this.world.notifyAboutChanges([_critters_CrittersWorld__WEBPACK_IMPORTED_MODULE_1__.WorldCangesType.Loaded]));

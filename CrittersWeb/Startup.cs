@@ -1,6 +1,6 @@
-using CrittersWeb.Data;
-using CrittersWeb.Data.Entities;
-using CrittersWeb.Data.Repositories;
+using CrittersWeb.DBModeles;
+using CrittersWeb.DBModeles.Entities;
+using CrittersWeb.DBModeles.Repositories;
 using CrittersWeb.Services;
 using CrittersWeb.Services.Mail;
 using Microsoft.AspNetCore.Builder;
@@ -24,7 +24,7 @@ namespace CrittersWeb
             _configuration = configuration;
         }
 
-        IConfiguration _configuration;
+        readonly IConfiguration _configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940

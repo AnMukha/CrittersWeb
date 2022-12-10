@@ -1,6 +1,6 @@
-﻿using CrittersWeb.Data;
-using CrittersWeb.Data.Entities;
-using CrittersWeb.Data.Repositories;
+﻿using CrittersWeb.DBModeles;
+using CrittersWeb.DBModeles.Entities;
+using CrittersWeb.DBModeles.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

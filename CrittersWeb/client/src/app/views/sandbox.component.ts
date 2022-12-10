@@ -66,9 +66,9 @@ export class SandboxComponent implements OnInit {
 
     private deserializeWorld(data: number[]) {
         this.world.clear();        
-        for (let i = 0; i < data.length; i = i + 2) {
+        for (let i = 0; i < data.length; i = i + 3) {
             console.log("add cell", data[i], data[i + 1]);
-            this.world.addCell(data[i], data[i + 1]);
+            this.world.addCell(data[i], data[i + 1], data[i + 2]);
         }
         this.zeroTimeController.setThisTimeAsZero();
         this.world.resetModificationFlag();

@@ -14,4 +14,5 @@ export class GameStartComponent implements OnInit {
 
     async ngOnInit() {
     }
+
 }

@@ -19,9 +19,9 @@ export class CrittersWorld {
     
     public readonly changesSubject: Subject<WorldCangesType[]> = new Subject();    
 
-    public addCell(x: number, y: number): Cell {
+    public addCell(x: number, y: number, heroId: number|null): Cell {
         let key = x * Cell.KEY_GEN_FACTOR + y;
-        let resultCell = new Cell(this.nextCellKey(), x, y, this.stepNum);
+        let resultCell = new Cell(this.nextCellKey(), x, y, heroId, this.stepNum);
         this.cells.set(key, resultCell);
         return resultCell;
     }
@@ -298,13 +298,11 @@ export class CrittersWorld {
     }
 
     public testInit() {
-        this.addCell(10, 10);
-        this.addCell(11, 11);
-        this.addCell(10, 11);
-        this.addCell(12, 11);
+        this.addCell(10, 10, null);
+        this.addCell(11, 11, null);
+        this.addCell(10, 11, null);
+        this.addCell(12, 11, null);
     }
-
-
 }
 
 export class CrittersWorldSerializer {
@@ -314,22 +312,24 @@ export class CrittersWorldSerializer {
         for (let c of w.getCells()) {            
             result.push(c.x);
             result.push(c.y);
+            result.push(c.heroId??-1);
         }
         return result;
     }
 
     public deserializeCells(cellsData: number[], cw: CrittersWorld) {        
-        for (let n = 0; n < cellsData.length; n=n+2) {
-            cw.addCell(cellsData[n], cellsData[n + 1]);
+        for (let n = 0; n < cellsData.length; n += 3) {
+            cw.addCell(cellsData[n], cellsData[n + 1], cellsData[n+2]);
         }
     }
 }
 
 export class Cell {
-    public constructor(id: number, x: number, y: number, procStep: number) {
+    public constructor(id: number, x: number, y: number, heroId: number|null, procStep: number) {
         this.id = id;
         this.x = x;
         this.y = y;
+        this.heroId = heroId;
         this.prosessedStep = procStep;
     }
 
@@ -340,6 +340,8 @@ export class Cell {
 
     public x: number;
     public y: number;
+    public heroId: number|null;
+
     public prosessedStep: number;
  
     public getKey(): number
@@ -354,7 +356,7 @@ export class Cell {
     }
 
     public clone(): Cell {
-        return new Cell(this.id, this.x, this.y, this.prosessedStep);
+        return new Cell(this.id, this.x, this.y, this.heroId, this.prosessedStep);
     }
 
 

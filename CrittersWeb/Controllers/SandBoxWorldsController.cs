@@ -1,6 +1,7 @@
-﻿using CrittersWeb.Data.Entities;
-using CrittersWeb.Data.Repositories;
+﻿using CrittersWeb.DBModeles.Entities;
+using CrittersWeb.DBModeles.Repositories;
 using CrittersWeb.DtoModels;
+using CrittersWeb.DtoModels.Sandbox;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ namespace CrittersWeb.Controllers
         public async Task<ActionResult<int>> SaveToSlot([FromBody] SandBoxWorldSavingDto saving)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var id = await _rep.SaveToSlot(currentUser, saving.Slot, saving.NewName, CellsDataInModelSerializer.ToCells(saving.CellsData));
+            var id = await _rep.SaveToSlot(currentUser, saving.Slot, saving.NewName, CellsDataInDtoSerializer.ToCells(saving.CellsData));
             return id;
         }
 
@@ -50,7 +51,7 @@ namespace CrittersWeb.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var w = await _rep.LoadFromSlot(currentUser, slot);
-            var data = CellsDataInModelSerializer.CellsToData(w.GetCells());
+            var data = CellsDataInDtoSerializer.CellsToData(w.GetCells());
             var result = new SandBoxWorldSavingDto() { Slot = slot, NewName = w.Name, CellsData = data };
             return result;
         }

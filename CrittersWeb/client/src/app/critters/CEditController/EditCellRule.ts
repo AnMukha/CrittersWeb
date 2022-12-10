@@ -20,7 +20,7 @@ export class EditCellRule {
             let endCell = this.editModel.cellXYInScr(event.offsetX, event.offsetY);
             if (Math.abs(this.startPos.x - event.offsetX) < EditCellRule.mouse_shift_to_edit && Math.abs(this.startPos.y - event.offsetY) < EditCellRule.mouse_shift_to_edit) {
                 if (this.cWorld.getCell(endCell.x, endCell.y) === undefined)
-                    this.cWorld.addCell(endCell.x, endCell.y);
+                    this.cWorld.addCell(endCell.x, endCell.y, null);
                 else
                     this.cWorld.clearCell(endCell.x, endCell.y);
                 modified = true;

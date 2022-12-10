@@ -38,8 +38,8 @@ export class EditArticleComponent implements OnInit {
                     this.article = article;
                     this.world.clear();
                     let data = article.cellsData;
-                    for (let i = 0; i < data.length ; i = i + 2)
-                        this.world.addCell(data[i], data[i + 1]);
+                    for (let i = 0; i < data.length ; i = i + 3)
+                        this.world.addCell(data[i], data[i + 1], data[i + 2]);
                     this.zeroTimeController.setThisTimeAsZero();                    
                     setTimeout(() =>
                         this.world.notifyAboutChanges([WorldCangesType.Loaded]));

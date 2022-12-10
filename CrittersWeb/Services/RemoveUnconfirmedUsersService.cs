@@ -1,5 +1,5 @@
-﻿using CrittersWeb.Data;
-using CrittersWeb.Data.Entities;
+﻿using CrittersWeb.DBModeles;
+using CrittersWeb.DBModeles.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +39,7 @@ namespace CrittersWeb.Services
             var now = DateTimeOffset.Now;
             var dbContext = scope.ServiceProvider.GetRequiredService<CrittersContext>();            
             var expired = dbContext.Users.Where(u => u.EmailConfirmed == false).ToArray()
-                        .Where(u =>  (now - u.registrationDate).TotalHours > 3).ToArray();                        
+                        .Where(u =>  (now - u.RegistrationDate).TotalHours > 3).ToArray();                        
             var userMangager = scope.ServiceProvider.GetRequiredService<UserManager<GameUser>>();
             foreach (var user in expired)
             {                

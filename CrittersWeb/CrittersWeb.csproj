@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -44,10 +44,6 @@
     <TypeScriptCompile Include="client\src\app\views\wiki\articles.component.html" />
     <TypeScriptCompile Include="client\src\app\views\wiki\article.component.html" />
     <TypeScriptCompile Include="client\src\app\views\wiki\wiki.component.html" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="client\src\app\views\gameScreen\" />
   </ItemGroup>
 
   <ItemGroup>

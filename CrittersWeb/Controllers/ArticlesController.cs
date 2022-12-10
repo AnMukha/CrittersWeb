@@ -1,5 +1,5 @@
-﻿using CrittersWeb.Data.Entities;
-using CrittersWeb.Data.Repositories;
+﻿using CrittersWeb.DBModeles.Entities;
+using CrittersWeb.DBModeles.Repositories;
 using CrittersWeb.Services;
 using CrittersWeb.DtoModels;
 using Microsoft.AspNetCore.Authorization;

@@ -1,5 +1,5 @@
-﻿using CrittersWeb.Data.Entities;
-using CrittersWeb.Data.Repositories;
+﻿using CrittersWeb.DBModeles.Entities;
+using CrittersWeb.DBModeles.Repositories;
 using CrittersWeb.Services;
 using CrittersWeb.DtoModels;
 using Microsoft.AspNetCore.Authorization;
@@ -41,7 +41,7 @@ namespace CrittersWeb.Controllers
                  ApprovalDate = article.ApprovalDate,
                  AuthorId = article.Author?.Id,
                  AuthorName = article.Author?.UserName,
-                 CellsData = CellsDataInModelSerializer.CellsToData(article.GetCells()),
+                 CellsData = CellsDataInDtoSerializer.CellsToData(article.GetCells()),
                  Content = article.Content,
                  CreationDate = article.CreationDate,
                  Id = article.Id,
@@ -60,7 +60,7 @@ namespace CrittersWeb.Controllers
             {
                 ApprovalDate = article.ApprovalDate,
                 Author = currentUser,
-                CellsData = CellsDataInDBSerializer.SerializeCells(CellsDataInModelSerializer.ToCells(article.CellsData)),
+                CellsData = CellsDataInDBSerializer.SerializeCells(CellsDataInDtoSerializer.ToCells(article.CellsData)),
                 Content = RestrictHtmlInContent(article.Content),
                 CreationDate = article.CreationDate,
                 LastEditionDate = DateTime.Now,
@@ -85,7 +85,7 @@ namespace CrittersWeb.Controllers
                 article.Content = article.Content.Substring(10000);
             if (article.Name?.Length > 60)
                 article.Content = article.Content.Substring(60);
-            modified.CellsData = CellsDataInDBSerializer.SerializeCells(CellsDataInModelSerializer.ToCells(article.CellsData));
+            modified.CellsData = CellsDataInDBSerializer.SerializeCells(CellsDataInDtoSerializer.ToCells(article.CellsData));
             modified.Content = RestrictHtmlInContent(article.Content);
             modified.LastEditionDate = DateTime.Now;
             modified.Name = article.Name;

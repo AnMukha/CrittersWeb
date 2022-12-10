@@ -38,7 +38,7 @@ export class TouchScrollRule {
             let endCell = this.editModel.cellXYInScr(curPos.x, curPos.y);
             if (event.changedTouches.length == 1 && Math.abs(this.startPos1.x - curPos.x) < 5 && Math.abs(this.startPos1.y - curPos.y) < 5) {
                 if (this.cWorld.getCell(endCell.x, endCell.y) === undefined)
-                    this.cWorld.addCell(endCell.x, endCell.y);
+                    this.cWorld.addCell(endCell.x, endCell.y, null);
                 else
                     this.cWorld.clearCell(endCell.x, endCell.y);
                 return [WorldCangesType.CellsEditing];

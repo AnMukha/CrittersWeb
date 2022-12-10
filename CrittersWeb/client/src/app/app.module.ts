@@ -16,6 +16,7 @@ import { EditArticleComponent } from './views/wiki/edit.component';
 import { CrittersCanvasComponent } from './critters/critters-canvas/critters-canvas.component';
 import { TimeControlPanelComponent } from './critters/time-control-panel/time-control-panel.component';
 import { GameStartComponent } from './views/gameStart/game-start.component';
+import { GamePlayComponent } from './views/gameScreen/game-play-component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { GameStartComponent } from './views/gameStart/game-start.component';
     EditArticleComponent,
     CrittersCanvasComponent,
     TimeControlPanelComponent,
-    GameStartComponent
+    GameStartComponent,
+    GamePlayComponent
   ],
   imports: [
     BrowserModule,

@@ -33,7 +33,7 @@ export class StartpageComponent implements OnInit {
             let x = Math.round(Math.random() * 150)+75; 
             let y = Math.round(Math.random() * 35)+12;
             if (this.world.getCell(x, y) === undefined)
-                this.world.addCell(x, y);
+                this.world.addCell(x, y, null);
         }
         this.editModel.scale = 3;
         let cfg = this.cView.getPaintConfig();

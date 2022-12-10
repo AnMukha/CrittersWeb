@@ -16,16 +16,14 @@ namespace CrittersWeb.Services.Mail
             _mailConfig = mailConfig;
         }
 
-        MailConfig _mailConfig;
+        readonly MailConfig _mailConfig;
 
         public async Task SendMail(MailRequest mailRequest)
         {
-            var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse(_mailConfig.Mail);
+            var email = new MimeMessage { Sender = MailboxAddress.Parse(_mailConfig.Mail) };
             email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
             email.Subject = mailRequest.Subject;
-            var builder = new BodyBuilder();
-            builder.HtmlBody = mailRequest.Body;
+            var builder = new BodyBuilder { HtmlBody = mailRequest.Body };
             email.Body = builder.ToMessageBody();
             using var smtp = new SmtpClient();
             smtp.Connect(_mailConfig.Host, _mailConfig.Port, SecureSocketOptions.StartTls);

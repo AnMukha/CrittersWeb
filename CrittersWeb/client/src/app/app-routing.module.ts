@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GamePlayComponent } from './views/gameScreen/game-play-component';
 import { GameStartComponent } from './views/gameStart/game-start.component';
 import { LoginComponent } from './views/login.component';
 import { SandboxComponent } from './views/sandbox.component';
@@ -20,7 +21,11 @@ const routes: Routes = [
         ]
     },
     {
-        path: 'play', component: GameStartComponent },
+        path: 'play', component: GameStartComponent
+    },
+    {
+        path: 'gameplay/:id', component: GamePlayComponent
+    },
     {
         path: "wiki", component: WikiComponent, 
         children: [
