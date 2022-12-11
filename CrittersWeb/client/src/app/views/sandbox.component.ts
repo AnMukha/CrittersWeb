@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
 import { CEditModel } from '../critters/CEditModel';
-import { CrittersWorld, CrittersWorldSerializer, WorldCangesType } from '../critters/CrittersWorld';
 import { CrittersView } from '../critters/CrittersView';
 import { ComponentContainerDirective } from './component-container.directive';
 import { CTimeController } from '../critters/CTimeController';
@@ -11,6 +10,8 @@ import { ZeroTimeController } from '../critters/ZeroTimeController';
 import { LoginService } from '../services/login.service';
 import { SandBoxCrittersEditController } from '../critters/CEditController/SandBoxCrittersEditController';
 import { CrittersEditController } from '../critters/CEditController/CrittersEditController';
+import { CrittersWorld, WorldCangesType } from '../critters/CrittersWorld';
+import { CellsDataSerializer } from '../dto/Serializers/cells-data-serializer';
 
 @Component({
     selector: 'app-sandbox',
@@ -66,10 +67,8 @@ export class SandboxComponent implements OnInit {
 
     private deserializeWorld(data: number[]) {
         this.world.clear();        
-        for (let i = 0; i < data.length; i = i + 3) {
-            console.log("add cell", data[i], data[i + 1]);
-            this.world.addCell(data[i], data[i + 1], data[i + 2]);
-        }
+        let ser = new CellsDataSerializer();
+        ser.deserializeCells(data, this.world);        
         this.zeroTimeController.setThisTimeAsZero();
         this.world.resetModificationFlag();
         this.world.notifyAboutChanges([WorldCangesType.Loaded]);
@@ -151,8 +150,8 @@ class SavePopup {
     }
 
     async saveWorld(worldTitle: SandboxWorldTitleModel | null) {
-        let s = new CrittersWorldSerializer();
-        let cellsData = s.serializeCells(this.world);
+        let s = new CellsDataSerializer();
+        let cellsData = s.serializeCells(this.world.getCells());
         let result = await lastValueFrom(this.http.post("/sandboxworlds/savetoslot", { slot: worldTitle?.slot, newName: worldTitle?.name, cellsData: cellsData }));
         console.log(result);
         if (result)

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
-import { CrittersWorld, CrittersWorldSerializer, WorldCangesType } from '../../critters/CrittersWorld';
+import { CrittersWorld, WorldCangesType } from '../../critters/CrittersWorld';
 import { CEditModel } from '../../critters/CEditModel';
 import { CrittersView } from '../../critters/CrittersView';
 import { CTimeController } from '../../critters/CTimeController';
@@ -12,6 +12,7 @@ import { ZeroTimeController } from '../../critters/ZeroTimeController';
 import { ArticleStatus } from './article.component';
 import { SandBoxCrittersEditController } from '../../critters/CEditController/SandBoxCrittersEditController';
 import { CrittersEditController } from '../../critters/CEditController/CrittersEditController';
+import { CellsDataSerializer } from '../../dto/Serializers/cells-data-serializer';
 
 @Component({
   selector: 'app-edit-article',
@@ -37,10 +38,8 @@ export class EditArticleComponent implements OnInit {
                 this.http.get<ArticleModel>("/article/" + (routeParams as any).id).subscribe(article => {
                     this.article = article;
                     this.world.clear();
-                    let data = article.cellsData;
-                    for (let i = 0; i < data.length ; i = i + 3)
-                        this.world.addCell(data[i], data[i + 1], data[i + 2]);
-                    this.zeroTimeController.setThisTimeAsZero();                    
+                    new CellsDataSerializer().deserializeCells(article.cellsData, this.world);
+                    this.zeroTimeController.setThisTimeAsZero();
                     setTimeout(() =>
                         this.world.notifyAboutChanges([WorldCangesType.Loaded]));
                 });
@@ -66,8 +65,7 @@ export class EditArticleComponent implements OnInit {
         this.article.content = text;
         this.article.name = name;
         this.article.status = status;
-        let s = new CrittersWorldSerializer();
-        let cellsData = s.serializeCells(this.world);
+        let cellsData = new CellsDataSerializer().serializeCells(this.world.getCells());
         this.article.cellsData = cellsData;
         if (this.isNew) {
             let article: any = await lastValueFrom(await this.http.post("/article", this.article));

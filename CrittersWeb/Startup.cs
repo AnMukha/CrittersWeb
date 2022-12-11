@@ -37,9 +37,12 @@ namespace CrittersWeb
             .AddEntityFrameworkStores<CrittersContext>()
             .AddDefaultTokenProviders();            
             services.AddDbContext<CrittersContext>();
-            services.AddScoped<ISandBoxWorldsRepository, SandBoxWorldsRepository>();
+            services.AddScoped<ISandBoxWorldsRepository, SandBoxWorldsRepository>();            
             services.AddScoped<ArticlesRepository, ArticlesRepository>();
-            services.AddSingleton<SearchService, SearchService>();
+            services.AddScoped<GameWorldRepository, GameWorldRepository>();
+
+            services.AddSingleton<SearchService, SearchService>();            
+
             var mailConfig = _configuration.GetSection("MailSettings").Get<MailConfig>();
             var setc = services.AddSingleton(mailConfig);
             services.AddTransient<MailService>();

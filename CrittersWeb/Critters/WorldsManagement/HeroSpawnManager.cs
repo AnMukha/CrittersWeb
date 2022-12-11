@@ -42,5 +42,38 @@ namespace CrittersWeb.Critters.WorldsManagement
             var rects = areas.SelectMany(a=> a.GetAreaRects()).ToArray();
             return world.Heroes.Where(h => rects.Any(r => r.Contains(h.X, h.Y))).ToArray();
         }
+
+        public static (Hero, bool created) FindOrCreateHero(GameUser user, GameWorld world)
+        {
+            var hero = world.FindHeroInWorld(user.Id);
+            if (hero == null)
+                return (CreateHeroInWorld(world, user), true);
+            else return (hero, false);
+            
+        }
+
+        private static Hero CreateHeroInWorld(GameWorld world, GameUser user)
+        {
+            var hero = new Hero();
+            SetDefaultValuesToHero(hero);
+            hero.User = user;
+            hero.World = world;
+            world.Heroes.Add(hero);
+            hero.X = world.SpaceAreas.First().Left + 10;
+            hero.Y = world.SpaceAreas.First().Top + 10;
+            return hero;
+        }
+
+        private static void SetDefaultValuesToHero(Hero hero)
+        {
+            hero.CellsBufferSize = 10;
+            hero.CellsInBuffer = 10;
+            hero.CellsLimitToPut = 10;
+            hero.Direction = 0;
+            hero.Energy = 10;
+            hero.FieldSize = 10;
+            hero.MaxEnergy = 20;            
+        }
     }
+    
 }

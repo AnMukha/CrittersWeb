@@ -305,25 +305,6 @@ export class CrittersWorld {
     }
 }
 
-export class CrittersWorldSerializer {
-
-    public serializeCells(w: CrittersWorld): number[] {
-        let result = [];
-        for (let c of w.getCells()) {            
-            result.push(c.x);
-            result.push(c.y);
-            result.push(c.heroId??-1);
-        }
-        return result;
-    }
-
-    public deserializeCells(cellsData: number[], cw: CrittersWorld) {        
-        for (let n = 0; n < cellsData.length; n += 3) {
-            cw.addCell(cellsData[n], cellsData[n + 1], cellsData[n+2]);
-        }
-    }
-}
-
 export class Cell {
     public constructor(id: number, x: number, y: number, heroId: number|null, procStep: number) {
         this.id = id;

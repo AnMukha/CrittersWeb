@@ -1,4 +1,6 @@
+using CrittersWeb.DBModeles;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace CrittersWeb
@@ -8,6 +10,8 @@ namespace CrittersWeb
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope())
+                new CrittersDBSeeder(scope.ServiceProvider).SeedData().Wait();
             host.Run();
         }
 

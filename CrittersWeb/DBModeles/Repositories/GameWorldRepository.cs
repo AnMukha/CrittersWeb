@@ -1,4 +1,5 @@
 ﻿using CrittersWeb.DBModeles.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,14 @@ namespace CrittersWeb.DBModeles.Repositories
             _dbContext = dbContext;
         }
 
-        public GameWorld FindByName(string worldName)
+        public async Task<GameWorld> FindByName(string worldName)
         {
-            return _dbContext.GameWorlds.FirstOrDefault(w=>w.Name == worldName);
+            return await _dbContext.GameWorlds.Where(w => w.Name == worldName).Include(w => w.Heroes).Include(w => w.SpaceAreas).FirstOrDefaultAsync();
+        }
+
+        public async Task SaveChanges()
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

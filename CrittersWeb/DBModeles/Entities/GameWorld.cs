@@ -14,9 +14,9 @@ namespace CrittersWeb.DBModeles.Entities
         public ICollection<Hero> Heroes { get; set; }
         public ICollection<SpaceArea> SpaceAreas { get; set; }
 
-        public Hero FindHeroInWorld(int worldId)
+        public Hero FindHeroInWorld(string userId)
         {
-            return Heroes.FirstOrDefault(h => h.World.Id == worldId);
+            return Heroes?.FirstOrDefault(h => h.User.Id == userId);
         }
     }
 }

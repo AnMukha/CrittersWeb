@@ -10,6 +10,7 @@ import { LoginService } from '../../services/login.service';
 import { ViewOnlyCrittersEditController } from '../../critters/CEditController/ViewOnlyCrittersEditController';
 import { CrittersEditController } from '../../critters/CEditController/CrittersEditController';
 import { SandBoxCrittersEditController } from '../../critters/CEditController/SandBoxCrittersEditController';
+import { CellsDataSerializer } from '../../dto/Serializers/cells-data-serializer';
 
 @Component({
   selector: 'app-article',
@@ -68,8 +69,7 @@ export class ArticleComponent implements OnInit {
     deserializeWorld(article: ArticleModel) {
         this.world.clear();
         let data = article.cellsData;
-        for (let i = 0; i < data.length; i = i + 3)
-            this.world.addCell(data[i], data[i + 1], data[i + 2]);
+        new CellsDataSerializer().deserializeCells(data, this.world);
     }
 
     deleteArticle() {

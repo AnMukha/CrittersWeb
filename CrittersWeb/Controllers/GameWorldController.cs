@@ -28,7 +28,7 @@ namespace CrittersWeb.Controllers
 
         [Authorize]
         [HttpGet("[action]/{int id}")]
-        public Task<IActionResult> GetWorld(int id)
+        public Task<ActionResult<GameWorldLocalAreaDto>> GetWorld(int id)
         {
             throw new Exception();
         }
@@ -37,17 +37,18 @@ namespace CrittersWeb.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<GameWorldLocalAreaDto>> GetMainWorld()
         {
-            var world = _worldRep.FindByName("Main");
+            var world = await _worldRep.FindByName("Main");
             var currentUser = await _userManager.GetUserAsync(User);
-            var currentHero = world.FindHeroInWorld(world.Id);
+            var (currentHero, created) = HeroSpawnManager.FindOrCreateHero(currentUser, world);
             if (currentHero == null)
                 return NotFound();
+            if (created)
+                await _worldRep.SaveChanges();
             var localAreas = HeroSpawnManager.FindLocalAreas(currentHero);
             var localHeroes = HeroSpawnManager.FindHeroesInAreas(world, localAreas);
             var result = DbToDtoMapper.MapGameWorld(world, currentHero, localHeroes, localAreas);
             return result;
         }
-
 
     }
 }

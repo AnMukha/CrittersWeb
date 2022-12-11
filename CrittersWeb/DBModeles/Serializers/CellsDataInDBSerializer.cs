@@ -27,18 +27,19 @@ namespace CrittersWeb.DBModeles.Entities
         {
             var b = new StringBuilder();
             var first = true;
-            foreach (var c in cells)
-            {
-                if (!first)
+            if (cells!=null)
+                foreach (var c in cells)
+                {
+                    if (!first)
+                        b.Append("|");
+                    else
+                        first = false;
+                    b.Append(c.X.ToString());
                     b.Append("|");
-                else
-                    first = false;
-                b.Append(c.X.ToString());
-                b.Append("|");
-                b.Append(c.Y.ToString());
-                b.Append("|");
-                b.Append(c.HeroId == null? "-1": c.HeroId.ToString());
-            }
+                    b.Append(c.Y.ToString());
+                    b.Append("|");
+                    b.Append(c.HeroId == null ? "-1" : c.HeroId.ToString());
+                }
             return b.ToString();
         }
 

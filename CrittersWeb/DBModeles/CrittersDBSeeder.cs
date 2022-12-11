@@ -32,7 +32,13 @@ namespace CrittersWeb.DBModeles
 
         private async Task SeedMainWorldData(CrittersContext context)
         {
-            if (context.GameWorlds.FirstOrDefault(w=> w.Name=="Main") == null)
+            var mainW = await context.GameWorlds.FirstOrDefaultAsync(w => w.Name == "Main");
+            //if (mainW != null)
+            //{                
+                //context.GameWorlds.Remove(mainW);
+                //await context.SaveChangesAsync();
+            //}
+            if (mainW == null)
             {
                 var newWorldModel = new GameWorldGenerator().GenerateMainWorld();
                 var newGameW = new GameWorld { Name = "Main" };
